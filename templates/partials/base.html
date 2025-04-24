@@ -31,19 +31,19 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ms-auto me-4 my-3 my-lg-0">
-                        <li class="nav-item"><a class="nav-link me-lg-3" href="#features">Shop</a></li>
-                        <li class="nav-item"><a class="nav-link me-lg-3" href="#download">About</a></li>
-                        <li class="nav-item"><a class="nav-link me-lg-3" href="#download">Catalog</a></li>
+                        <li class="nav-item"><a class="nav-link me-lg-3" href="{% url 'main:shop' %}">Shop</a></li>
+                        <li class="nav-item"><a class="nav-link me-lg-3" href="{% url 'main:about' %}">About</a></li>
+                        <li class="nav-item"><a class="nav-link me-lg-3" href="{% url 'main:catalog' %}">Catalog</a></li>
                         <input type="text" placeholder="Search..">
                     </ul>
-                    <button class="btn btn-primary rounded-pill px-3 mb-2 mb-lg-0" data-bs-toggle="modal" data-bs-target="#feedbackModal">
+                    <button class="btn btn-primary rounded-pill px-3 mb-2 mb-lg-0" data-bs-toggle="modal" id="RegistrationButton">
                         <span class="d-flex align-items-center">
                             <i class="bi bi-person-add me-2" ></i>
                             <span class="small">  Register</span>
                         </span>
                     </button>
                      <ul class="navbar-nav">
-                          <li class="nav-item"><a class="nav-link me-lg-3" href="#features">Log in</a></li>
+                          <li class="nav-item"><a class="nav-link me-lg-3" href="{% url 'main:login' %}">Log in</a></li>
                      </ul>
                 </div>
             </div>
@@ -307,5 +307,11 @@
         <!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
         <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
         <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+
+        <script>
+          document.getElementById('RegistrationButton').addEventListener('click', function() {
+            window.location.href = "{% url 'main:registration' %}";
+          });
+        </script>
     </body>
 </html>
