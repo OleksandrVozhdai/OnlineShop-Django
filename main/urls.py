@@ -7,7 +7,7 @@ from main.views import *
 app_name = 'main'
 
 urlpatterns = [
-    path("", IndexView),
+    path("", IndexView, name = 'index'),
     path("shop/", ShopView, name="shop"),
     path("about/", AboutView, name="about"),
     path("catalog/", CatalogView, name="catalog"),
