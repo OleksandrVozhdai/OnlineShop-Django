@@ -1,3 +1,79 @@
 {% include 'partials/nav.html' %}
 {% include 'partials/dependence.html' %}
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Shop</title>
+    
+    <style>
+    .card-img-top {
+        height: 200px;
+        width: 100%;
+        object-fit: contain;
+    }
+    </style>
+</head>
+<body>
+   <section class="py-5" style = "margin-top: 60px">
+       <div class="container px-5 px-3 mt-5">
+           <div class="row gx-4 gx-lg-5 row-cols-4 row-cols-md-4 row-cols-xl-4 justify-content-center">
+
+               <div class="col mb-5">
+                   <a href="{% url 'main:shop' %}smartphones/">
+                       <div class="card h-100">
+                           <img class="card-img-top" src='{{ "https://openshop.uz/storage/uploads/products/photos/202409/Zl3vxDtSz0Eowpwikuz1r8j3ioPfKbH4yckOYatX.jpg"|default:"https://dummyimage.com/450x300/dee2e6/6c757d.jpg" }}' alt="Smartphones" />
+                           <div class="card-body p-4">
+                               <div class="text-center">
+                                   <h5 class="fw-bolder">Smartphones</h5>
+                               </div>
+                           </div>
+                       </div>
+                   </a>
+               </div>
+
+               <div class="col mb-5">
+                   <a href="{% url 'main:shop' %}laptops/">
+                       <div class="card h-100">
+                           <img class="card-img-top" src='{{ "https://bigmag.ua/image/cache/catalog/new/kumunren/Liza/NewFolder/Galaxy%20S21/2289573745-2000x2000.jpg"|default:"https://dummyimage.com/450x300/dee2e6/6c757d.jpg" }}' alt="Laptops" />
+                           <div class="card-body p-4">
+                               <div class="text-center">
+                                   <h5 class="fw-bolder">Laptops</h5>
+                               </div>
+                           </div>
+                       </div>
+                   </a>
+               </div>
+
+               <div class="col mb-5">
+                   <a href="{% url 'main:shop' %}mouses/">
+                       <div class="card h-100">
+                           <img class="card-img-top" src='{{ "https://static3.nordic.pictures/29607040-thickbox_default/razer-wireless-mouse-viper-ultimate-charging-dock.jpg"|default:"https://dummyimage.com/450x300/dee2e6/6c757d.jpg" }}' alt="Mouses" />
+                           <div class="card-body p-4">
+                               <div class="text-center">
+                                   <h5 class="fw-bolder">Mouses</h5>
+                               </div>
+                           </div>
+                       </div>
+                   </a>
+               </div>
+
+               <div class="col mb-5">
+                   <a href="{% url 'main:shop' %}televisions/">
+                       <div class="card h-100">
+                           <img class="card-img-top" src='{{ "https://mke.com.bd/media/catalog/product/s/o/sony_4k_ultra_hd_led_smart_android_google_tv_kd-55x80j_55_inch_1_1_1.jpg?store=default&image-type=image"|default:"https://dummyimage.com/450x300/dee2e6/6c757d.jpg" }}' alt="Televisions" />
+                           <div class="card-body p-4">
+                               <div class="text-center">
+                                   <h5 class="fw-bolder">Televisions</h5>
+                               </div>
+                           </div>
+                       </div>
+                   </a>
+               </div>
+
+           </div>
+       </div>
+   </section>
+</body>
+</html>
