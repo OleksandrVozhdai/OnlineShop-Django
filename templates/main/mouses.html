@@ -5,18 +5,30 @@
 <head>
     <meta charset="UTF-8">
     <title>Shop</title>
+    <link rel="stylesheet" href="../../static/css/shop-stylesheet.css">
     <style>
-        .card-img-top {
-            height: 200px;
-            object-fit: cover;
+        .card {
+        border-radius: 20px;
+        overflow: hidden;
         }
-    </style>
+
+        .card-img-top {
+        height: 200px;
+        width: 100%;
+        object-fit: contain;
+        padding: 10px 10px 0 10px;
+        }
+         h5.fw-bolder {
+        font-family: 'Arial', sans-serif;
+        margin-top: 0;
+    }
+</style>
 </head>
 
 <body>
    <section class="py-5">
        <div class="container px-4 px-lg-5 mt-5">
-           <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+           <div class="row gx-6 gx-lg-3 row-cols-5 row-cols-md-4 row-cols-xl-6 justify-content-center">
                {% for mouse in mouses %}
                <div class="col mb-5">
                    <div class="card h-100">
