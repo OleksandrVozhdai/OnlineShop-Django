@@ -1,0 +1,60 @@
+{% include 'partials/nav.html' %}
+{% include 'partials/dependence.html' %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Shop</title>
+    <link rel="stylesheet" href="../../static/css/shop-stylesheet.css">
+    <style>
+        .card {
+        border-radius: 20px;
+        overflow: hidden;
+        }
+
+        .card-img-top {
+        height: 200px;
+        width: 100%;
+        object-fit: contain;
+        padding: 10px 10px 0 10px;
+        }
+         h5.fw-bolder {
+        font-family: 'Arial', sans-serif;
+        margin-top: 0;
+    }
+</style>
+</head>
+
+<body>
+   <section class="py-5">
+       <div class="container px-4 px-lg-5 mt-5">
+           <div class="row gx-6 gx-lg-3 row-cols-5 row-cols-md-4 row-cols-xl-6 justify-content-center">
+               {% for laptop in laptops %}
+               <div class="col mb-5">
+                   <div class="card h-100">
+                       <!-- Product image-->
+                       <img class="card-img-top" src='{{ laptop.image_url|default:"https://dummyimage.com/450x300/dee2e6/6c757d.jpg" }}' alt="{{ laptop.product_name }}" />
+                       <!-- Product details-->
+                       <div class="card-body p-4">
+                           <div class="text-center">
+                               <!-- Product name-->
+                               <h5 class="fw-bolder">{{ laptop.product_name }}</h5>
+                               <!-- Product price-->
+                               ${{ laptop.price }}
+                           </div>
+                       </div>
+                       <!-- Product actions-->
+                       <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                           <div class="text-center">
+                               <a class="btn btn-outline-dark mt-auto" href="#">Add to cart</a>
+                           </div>
+                       </div>
+                   </div>
+               </div>
+               {% endfor %}
+           </div>
+       </div>
+   </section>
+</body>
+</html>
