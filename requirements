@@ -2,3 +2,5 @@ pip install Django
 pip install Pillow
 pip install django-crispy-forms
 pip install crispy-bootstrap5
+py -m pip install mssql-django
+py -m  pip install twisted
