@@ -1,3 +1,4 @@
+
 {% include 'partials/nav.html' %}
 {% include 'partials/dependence.html' %}
 
@@ -6,60 +7,208 @@
     <meta charset="UTF-8">
     <title>Shop</title>
     <link rel="stylesheet" href="../../static/css/shop-stylesheet.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.7.1/nouislider.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.7.1/nouislider.min.js"></script>
 
     <style>
         .card {
-        border-radius: 20px;
-        overflow: hidden;
+            border-radius: 20px;
+            overflow: hidden;
         }
 
         .card-img-top {
-        height: 200px;
-        width: 100%;
-        object-fit: contain;
-        padding: 10px 10px 0 10px;
+            height: 200px;
+            width: 100%;
+            object-fit: contain;
+            padding: 10px 10px 0 10px;
         }
-         h5.fw-bolder {
-        font-family: 'Arial', sans-serif;
-        margin-top: 0;
-    }
-</style>
 
+        h5.fw-bolder {
+            font-family: 'Arial', sans-serif;
+            margin-top: 0;
+        }
+
+        .filter-container {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px auto;
+            width: 90%;
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+            border: 1px solid lightgray;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-sizing: border-box;
+            min-width: 250px;
+        }
+        .filter-container {
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+        }
+
+        .filter-container::-webkit-scrollbar {
+            display: none;
+        }
+
+        .filter-container select,
+        .filter-container input[type="number"] {
+            padding: 8px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+        }
+
+        .filter-container button {
+            padding: 8px 16px;
+            border-radius: 8px;
+            border: 1px solid black;
+            background-color: transparent;
+            color: black;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        .filter-container button:hover {
+            background-color: #212529;
+            color: white;
+        }
+
+    </style>
 </head>
 
-   <section class="py-5">
-       <div class="container px-4 px-lg-0 mt-5">
-           <div class="row gx-6 gx-lg-3 row-cols-5 row-cols-md-4 row-cols-xl-6 justify-content-center">
-               {% for product in products %}
-               <div class="col mb-5">
-                   <div class="card h-100">
-                    {% if product.on_sale %}
-                    <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Sale</div>
+<body>
 
-                    {% endif %}
-                    <!-- Product image-->
-                    <img class="card-img-top" src='{{ product.image_url|default:"https://dummyimage.com/450x300/dee2e6/6c757d.jpg" }}' alt="{{ product.product_name }}" />
-                    <!-- Product details-->
-                    <div class="card-body p-4">
-                        <div class="text-center">
-                            <!-- Product name-->
-                            <h5 class="fw-bolder">{{ product.product_name }}</h5>
-                            <!-- Product price-->
-                            <span> ${{ product.price }} </span>
 
-                        </div>
-                    </div>
-                    <!-- Product actions-->
-                    <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                        <div class="text-center">
-                            <a class="btn btn-outline-dark mt-auto" href="#">Add to cart</a>
-                        </div>
-                    </div>
+<div style="display: flex; margin-top: 30px;">
+    <div class="filter-container" style="width: 250px; margin-left: 60px; flex-shrink: 0; position: sticky; top: 120px; height: fit-content;">
+
+        <form method="get" action="">
+            <div style="margin-bottom: 15px;">
+                <label style="font-weight: bold;">Price Range ($):</label>
+                <div id="priceSlider" style="margin: 20px 0;"></div>
+                <div style="display: flex; justify-content: space-between; margin-top: 10px;">
+                    <input type="text" id="minPriceInput" name="min_price" readonly style="width: 45%; text-align: center;">
+                    <input type="text" id="maxPriceInput" name="max_price" readonly style="width: 45%; text-align: center;">
                 </div>
-               </div>
-               {% endfor %}
-           </div>
-       </div>
-   </section>
+            </div>
+
+
+            <div style="margin-bottom: 15px;">
+                <label style="font-weight: bold;">Brand:</label>
+                <div id="brandContainer" style="max-height: none; overflow: hidden;">
+                    {% for b in brands %}
+                        <div class="brand-item" style="{% if forloop.counter > 6 %}display: none;{% endif %}">
+                            <input type="checkbox" name="brand" value="{{ b }}" id="brand_{{ forloop.counter }}">
+                            <label for="brand_{{ forloop.counter }}">{{ b }}</label>
+                        </div>
+                    {% endfor %}
+                </div>
+
+                {% if brands|length > 6 %}
+                    <button id="showMoreBrands" style="background: none; border: none; color: #007bff; padding: 0; margin-top: 5px; cursor: pointer;" type="button" class="btn btn-link p-0 mt-1"> {{ brands|length|add:"-6" }} more</button>
+                {% endif %}
+            </div>
+
+            <div style="margin-bottom: 15px;">
+                <label style="font-weight: bold;">Сategory:</label>
+                <div style="max-height: 200px; overflow-y: auto;">
+                    {% for c in categories|slice:":6" %}
+                        <div>
+                            <input type="checkbox" name="category" value="{{ c }}" id="category_{{ forloop.counter }}" {% if request.GET.category == c %}checked{% endif %}>
+                            <label for="category_{{ forloop.counter }}">{{ c }}</label>
+                        </div>
+                    {% endfor %}
+
+                    {% if categories|length > 6 %}
+                        <div style="color: gray; font-style: italic;">more {{ categories|length|add:"-6" }} more</div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <button style="margin-top: 15px" type="submit">Filter</button>
+        </form>
+    </div>
+
+
+  <div style="flex-grow: 1; padding-left: 40px; overflow-x: auto;">
+        <section class="py-5" style="margin-right: 30px;">
+            <div class="container px-4 px-lg-0 mt-5">
+                <div class="row gx-6 gx-lg-3 row-cols-5 row-cols-md-4 row-cols-xl-6 justify-content-center">
+                    {% for product in products %}
+                    <div class="col mb-5">
+                        <div class="card h-100">
+                            {% if product.on_sale %}
+                            <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Sale</div>
+                            {% endif %}
+                            <img class="card-img-top" src='{{ product.image_url|default:"https://dummyimage.com/450x300/dee2e6/6c757d.jpg" }}' alt="{{ product.product_name }}" />
+                            <div class="card-body p-4">
+                                <div class="text-center">
+                                    <h5 class="fw-bolder">{{ product.product_name }}</h5>
+                                    <span> ${{ product.price }} </span>
+                                </div>
+                            </div>
+                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                <div class="text-center">
+                                    <a class="btn btn-outline-dark mt-auto" href="#">Add to cart</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    var priceSlider = document.getElementById('priceSlider');
+    noUiSlider.create(priceSlider, {
+        start: [
+            {{ request.GET.min_price|default:0 }},
+            {{ request.GET.max_price|default:2000 }}
+        ],
+        connect: true,
+        step: 1,
+        range: {
+            'min': 0,
+            'max': 2000
+        },
+        tooltips: [false, false],
+        format: {
+            to: function (value) {
+                return Math.round(value);
+            },
+            from: function (value) {
+                return Number(value);
+            }
+        }
+    });
+
+    var minInput = document.getElementById('minPriceInput');
+    var maxInput = document.getElementById('maxPriceInput');
+
+    priceSlider.noUiSlider.on('update', function (values, handle) {
+        if (handle === 0) {
+            minInput.value = values[0];
+        } else {
+            maxInput.value = values[1];
+        }
+    });
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+    const btn = document.getElementById("showMoreBrands");
+    if (btn) {
+        btn.addEventListener("click", function () {
+            document.querySelectorAll(".brand-item").forEach(item => item.style.display = "block");
+            btn.style.display = "none";
+        });
+    }
+});
+</script>
+
 </body>
 </html>

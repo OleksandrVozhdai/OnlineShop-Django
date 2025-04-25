@@ -9,7 +9,30 @@ def IndexView(request):
 
 def ShopView(request):
     products = TechList.objects.all()
-    return render(request, 'main/shop.html', {'products': products})
+
+    min_price = request.GET.get('min_price')
+    max_price = request.GET.get('max_price')
+    if min_price:
+        products = products.filter(price__gte=min_price)
+    if max_price:
+        products = products.filter(price__lte=max_price)
+
+    brand = request.GET.get('brand')
+    if brand:
+        products = products.filter(brand=brand)
+
+    category = request.GET.get('category')
+    if category:
+        products = products.filter(category=category)
+
+    brands = TechList.objects.values_list('brand', flat=True).distinct()
+    categories = TechList.objects.values_list('category', flat=True).distinct()
+
+    return render(request, 'main/shop.html', {
+        'products': products,
+        'brands': brands,
+        'categories': categories,
+    })
 
 def AboutView(request):
     return render(request, 'main/about.html')
