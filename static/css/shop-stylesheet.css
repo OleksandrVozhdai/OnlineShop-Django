@@ -5,3 +5,94 @@ body {
 .card-container {
     margin-top: 20px;
 }
+
+.filter-container {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 15px;
+    margin: 20px auto;
+    width: 90%;
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+    border: 1px solid lightgray;
+    max-height: 80vh;
+    overflow-y: auto;
+    box-sizing: border-box;
+    min-width: 250px;
+}
+.filter-container {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.filter-container::-webkit-scrollbar {
+    display: none;
+}
+
+.filter-container select,
+.filter-container input[type="number"] {
+    padding: 8px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+.filter-container button {
+    padding: 8px 16px;
+    border-radius: 8px;
+    border: 1px solid black;
+    background-color: transparent;
+    color: black;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.filter-container button:hover {
+    background-color: #212529;
+    color: white;
+}
+
+.card {
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.card-img-top {
+    height: 200px;
+    width: 100%;
+    object-fit: contain;
+    padding: 10px 10px 0 10px;
+}
+
+h5.fw-bolder {
+    font-family: 'Arial', sans-serif;
+    margin-top: 0;
+}
+
+.recommendation-container {
+    background-color: darkcyan;
+    background-image: url('/static/assets/img/shop-recommendation-bg.jpg');
+
+    padding: 20px;
+    border-radius: 15px;
+    margin: 20px auto;
+    width: 90%;
+    height: 55%;
+    display: flex;
+    overflow-x: auto;
+    overflow-y: hidden;
+    border: 1px solid #013548;
+    box-sizing: border-box;
+    min-width: 250px;
+
+}
+
+.recommendation-background {
+    background: linear-gradient(to bottom, #013548, #e0f2f7);
+}
+
+.recommendation-container .row {
+    scroll-behavior: smooth;
+}
+

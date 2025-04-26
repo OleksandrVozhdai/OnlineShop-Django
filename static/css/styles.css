@@ -1432,6 +1432,11 @@ progress {
     flex: 0 0 auto;
     width: 16.6666666667%;
   }
+
+  .row-cols-xl-10 > * {
+    flex: 0 0 auto;
+    width: 13%;
+  }
   .col-xl-auto {
     flex: 0 0 auto;
     width: auto;
@@ -6695,6 +6700,7 @@ textarea.form-control-lg {
   background-color: RGBA(33, 37, 41, var(--bs-bg-opacity, 1)) !important;
 }
 
+
 .link-primary {
   color: #2937f0 !important;
 }
@@ -8163,6 +8169,11 @@ textarea.form-control-lg {
 .bg-dark {
   --bs-bg-opacity: 1;
   background-color: rgba(var(--bs-dark-rgb), var(--bs-bg-opacity)) !important;
+}
+
+.bg-red {
+ --bs-bg-opacity: 1;
+  background-color: red !important;
 }
 
 .bg-black {
@@ -11159,4 +11170,10 @@ footer a:hover, footer a:active, footer a:focus {
   .masthead .masthead-device-mockup .device-wrapper {
     max-width: 17rem;
   }
+}
+
+.navbar-brand {
+  outline: none;
+  box-shadow: none;
+  border: none;
 }
