@@ -83,7 +83,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'mssql',
         'NAME': 'OnlineShop',
-        'HOST': 'YourServerName',
+        'HOST': 'dassszgod\\MSSQLSERVER01',
         'OPTIONS': {
             'driver': 'ODBC Driver 17 for SQL Server',
             'trusted_connection': 'yes',

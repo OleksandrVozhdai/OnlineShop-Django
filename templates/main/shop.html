@@ -117,35 +117,44 @@
     </div>
 
   <div style="flex-grow: 1; padding-left: 40px; overflow-x: auto;"> <!-- product cards -->
-        <section class="py-5" style="margin-right: 30px;">
-            <div class="container px-4 px-lg-0">
-                <div class="row gx-6 gx-lg-3 row-cols-5 row-cols-md-4 row-cols-xl-6 justify-content-center">
-                    {% for product in products %}
-                    <div class="col mb-5">
-                        <div class="card h-100">
-                            {% if product.on_sale %}
-                            <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Sale</div>
-                            {% endif %}
+    <section class="py-5" style="margin-right: 30px;">
+        <div class="container px-4 px-lg-0">
+            <div class="row gx-6 gx-lg-3 row-cols-5 row-cols-md-4 row-cols-xl-6 justify-content-center">
+                {% for product in products %}
+                <div class="col mb-5">
+                    <div class="card h-100 position-relative">
+                        {% if product.on_sale %}
+                        <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Sale</div>
+                        {% endif %}
+                        <a href="{% url 'main:productPage' product.id %}" style="text-decoration: none; color: inherit;">
                             <img class="card-img-top" src='{{ product.image_url|default:"https://dummyimage.com/450x300/dee2e6/6c757d.jpg" }}' alt="{{ product.product_name }}" />
-                            <div class="card-body p-4">
-                                <div class="text-center">
-                                    <h5 class="fw-bolder">{{ product.product_name }}</h5>
-                                    <span> ${{ product.price }} </span>
-                                </div>
-                            </div>
-                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                <div class="text-center">
-                                    <a class="btn btn-outline-dark mt-auto" href="#">Add to cart</a>
-                                </div>
+                        </a>
+                        <div class="card-body p-4">
+                            <div class="text-center">
+                                <h5 class="fw-bolder">{{ product.product_name }}</h5>
+                                <span> ${{ product.price }} </span>
                             </div>
                         </div>
+                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent d-flex justify-content-between align-items-center">
+                            <a class="btn btn-outline-dark mt-auto" href="#">Add to cart</a>
+                
+                            <!-- wishlist heart -->
+                            <button class="btn p-0 border-0 bg-transparent wishlist-btn" data-product-id="{{ product.id }}">
+                                {% if product.OnWishlist %}
+                                    <i class="bi bi-heart-fill" style="font-size: 1.5rem; color: red;"></i>
+                                {% else %}
+                                    <i class="bi bi-heart" style="font-size: 1.5rem; color: black;"></i>
+                                {% endif %}
+                            </button>
+                        </div>
                     </div>
-                    {% endfor %}
                 </div>
+                {% endfor %}
             </div>
-        </section>
-    </div>
+        </div>
+    </section>
 </div>
+
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {
@@ -202,6 +211,41 @@ document.addEventListener("DOMContentLoaded", function() {
             e.preventDefault();
             container.scrollLeft += e.deltaY;
         }
+    });
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+    const buttons = document.querySelectorAll('.wishlist-btn');
+    
+    buttons.forEach(button => {
+        button.addEventListener('click', function(e) {
+            e.preventDefault();
+            const productId = this.getAttribute('data-product-id');
+            const icon = this.querySelector('i');
+
+            fetch(`/toggle_wishlist/${productId}/`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}',
+                    'Content-Type': 'application/json'
+                },
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    if (data.on_wishlist) {
+                        icon.classList.remove('bi-heart');
+                        icon.classList.add('bi-heart-fill');
+                        icon.style.color = 'red';
+                    } else {
+                        icon.classList.remove('bi-heart-fill');
+                        icon.classList.add('bi-heart');
+                        icon.style.color = 'black';
+                    }
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        });
     });
 });
 </script>

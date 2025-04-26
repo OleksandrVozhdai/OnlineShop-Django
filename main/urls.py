@@ -13,9 +13,11 @@ urlpatterns = [
     path("catalog/", CatalogView, name="catalog"),
     path("registration/", RegistrationView, name="registration"),
     path("login/", LogInView, name="login"),
+    path("wishlist/", WishlistView, name="wishlist"),
     path("shop/smartphones/", SmartphonesView, name="smartphones"),
     path("shop/laptops/", LaptopsView, name="laptops"),
     path("shop/mouses/", MousesView, name="mouses"),
     path("shop/televisions/", TelevisionsView, name="televisions"),
-
+    path("shop/productPage/<int:id>/", ProductPageView, name="productPage"),
+    path('toggle_wishlist/<int:id>/', Toggle_wishlist, name='toggle_wishlist'),
 ]

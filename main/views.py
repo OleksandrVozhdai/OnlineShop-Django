@@ -1,6 +1,7 @@
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
 from .models import TechList
+from django.http import JsonResponse
 
 # Create your views here.
 
@@ -62,6 +63,23 @@ def MousesView(request):
 def TelevisionsView(request):
     televisions = TechList.objects.filter(category="Television")
     return render(request, 'main/televisions.html', {"televisions": televisions})
+
+def ProductPageView(request, id):
+    product = get_object_or_404(TechList, id=id)
+    relatedProducts = TechList.objects.filter(category= product.category)
+    return render(request, 'main/productPage.html', {'product': product, 'relatedProducts': relatedProducts})
+
+def Toggle_wishlist(request, id):
+    if request.method == 'POST':
+        product = get_object_or_404(TechList, id=id)
+        product.on_wishlist = not product.on_wishlist
+        product.save()
+        return JsonResponse({'success': True, 'on_wishlist': product.on_wishlist})
+    return JsonResponse({'success': False})
+
+def WishlistView(request):
+    wishlistProducts = TechList.objects.filter(on_wishlist=True)
+    return render(request, 'main/wishlist.html', {"wishlistProducts": wishlistProducts})
 
 def RegistrationView(request):
     return render(request, 'main/registration.html')

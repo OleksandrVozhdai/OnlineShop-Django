@@ -14,6 +14,7 @@ class TechList(models.Model):
     stock_quantity = models.IntegerField(db_column='StockQuantity')
     image_url = models.URLField(max_length=500, blank=True, null=True, db_column='ImageURL')
     on_sale = models.BooleanField(default=False, db_column='OnSale')
+    on_wishlist = models.BooleanField(default=False, db_column='OnWishlist')
 
     def __str__(self):
         return self.product_name
