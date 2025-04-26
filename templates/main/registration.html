@@ -9,28 +9,17 @@
 <body>
     <div class="form-container">
         <h2>Register</h2>
-        <form action="/register" method="POST">
+        <form action="" method="POST">
             {% csrf_token %}
-            <div class="form-group">
-                <label for="fullname">Full Name</label>
-                <input type="text" id="fullname" name="fullname" required>
-            </div>
-
-            <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" id="email" name="email" required>
-            </div>
-
-            <div class="form-group">
-                <label for="phone">Phone</label>
-                <input type="tel" id="phone" name="phone" required>
-            </div>
-
-            <div class="form-group">
-                <label for="address">Address</label>
-                <input type="text" id="address" name="address" required>
-            </div>
-
+            {% for field in form %}
+                <div class="form-group">
+                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    {{ field }}
+                    {% if field.errors %}
+                        <p style="color: red;">{{ field.errors }}</p>
+                    {% endif %}
+                </div>
+            {% endfor %}
             <button type="submit" class="btn">Register</button>
         </form>
 
