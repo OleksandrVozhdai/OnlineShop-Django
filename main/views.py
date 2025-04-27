@@ -7,6 +7,7 @@ from .forms import UserRegistrationForm, UserLoginForm
 from .models import TechList, User
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import JsonResponse
+import random
 
 # Представлення для головної сторінки
 def IndexView(request):
@@ -15,6 +16,8 @@ def IndexView(request):
 
 def ProductPageView(request, id):
     product = get_object_or_404(TechList, id=id)
+    all_products = TechList.objects.all()
+    constAllProducts = random.sample(list(all_products), min(6, len(all_products)))
 
     relatedProducts = TechList.objects.filter(category=product.category).exclude(id=product.id)
     sameBrandProducts = TechList.objects.filter(brand=product.brand).exclude(id=product.id)[:6]
@@ -23,6 +26,7 @@ def ProductPageView(request, id):
         'product': product,
         'relatedProducts': relatedProducts,
         'sameBrandProducts': sameBrandProducts,
+        'constAllProducts' : constAllProducts,
     })
 
 
@@ -48,6 +52,7 @@ def WishlistView(request):
 # Представлення для магазину
 def ShopView(request):
     products = TechList.objects.all()
+
     is_filtered = False
 
     min_price = request.GET.get('min_price')
@@ -80,6 +85,7 @@ def ShopView(request):
         'categories': categories,
         'is_filtered': is_filtered,
         'isOnSale': isOnSale,
+
     })
 
 # Представлення для сторінки "Про нас"

@@ -76,18 +76,20 @@ h5.fw-bolder {
 }
 
 .recommendation-container {
-    background-color: darkcyan;
-    background-image: url('/static/assets/img/shop-recommendation-bg.jpg');
+
+    background-image: url('/static/assets/img/recommendation-bg.png');
+    background-position: center 360px;
+    background-size: cover;
 
     padding: 20px;
     border-radius: 15px;
-    margin: 20px auto;
+    margin: 21px auto;
     width: 90%;
     height: 55%;
     display: flex;
     overflow-x: auto;
     overflow-y: hidden;
-    border: 1px solid #013548;
+    border: none;
     box-sizing: border-box;
     min-width: 250px;
 

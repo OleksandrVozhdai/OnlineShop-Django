@@ -26,8 +26,6 @@
 
 </head>
 
-<body style="font-family: 'Arial', sans-serif;">
-
 {% if sameBrandProducts %}
     <div class = "recommendation-background" style="height: auto; width: auto; align-content: center">
 <section class="py-5" style="margin-top: 90px">
@@ -64,8 +62,44 @@
     </div>
 </div>
 </section>
-{% endif %}
+{% else %}
+    <div class = "recommendation-background" style="height: auto; width: auto; align-content: center">
+<section class="py-5" style="margin-top: 90px">
 
+    <div class="container">
+        <h1 style="
+        font-family: 'Arial', sans-serif;
+        color: #e0f2f7;
+        font-size: 24px;
+        font-weight: bold;
+        text-shadow: 2px 2px 8px rgba(0,0,0,0.2);
+        animation: fadeIn 2s ease-in-out;
+        ">Check our other offers</h1>
+
+        <div class="row gx-2 gx-lg-3 row-cols-2 row-cols-md-4 row-cols-xl-6 justify-content-right">
+
+            {% for product in constAllProducts %}
+            <div class="col mb-4">
+                <a href="{% url 'main:productPage' product.id %}" class="text-decoration-none text-dark">
+                    <div class="card h-100 shadow-sm border-0">
+                        <img class="card-img-top img-fluid" style=" height: 80px; object-fit: contain;" src="{{ product.image_url|default:'https://dummyimage.com/300x200/dee2e6/6c757d.jpg' }}" alt="{{ product.product_name }}">
+                        <div class="card-body p-2">
+                            <div class="text-center">
+                                <h6 class="fw-bold" style="font-size: 0.9rem;">{{ product.product_name }}</h6>
+                                <div class="text-muted" style="font-size: 0.8rem;">${{ product.price }}</div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            {% endfor %}
+
+        </div>
+    </div>
+</div>
+</section>
+
+{% endif %}
 
     <!-- Секція продукту -->
 {% if sameBrandProducts %}
@@ -141,7 +175,7 @@
                     <a href="{% url 'main:productPage' product.id %}" class="text-decoration-none text-dark">
                         <div class="card h-100 shadow-sm">
                             {% if product.on_sale %}
-                            <div class="badge bg-danger text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Sale</div>
+                                <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Sale</div>
                             {% endif %}
                             <img class="card-img-top" src="{{ product.image_url|default:'https://dummyimage.com/450x300/dee2e6/6c757d.jpg' }}" alt="{{ product.product_name }}">
                             <div class="card-body p-0">
