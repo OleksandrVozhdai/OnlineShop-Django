@@ -15,4 +15,5 @@ urlpatterns = [
     path("shop/laptops/", LaptopsView, name="laptops"),
     path("shop/mouses/", MousesView, name="mouses"),
     path("shop/televisions/", TelevisionsView, name="televisions"),
+    path("profile/", ProfileView, name="profile"),  # Додаємо URL для профілю
 ]

@@ -105,3 +105,9 @@ def ActivateView(request, user_id):
 class LogInView(AuthLoginView):
     form_class = UserLoginForm
     template_name = 'main/login.html'
+
+# Представлення для профілю користувача
+def ProfileView(request):
+    if not request.user.is_authenticated:
+        return redirect('main:login')
+    return render(request, 'main/profile.html', {'user': request.user})
