@@ -45,5 +45,20 @@
         </form>
         <p>Already have an account? <a href="{% url 'main:login' %}">Login here</a></p>
     </div>
+
+    <script>
+        // Зникаюче повідомлення через 7 секунд
+        document.addEventListener('DOMContentLoaded', function() {
+            const alerts = document.querySelectorAll('.alert');
+            alerts.forEach(alert => {
+                setTimeout(() => {
+                    alert.style.opacity = '0';
+                    setTimeout(() => {
+                        alert.remove();
+                    }, 500); // Даємо час на анімацію зникнення
+                }, 7000); // 7 секунд
+            });
+        });
+    </script>
 </body>
 </html>

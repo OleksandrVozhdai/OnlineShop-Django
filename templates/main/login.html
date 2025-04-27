@@ -38,5 +38,20 @@
         <p>Forgot your password? <a href="{% url 'password_reset' %}">Reset it here</a></p>
         <p>Don't have an account? <a href="{% url 'main:registration' %}">Register here</a></p>
     </div>
+
+    <script>
+        // Зникаюче повідомлення через 7 секунд
+        document.addEventListener('DOMContentLoaded', function() {
+            const alerts = document.querySelectorAll('.alert');
+            alerts.forEach(alert => {
+                setTimeout(() => {
+                    alert.style.opacity = '0';
+                    setTimeout(() => {
+                        alert.remove();
+                    }, 500); // Даємо час на анімацію зникнення
+                }, 7000); // 7 секунд
+            });
+        });
+    </script>
 </body>
 </html>

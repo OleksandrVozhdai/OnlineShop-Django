@@ -138,7 +138,7 @@ EMAIL_HOST = 'mail.hosting.reg.ru'  # SMTP-сервер REG.RU
 EMAIL_PORT = 587  # Порт для TLS
 EMAIL_USE_TLS = True  # Використовуємо TLS для безпечного з'єднання
 EMAIL_HOST_USER = 'admin@deinekogames.net'  # Твій email для надсилання
-EMAIL_HOST_PASSWORD = 'SECRET'  # Пароль для твого email
+EMAIL_HOST_PASSWORD = 'secret'  # Пароль для твого email
 DEFAULT_FROM_EMAIL = 'admin@deinekogames.net'  # Email, з якого будуть надсилатися листи
 
 # Налаштування для авторизації та перенаправлення
