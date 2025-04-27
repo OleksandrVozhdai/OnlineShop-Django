@@ -1,7 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 
-# Кастомна модель користувача
 class User(AbstractUser):
     id = models.AutoField(primary_key=True, db_column='UserID')
     full_name = models.CharField(max_length=255, db_column='FullName')
@@ -10,10 +9,8 @@ class User(AbstractUser):
     address = models.TextField(blank=True, null=True, db_column='Address')
     registration_date = models.DateTimeField(auto_now_add=True, db_column='RegistrationDate')
 
-    # Поле для логіну (замість username використовуємо email)
     USERNAME_FIELD = 'email'
 
-    # Обов'язкові поля при створенні користувача (наприклад, через createsuperuser)
     REQUIRED_FIELDS = ['full_name']
 
     def __str__(self):
@@ -40,7 +37,6 @@ class TechList(models.Model):
     class Meta:
         db_table = 'TechList'
 
-# Модель для замовлення
 class Order(models.Model):
     id = models.AutoField(primary_key=True, db_column='OrderID')
     user = models.ForeignKey(User, on_delete=models.CASCADE, db_column='UserID')

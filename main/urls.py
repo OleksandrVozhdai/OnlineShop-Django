@@ -12,10 +12,6 @@ urlpatterns = [
     path("login/", LogInView.as_view(), name="login"),
     path("wishlist/", WishlistView, name="wishlist"),
     path("activate/<int:user_id>/", ActivateView, name="activate"),
-    path("shop/smartphones/", SmartphonesView, name="smartphones"),
-    path("shop/laptops/", LaptopsView, name="laptops"),
-    path("shop/mouses/", MousesView, name="mouses"),
-    path("shop/televisions/", TelevisionsView, name="televisions"),
     path("shop/productPage/<int:id>/", ProductPageView, name="productPage"),
 
     path('toggle_wishlist/<int:id>/', Toggle_wishlist, name='toggle_wishlist'),

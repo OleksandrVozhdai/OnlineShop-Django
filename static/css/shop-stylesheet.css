@@ -113,3 +113,22 @@ h5.fw-bolder {
     max-width: 100%;
     object-fit: contain;
 }
+
+.noUi-handle {
+    border-radius: 50% !important;
+    width: 20px !important;
+    height: 20px !important;
+    background: darkcyan !important;
+    border: none !important;
+    right: -10px !important;
+    top: -2.5px !important;
+    position: absolute !important;
+}
+.noUi-handle::before,
+.noUi-handle::after {
+    display: none !important;
+}
+
+
+
+

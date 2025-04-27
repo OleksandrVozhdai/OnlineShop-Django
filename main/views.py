@@ -9,7 +9,6 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.http import JsonResponse
 import random
 
-# Представлення для головної сторінки
 def IndexView(request):
     return render(request, 'main/index.html')
 
@@ -49,7 +48,6 @@ def WishlistView(request):
 
     return render(request, 'main/wishlist.html', {"wishlistProducts": wishlistProducts})
 
-# Представлення для магазину
 def ShopView(request):
     products = TechList.objects.all()
 
@@ -88,54 +86,33 @@ def ShopView(request):
 
     })
 
-# Представлення для сторінки "Про нас"
 def AboutView(request):
     return render(request, 'main/about.html')
 
-# Представлення для каталогу
 def CatalogView(request):
     return render(request, 'main/catalog.html')
 
-# Представлення для смартфонів
-def SmartphonesView(request):
-    smartphones = TechList.objects.filter(category="Smartphone")
-    return render(request, 'main/smartphones.html', {"smartphones": smartphones})
 
-# Представлення для ноутбуків
-def LaptopsView(request):
-    laptops = TechList.objects.filter(category="Laptop")
-    return render(request, 'main/laptops.html', {"laptops": laptops})
-
-# Представлення для мишок
-def MousesView(request):
-    mouses = TechList.objects.filter(category="Mouse")
-    return render(request, 'main/mouses.html', {"mouses": mouses})
-
-# Представлення для телевізорів
-def TelevisionsView(request):
-    televisions = TechList.objects.filter(category="Television")
-    return render(request, 'main/televisions.html', {"televisions": televisions})
-
-# Представлення для реєстрації
+# Registration
 def RegistrationView(request):
     if request.method == 'POST':
         form = UserRegistrationForm(request.POST)
         if form.is_valid():
             user = form.save(commit=False)
-            user.is_active = False  # Деактивуємо користувача до підтвердження email
+            user.is_active = False  # user deactivation to confirm email
             user.save()
 
-            # Надсилаємо email для підтвердження
+            # sent email
             subject = 'Confirm Your Registration at DeviceMarket'
             message = f'Hello, {user.full_name}!\n\nThank you for registering. Please click the link below to activate your account:\nhttp://{request.get_host()}/activate/{user.id}/'
             send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, [user.email])
 
-            return redirect('main:login')  # Перенаправляємо на сторінку входу
+            return redirect('main:login')  # redirecting
     else:
         form = UserRegistrationForm()
     return render(request, 'main/registration.html', {'form': form})
 
-# Представлення для активації акаунту
+# Account Activation
 def ActivateView(request, user_id):
     try:
         user = User.objects.get(id=user_id)
@@ -145,7 +122,7 @@ def ActivateView(request, user_id):
     except User.DoesNotExist:
         return render(request, 'main/error.html', {'message': 'User not found'})
 
-# Представлення для входу (авторизації)
+# LogIn
 class LogInView(AuthLoginView):
     form_class = UserLoginForm
     template_name = 'main/login.html'
