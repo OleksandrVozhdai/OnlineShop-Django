@@ -14,11 +14,9 @@ from pathlib import Path
 import os
 
 from django.conf.global_settings import MEDIA_URL, MEDIA_ROOT
-# from panel.examples.apps.django2.project.settings import STATICFILES_DIRS
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
@@ -30,7 +28,6 @@ SECRET_KEY = 'django-insecure-#rahn1*jjlp6jg=@4(^j$#b6m+@(=ef)55fkr%(ylqhe0fy(qq
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -75,7 +72,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'devicemarket.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
@@ -90,7 +86,6 @@ DATABASES = {
         },
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
@@ -110,18 +105,16 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'en-us'  # Мова сайту - англійська
 
 TIME_ZONE = 'UTC'
 
 USE_I18N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
@@ -140,3 +133,13 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Налаштування для надсилання email
+
+# В ЭТУ СТРОКУ ВВОДИМ ДАННЫЕ МОЕГО ПОЧТОВОГО ДОМЕНА <--------
+
+# Налаштування для авторизації та перенаправлення
+AUTH_USER_MODEL = 'main.User'  # Кастомна модель користувача
+LOGIN_REDIRECT_URL = '/'  # Перенаправлення після входу
+LOGOUT_REDIRECT_URL = '/login/'  # Перенаправлення після виходу
+LOGIN_URL = '/login/'  # URL для входу
