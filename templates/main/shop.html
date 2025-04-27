@@ -1,4 +1,4 @@
-
+{% load static %}
 {% include 'partials/nav.html' %}
 {% include 'partials/dependence.html' %}
 
@@ -6,7 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Shop</title>
-    <link rel="stylesheet" href="../../static/css/shop-stylesheet.css">
+    <link rel="stylesheet" href="{% static 'css/shop-stylesheet.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.7.1/nouislider.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.7.1/nouislider.min.js"></script>
 
@@ -20,7 +20,7 @@
 
 <body>
 
-<div class = "recommendation-background" style="height: auto; width: auto; align-content: center">
+<div class="recommendation-background" style="height: auto; width: auto; align-content: center">
 <div style="display: flex; justify-content: center; margin-top: 120px">
   <h1 style="
     font-family: 'Arial', sans-serif;
@@ -34,16 +34,16 @@
   </h1>
 </div>
 
-<div class="recommendation-container" style="margin-top: 30px; height: 330px; background-size: cover;"> <!-- Recommendation -->
+<div class="recommendation-container" style="margin-top: 30px; height: 330px; background-size: cover;">
     <section class="py-0">
         <div class="container px-1 px-lg-0 mt-0">
             <div class="row gx-1 gx-lg-3 justify-content-start flex-nowrap" style="overflow-x: auto; overflow-y: hidden;">
                 {% for product in products %}
                     {% if product.on_sale %}
-                    <div class="col mb-5" style="flex: 0 0 auto; width: 200px;"> <!-- Фіксована ширина -->
+                    <div class="col mb-5" style="flex: 0 0 auto; width: 200px;">
                         <div class="card h-100">
                             <div class="badge bg-red text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Sale</div>
-                            <img class="card-img-top" src='{{ product.image_url|default:"https://dummyimage.com/450x300/dee2e6/6c757d.jpg" }}' alt="{{ product.product_name }}" />
+                            <img class="card-img-top" src='{{ product.image|default:"https://dummyimage.com/450x300/dee2e6/6c757d.jpg" }}' alt="{{ product.name }}" />
                             <div class="card-body p-1">
                                 <div class="text-center">
                                     <div class="d-flex justify-content-center small text-warning mb-2">
@@ -53,7 +53,7 @@
                                         <div class="bi-star-fill"></div>
                                         <div class="bi-star-fill"></div>
                                     </div>
-                                    <h5 class="fw-bolder">{{ product.product_name }}</h5>
+                                    <h5 class="fw-bolder">{{ product.name }}</h5>
                                 </div>
                             </div>
                         </div>
@@ -67,9 +67,8 @@
 
 </div>
 
-
 <div style="display: flex;">
-    <div class="filter-container" style="width: 250px; margin-top: 50px; margin-left: 30px; flex-shrink: 0; position: sticky; top: 120px; height: fit-content;"> <!-- filters -->
+    <div class="filter-container" style="width: 250px; margin-top: 50px; margin-left: 30px; flex-shrink: 0; position: sticky; top: 120px; height: fit-content;">
         <form method="get" action="">
             <div style="margin-bottom: 15px;">
                 <label style="font-weight: bold;">Price Range ($):</label>
@@ -116,7 +115,7 @@
         </form>
     </div>
 
-  <div style="flex-grow: 1; padding-left: 40px; overflow-x: auto;"> <!-- product cards -->
+    <div style="flex-grow: 1; padding-left: 40px; overflow-x: auto;">
         <section class="py-5" style="margin-right: 30px;">
             <div class="container px-4 px-lg-0">
                 <div class="row gx-6 gx-lg-3 row-cols-5 row-cols-md-4 row-cols-xl-6 justify-content-center">
@@ -126,10 +125,10 @@
                             {% if product.on_sale %}
                             <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Sale</div>
                             {% endif %}
-                            <img class="card-img-top" src='{{ product.image_url|default:"https://dummyimage.com/450x300/dee2e6/6c757d.jpg" }}' alt="{{ product.product_name }}" />
+                            <img class="card-img-top" src='{{ product.image|default:"https://dummyimage.com/450x300/dee2e6/6c757d.jpg" }}' alt="{{ product.name }}" />
                             <div class="card-body p-4">
                                 <div class="text-center">
-                                    <h5 class="fw-bolder">{{ product.product_name }}</h5>
+                                    <h5 class="fw-bolder">{{ product.name }}</h5>
                                     <span> ${{ product.price }} </span>
                                 </div>
                             </div>
