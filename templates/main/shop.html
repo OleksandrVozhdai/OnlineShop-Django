@@ -19,7 +19,7 @@
 </head>
 
 <body>
-
+{% if isOnSale %}
 <div class = "recommendation-background" style="height: auto; width: auto; align-content: center">
 <div style="display: flex; justify-content: center; margin-top: 120px">
   <h1 style="
@@ -33,6 +33,7 @@
     Don't miss our best offers
   </h1>
 </div>
+
 
 <div class="recommendation-container" style="margin-top: 30px; height: 330px; background-size: cover;"> <!-- Recommendation -->
     <section class="py-0">
@@ -70,8 +71,13 @@
 </div>
 
 
+
 <div style="display: flex;">
     <div class="filter-container" style="width: 250px; margin-top: 50px; margin-left: 30px; flex-shrink: 0; position: sticky; top: 120px; height: fit-content;"> <!-- filters -->
+    {% else %}
+<div style="display: flex;">
+    <div class="filter-container" style="width: 250px; margin-top: 120px; margin-left: 30px; flex-shrink: 0; position: sticky; top: 120px; height: fit-content;"> <!-- filters -->
+    {% endif %}
         <form method="get" action="">
             <div style="margin-bottom: 15px;">
                 <label style="font-weight: bold;">Price Range ($):</label>
@@ -117,9 +123,12 @@
             <button style="margin-top: 15px" type="submit">Filter</button>
         </form>
     </div>
-
-  <div style="flex-grow: 1; padding-left: 40px; overflow-x: auto;"> <!-- product cards -->
-    <section class="py-5" style="margin-right: 30px;">
+{% if not isOnSale %}
+  <div style="flex-grow: 1; padding-left: 40px; overflow-x: auto; margin-top: 75px"> <!-- product cards -->
+  {% else %}
+  <div style="flex-grow: 1; padding-left: 40px; overflow-x: auto;"> 
+  {% endif %}
+      <section class="py-5" style="margin-right: 30px;">
         <div class="container px-4 px-lg-0">
             <div class="row gx-6 gx-lg-3 row-cols-5 row-cols-md-4 row-cols-xl-6 justify-content-center">
                 {% for product in products %}

@@ -69,6 +69,8 @@ def ShopView(request):
         products = products.filter(category=category)
         is_filtered = True
 
+    isOnSale = products.filter(on_sale=True)
+
     brands = TechList.objects.values_list('brand', flat=True).distinct()
     categories = TechList.objects.values_list('category', flat=True).distinct()
 
@@ -77,6 +79,7 @@ def ShopView(request):
         'brands': brands,
         'categories': categories,
         'is_filtered': is_filtered,
+        'isOnSale': isOnSale,
     })
 
 # Представлення для сторінки "Про нас"
