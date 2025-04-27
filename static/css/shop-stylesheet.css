@@ -56,6 +56,11 @@ body {
 .card {
     border-radius: 20px;
     overflow: hidden;
+    transition: transform 0.3s ease;
+}
+
+.card:hover {
+    transform: scale(1.05);
 }
 
 .card-img-top {
@@ -96,3 +101,13 @@ h5.fw-bolder {
     scroll-behavior: smooth;
 }
 
+.product-image-container {
+    height: 500px;
+    overflow: hidden;
+}
+
+.product-image {
+    max-height: 100%;
+    max-width: 100%;
+    object-fit: contain;
+}

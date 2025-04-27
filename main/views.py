@@ -16,9 +16,15 @@ def IndexView(request):
 def ProductPageView(request, id):
     product = get_object_or_404(TechList, id=id)
 
-    relatedProducts = TechList.objects.filter(category=product.category)
+    relatedProducts = TechList.objects.filter(category=product.category).exclude(id=product.id)
+    sameBrandProducts = TechList.objects.filter(brand=product.brand).exclude(id=product.id)[:6]
 
-    return render(request, 'main/productPage.html', {'product': product, 'relatedProducts': relatedProducts})
+    return render(request, 'main/productPage.html', {
+        'product': product,
+        'relatedProducts': relatedProducts,
+        'sameBrandProducts': sameBrandProducts,
+    })
+
 
 
 def Toggle_wishlist(request, id):
