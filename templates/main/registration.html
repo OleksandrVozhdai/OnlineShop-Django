@@ -9,20 +9,25 @@
 <body>
     <div class="form-container">
         <h2>Register</h2>
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
         <form action="" method="POST">
             {% csrf_token %}
             {% for field in form %}
                 <div class="form-group">
                     <label for="{{ field.id_for_label }}">
-                        {% if field.label == "Повне ім'я" %}
+                        {% if field.label == "Full Name" %}
                             Full Name
-                        {% elif field.label == "Електронна пошта" %}
+                        {% elif field.label == "Email" %}
                             Email Address
-                        {% elif field.label == "Телефон" %}
+                        {% elif field.label == "Phone" %}
                             Phone Number
-                        {% elif field.label == "Адреса" %}
+                        {% elif field.label == "Address" %}
                             Address
-                        {% elif field.label == "Пароль" %}
+                        {% elif field.label == "Password" %}
                             Password
                         {% elif field.label == "Password confirmation" %}
                             Password Confirmation
@@ -38,7 +43,6 @@
             {% endfor %}
             <button type="submit" class="btn">Register</button>
         </form>
-
         <p>Already have an account? <a href="{% url 'main:login' %}">Login here</a></p>
     </div>
 </body>

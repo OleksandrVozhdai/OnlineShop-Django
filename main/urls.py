@@ -1,19 +1,19 @@
 from django.urls import path
-from .views import *
+from . import views
 
 app_name = 'main'
 
 urlpatterns = [
-    path("", IndexView, name="index"),
-    path("shop/", ShopView, name="shop"),
-    path("about/", AboutView, name="about"),
-    path("catalog/", CatalogView, name="catalog"),
-    path("registration/", RegistrationView, name="registration"),
-    path("login/", LogInView.as_view(), name="login"),
-    path("activate/<int:user_id>/", ActivateView, name="activate"),
-    path("shop/smartphones/", SmartphonesView, name="smartphones"),
-    path("shop/laptops/", LaptopsView, name="laptops"),
-    path("shop/mouses/", MousesView, name="mouses"),
-    path("shop/televisions/", TelevisionsView, name="televisions"),
-    path("profile/", ProfileView, name="profile"),  # Додаємо URL для профілю
+    path('', views.IndexView, name='index'),
+    path('shop/', views.ShopView, name='shop'),
+    path('about/', views.AboutView, name='about'),
+    path('catalog/', views.CatalogView, name='catalog'),
+    path('smartphones/', views.SmartphonesView, name='smartphones'),
+    path('laptops/', views.LaptopsView, name='laptops'),
+    path('mouses/', views.MousesView, name='mouses'),
+    path('televisions/', views.TelevisionsView, name='televisions'),
+    path('registration/', views.RegistrationView, name='registration'),
+    path('confirm-email/<str:token>/', views.ConfirmEmailView, name='confirm_email'),
+    path('login/', views.LogInView.as_view(), name='login'),
+    path('profile/', views.ProfileView, name='profile'),
 ]

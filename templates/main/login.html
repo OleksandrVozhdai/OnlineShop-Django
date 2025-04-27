@@ -9,14 +9,19 @@
 <body>
     <div class="form-container">
         <h2>Login</h2>
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
         <form action="" method="POST">
             {% csrf_token %}
             {% for field in form %}
                 <div class="form-group">
                     <label for="{{ field.id_for_label }}">
-                        {% if field.label == "Електронна пошта" %}
+                        {% if field.label == "Email" %}
                             Email Address
-                        {% elif field.label == "Пароль" %}
+                        {% elif field.label == "Password" %}
                             Password
                         {% else %}
                             {{ field.label }}

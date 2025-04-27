@@ -1,0 +1,18 @@
+{% extends 'partials/base.html' %}
+
+{% block content %}
+<!-- Всплывающее окно -->
+<div id="successModal" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: #28a745; color: white; padding: 20px; border-radius: 5px; z-index: 1000;">
+    <p>Account successfully confirmed!</p>
+</div>
+
+<script>
+    // Показываем всплывающее окно
+    document.getElementById('successModal').style.display = 'block';
+
+    // Скрываем через 2 секунды и перенаправляем на главную страницу
+    setTimeout(function() {
+        window.location.href = "{% url 'main:index' %}";
+    }, 2000);
+</script>
+{% endblock content %}
