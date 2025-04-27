@@ -13,7 +13,15 @@
             {% csrf_token %}
             {% for field in form %}
                 <div class="form-group">
-                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    <label for="{{ field.id_for_label }}">
+                        {% if field.label == "Електронна пошта" %}
+                            Email Address
+                        {% elif field.label == "Пароль" %}
+                            Password
+                        {% else %}
+                            {{ field.label }}
+                        {% endif %}
+                    </label>
                     {{ field }}
                     {% if field.errors %}
                         <p style="color: red;">{{ field.errors }}</p>
