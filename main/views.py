@@ -130,6 +130,17 @@ def ActivateView(request, user_id):
     except User.DoesNotExist:
         return render(request, 'main/error.html', {'message': 'User not found'})
 
+def CartView(request):
+    cart = request.session.get('cart', [])
+    products = TechList.objects.filter(id__in=cart)
+    return render(request, 'main/cart.html', {'products': products})
+
+def AddToCartView(request, product_id):
+    cart = request.session.get('cart', [])
+    cart.append(product_id)
+    request.session['cart'] = cart
+    return redirect('main:cart')
+
 # Представлення для входу (авторизації)
 class LogInView(AuthLoginView):
     form_class = UserLoginForm

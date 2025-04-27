@@ -1,10 +1,62 @@
+{% include 'partials/nav.html' %}
+{% include 'partials/dependence.html' %}
+
 <!DOCTYPE html>
-<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Cart</title>
+    <link rel="stylesheet" href="../../static/css/shop-stylesheet.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.7.1/nouislider.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.7.1/nouislider.min.js"></script>
 </head>
 <body>
+<!-- Cart items section -->
+<div style="flex-grow: 1; padding-left: 40px; overflow-x: auto;">
+    <section class="py-5 bg-light" style="flex-grow: 1; padding-left: 40px; overflow-x: auto;">
+        <div class="container px-4 px-lg-5 mt-5">
+            <h2 class="fw-bolder mb-4">Your Cart</h2>
+            {% if products %}
+            <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+                {% for product in products %}
+                <div class="col mb-5">
+                    <a href="{% url 'main:productPage' product.id %}" style="text-decoration: none; color: inherit;">
+                        <div class="card h-100">
+                            {% if product.on_sale %}
+                            <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Sale</div>
+                            {% endif %}
+                            <img class="card-img-top" src='{{ product.image_url|default:"https://dummyimage.com/450x300/dee2e6/6c757d.jpg" }}' alt="{{ product.product_name }}" />
+                            <div class="card-body p-4">
+                                <div class="text-center">
+                                    <h5 class="fw-bolder">{{ product.product_name }}</h5>
+                                    <span> ${{ product.price }} </span>
+                                </div>
+                            </div>
+                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                <div class="text-center">
+                                    <a class="btn btn-outline-dark mt-auto" href="#">Remove</a>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+                <p class="text-center">Your cart is empty.</p>
+            {% endif %}
+        </div>
+    </section>
+</div>
 
+<!-- Footer -->
+<footer class="py-5 bg-dark">
+    <div class="container">
+        <p class="m-0 text-center text-white">Copyright &copy; Your Website 2023</p>
+    </div>
+</footer>
+
+<!-- Bootstrap core JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Core theme JS -->
+<script src="js/scripts.js"></script>
 </body>
-</html>

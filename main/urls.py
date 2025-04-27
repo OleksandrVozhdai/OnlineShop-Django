@@ -19,4 +19,7 @@ urlpatterns = [
     path("shop/productPage/<int:id>/", ProductPageView, name="productPage"),
 
     path('toggle_wishlist/<int:id>/', Toggle_wishlist, name='toggle_wishlist'),
+path('add-to-cart/<int:product_id>/', AddToCartView, name='add_to_cart'),
+    path("cart/", CartView, name="cart"),
+
 ]
