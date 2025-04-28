@@ -1,3 +1,4 @@
+{% load static %}
 {% include 'partials/nav.html' %}
 {% include 'partials/dependence.html' %}
 
@@ -6,27 +7,23 @@
 <head>
     <meta charset="UTF-8">
     <title>Shop</title>
-    <link rel="stylesheet" href="../../static/css/shop-stylesheet.css">
+    <link rel="stylesheet" href="{% static 'css/shop-stylesheet.css' %}">
     <style>
     .card-img-top {
         height: 200px;
         width: 100%;
         object-fit: contain;
         padding: 20px 20px 20px 20px;
-        }
+    }
 
     .card {
-
         border-radius: 50%;
         overflow: hidden;
-
         width: 200px;
         height: 200px;
-
         margin-left: auto;
         margin-right: auto;
         margin-bottom: 25px;
-
         display: flex;
         align-items: center;
         justify-content: center;
@@ -44,7 +41,7 @@
     </style>
 </head>
 <body>
-   <section class="py-5" style = "margin-top: 60px">
+   <section class="py-5" style="margin-top: 60px">
        <div class="container px-5 px-3 mt-5">
            <div class="row gx-4 gx-lg-5 row-cols-4 row-cols-md-4 row-cols-xl-4 justify-content-center">
 
@@ -84,7 +81,7 @@
                    <h5 class="fw-bolder">Televisions</h5>
                </div>
 
-                <div class="col mb-5">
+               <div class="col mb-5">
                    <a href="{% url 'main:shop' %}">
                        <div class="card">
                            <img class="card-img-top" src='{{ "https://media.istockphoto.com/id/639201180/vector/shopping-cart-icon.jpg?s=612x612&w=0&k=20&c=AIDue0uA36lvIYf4gstcMYqcIwCK_p3_RQb0EQv9XsI="|default:"https://dummyimage.com/450x300/dee2e6/6c757d.jpg" }}' alt="Shop" />
