@@ -19,7 +19,8 @@ urlpatterns = [
     path("shop/productPage/<int:id>/", ProductPageView, name="productPage"),
 
     path('toggle_wishlist/<int:id>/', Toggle_wishlist, name='toggle_wishlist'),
-path('add-to-cart/<int:product_id>/', AddToCartView, name='add_to_cart'),
+    path('add_to_cart/<int:product_id>/', AddToCartView, name='add_to_cart'),
     path("cart/", CartView, name="cart"),
-
+    path('remove_from_cart/<int:product_id>/', RemoveFromCartView, name='remove_from_cart'),
+    path('cart_item_count/', CartItemCountView, name='cart_item_count'),
 ]

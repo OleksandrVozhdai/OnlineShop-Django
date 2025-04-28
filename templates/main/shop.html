@@ -136,7 +136,10 @@
                             </div>
                         </div>
                         <div class="card-footer p-4 pt-0 border-top-0 bg-transparent d-flex justify-content-between align-items-center">
-                            <a class="btn btn-outline-dark mt-auto" href="#">Add to cart</a>
+                            <button class="btn btn-outline-dark mt-auto add-to-cart-btn" data-product-id="{{ product.id }}">
+                                   Add to cart
+                            </button>
+
 
                             <!-- wishlist heart -->
                             <button class="btn p-0 border-0 bg-transparent wishlist-btn" data-product-id="{{ product.id }}">
@@ -249,5 +252,33 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 </script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const addToCartButtons = document.querySelectorAll('.add-to-cart-btn');
+
+    addToCartButtons.forEach(button => {
+        button.addEventListener('click', function(e) {
+            e.preventDefault();
+            const productId = this.getAttribute('data-product-id');
+
+            fetch(`/add_to_cart/${productId}/`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}',
+                    'Content-Type': 'application/json'
+                },
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Succesfully added! 🛒')
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        });
+    });
+});
+</script>
+
 </body>
 </html>

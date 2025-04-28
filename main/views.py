@@ -7,7 +7,9 @@ from .forms import UserRegistrationForm, UserLoginForm
 from .models import TechList, User
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import JsonResponse
-
+from django.http import JsonResponse
+from django.views.decorators.http import require_POST
+from django.views.decorators.csrf import csrf_exempt
 # Представлення для головної сторінки
 def IndexView(request):
     return render(request, 'main/index.html')
@@ -132,15 +134,28 @@ def ActivateView(request, user_id):
 
 def CartView(request):
     cart = request.session.get('cart', [])
+    cart = [int(product_id) for product_id in cart]
     products = TechList.objects.filter(id__in=cart)
     return render(request, 'main/cart.html', {'products': products})
 
+@require_POST
 def AddToCartView(request, product_id):
     cart = request.session.get('cart', [])
-    cart.append(product_id)
+    if str(product_id) not in cart:
+        cart.append(str(product_id))
     request.session['cart'] = cart
-    return redirect('main:cart')
-
+    return JsonResponse({'success': True})
+@require_POST
+def RemoveFromCartView(request, product_id):
+    cart = request.session.get('cart', [])
+    if str(product_id) in cart:
+        cart.remove(str(product_id))
+    request.session['cart'] = cart
+    return JsonResponse({'success': True})
+@csrf_exempt
+def CartItemCountView(request):
+    cart = request.session.get('cart', [])
+    return JsonResponse({'count': len(cart)})
 # Представлення для входу (авторизації)
 class LogInView(AuthLoginView):
     form_class = UserLoginForm
