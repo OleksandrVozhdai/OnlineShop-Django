@@ -62,41 +62,18 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 <!-- Core theme JS -->
 <script src="js/scripts.js"></script>
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    const removeButtons = document.querySelectorAll('.remove-from-cart-btn');
 
-    removeButtons.forEach(button => {
-        button.addEventListener('click', function(e) {
-            e.preventDefault();
-            const productId = this.getAttribute('data-product-id');
-
-            fetch(`/remove_from_cart/${productId}/`, {
-                method: 'POST',
-                headers: {
-                    'X-CSRFToken': '{{ csrf_token }}',
-                    'Content-Type': 'application/json'
-                },
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    location.reload();
-                }
-            })
-            .catch(error => console.error('Error:', error));
-        });
-    });
-});
-</script>
 <script>
 function updateCartCount() {
-    fetch('/cart_item_count/') 
+    fetch('/cart_item_count/')
         .then(response => response.json())
         .then(data => {
-            document.getElementById('cart-count').innerText = data.count;
+            const cartCountElement = document.getElementById('cart-count');
+            if (cartCountElement) {
+                cartCountElement.innerText = data.count;
+            }
         })
-        .catch(error => console.error('Error:', error));
+        .catch(error => console.error('Error updating cart count:', error));
 }
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -104,27 +81,38 @@ document.addEventListener('DOMContentLoaded', function() {
 
     removeButtons.forEach(button => {
         button.addEventListener('click', function(e) {
-            e.preventDefault();
-            const productId = this.getAttribute('data-product-id');
+    e.preventDefault();
+    const productId = this.getAttribute('data-product-id');
 
-            fetch(`/remove_from_cart/${productId}/`, {
-                method: 'POST',
-                headers: {
-                    'X-CSRFToken': '{{ csrf_token }}',
-                    'Content-Type': 'application/json'
-                },
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    updateCartCount();  
-                    location.reload();  
-                }
-            })
-            .catch(error => console.error('Error:', error));
-        });
+    fetch(`/remove_from_cart/${productId}/`, {
+        method: 'POST',
+        headers: {
+            'X-CSRFToken': '{{ csrf_token }}',
+            'Content-Type': 'application/json'
+        },
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            updateCartCount(); // оновлення без reload
+            const card = button.closest('.col.mb-5');
+            if (card) {
+                card.remove();
+            }
+
+            const remainingProducts = document.querySelectorAll('.remove-from-cart-btn');
+            if (remainingProducts.length === 0) {
+                const container = document.querySelector('.container.px-4');
+                container.innerHTML = '<p class="text-center">Your cart is empty.</p>';
+            }
+        }
+    })
+    .catch(error => console.error('Error:', error));
+});
+
     });
 });
 </script>
+
 
 </body>

@@ -41,3 +41,19 @@
             window.location.href = "{% url 'main:registration' %}";
           });
         </script>
+<script>
+  function updateCartCount() {
+    fetch('/cart_item_count/')
+      .then(response => response.json())
+      .then(data => {
+        const countElement = document.getElementById('cart-count');
+        if (countElement) {
+          countElement.textContent = data.count;
+        }
+      });
+  }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    updateCartCount();  
+  });
+</script>
