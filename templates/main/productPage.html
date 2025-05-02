@@ -201,9 +201,14 @@
                             <img class="card-img-top" src="{{ product.image_url|default:'https://dummyimage.com/450x300/dee2e6/6c757d.jpg' }}" alt="{{ product.product_name }}">
                             <div class="card-body p-0">
                                 <div class="text-center">
-                                    <h5 class="fw-bold">{{ product.product_name }}</h5>
-                                    <span class="text">${{ product.price }}</span>
-                                </div>
+                                <h5 class="fw-bolder">{{ product.product_name }}</h5>
+                               {% if product.on_sale %}
+                                    <span class="text-muted text-decoration-line-through">${{ product.price }}</span><br>
+                                    <span class="text-danger fw-bold">${{ product.discounted_price }}</span>
+                                {% else %}
+                                    <span>${{ product.price }}</span>
+                                {% endif %}
+                            </div>
                             </div>
                             <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
                                 <div class="text-center">
