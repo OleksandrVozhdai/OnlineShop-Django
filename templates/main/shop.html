@@ -143,7 +143,12 @@
                         <div class="card-body p-4">
                             <div class="text-center">
                                 <h5 class="fw-bolder">{{ product.product_name }}</h5>
-                                <span> ${{ product.price }} </span>
+                               {% if product.on_sale %}
+                                    <span class="text-muted text-decoration-line-through">${{ product.price }}</span><br>
+                                    <span class="text-danger fw-bold">${{ product.discounted_price }}</span>
+                                {% else %}
+                                    <span>${{ product.price }}</span>
+                                {% endif %}
                             </div>
                         </div>
                         <div class="card-footer p-4 pt-0 border-top-0 bg-transparent d-flex justify-content-between align-items-center">

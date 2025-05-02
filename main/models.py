@@ -6,6 +6,7 @@ from django.db import models
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 import uuid
+from decimal import Decimal
 
 class TechList(models.Model):
     id = models.AutoField(primary_key=True, db_column='ID')
@@ -24,6 +25,10 @@ class TechList(models.Model):
 
     class Meta:
         db_table = 'TechList'
+
+    @property
+    def discounted_price(self):
+        return round(self.price * Decimal('0.75'), 2)
 
 
 # Кастомна модель користувача

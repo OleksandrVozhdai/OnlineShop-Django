@@ -49,8 +49,16 @@
                         <img class="card-img-top img-fluid" style=" height: 80px; object-fit: contain;" src="{{ product.image_url|default:'https://dummyimage.com/300x200/dee2e6/6c757d.jpg' }}" alt="{{ product.product_name }}">
                         <div class="card-body p-2">
                             <div class="text-center">
-                                <h6 class="fw-bold" style="font-size: 0.9rem;">{{ product.product_name }}</h6>
-                                <div class="text-muted" style="font-size: 0.8rem;">${{ product.price }}</div>
+                               <h6 class="fw-bold" style="font-size: 0.9rem;">{{ product.product_name }}</h6>
+                                <div class="text-center">
+
+                               {% if product.on_sale %}
+                                    <span class="text-muted text-decoration-line-through">${{ product.price }}</span><br>
+                                    <span class="text-danger fw-bold">${{ product.discounted_price }}</span>
+                                {% else %}
+                                    <span>${{ product.price }}</span>
+                                {% endif %}
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -86,7 +94,15 @@
                         <div class="card-body p-2">
                             <div class="text-center">
                                 <h6 class="fw-bold" style="font-size: 0.9rem;">{{ product.product_name }}</h6>
-                                <div class="text-muted" style="font-size: 0.8rem;">${{ product.price }}</div>
+                                <div class="text-center">
+
+                               {% if product.on_sale %}
+                                    <span class="text-muted text-decoration-line-through">${{ product.price }}</span><br>
+                                    <span class="text-danger fw-bold">${{ product.discounted_price }}</span>
+                                {% else %}
+                                    <span>${{ product.price }}</span>
+                                {% endif %}
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -128,13 +144,20 @@
                         {% else %}
                             <h2 style="font-size: medium; color: darkred;">Out of stock</h2>
                         {% endif %}
-                        <div class="fs-4 text-success mb-4">
-                            {% if not product.on_sale %}
-                                <strong style="color: black;">${{ product.price }}</strong>
+                        <div class="fs-4 mb-4 d-flex align-items-baseline gap-3">
+                            {% if product.on_sale %}
+                                <span class="text-muted text-decoration-line-through" style="font-size: 1.2rem;">
+                                    ${{ product.price }}
+                                </span>
+                                <strong class="text-danger" style="font-size: 1.65rem;">
+                                    ${{ product.discounted_price }}
+                                </strong>
                             {% else %}
-                                <strong style="color: red;">${{ product.price }}</strong>
+                                <strong style="color: black;">${{ product.price }}</strong>
                             {% endif %}
                         </div>
+
+
                         <div class="d-flex align-items-center mt-4">
                             <input class="form-control text-center me-3" id="inputQuantity" type="number" value="1" style="max-width: 4rem;" />
                             <button class="btn btn-outline-dark flex-shrink-0" type="button">
@@ -149,8 +172,6 @@
                             </button>
                         </div>
                     </div>
-
-
                 </div>
             </div>
         </div>
