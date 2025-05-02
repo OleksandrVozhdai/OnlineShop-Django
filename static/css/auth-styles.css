@@ -1,76 +1,78 @@
-/* auth-styles.css */
-
-/* Загальні стилі для сторінок авторизації та реєстрації */
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f7fc;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-}
-
 .form-container {
-    background-color: white;
-    padding: 30px;
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #fff;
     border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    width: 300px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
-h2 {
+.form-container h2 {
     text-align: center;
     margin-bottom: 20px;
-    color: #333;
 }
 
 .form-group {
     margin-bottom: 15px;
 }
 
-label {
+.form-group label {
     display: block;
     margin-bottom: 5px;
     font-weight: bold;
 }
 
-input[type="text"],
-input[type="email"],
-input[type="tel"],
-input[type="password"] {
+.form-group input {
     width: 100%;
     padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
 }
 
-button[type="submit"] {
+.btn {
     width: 100%;
     padding: 10px;
-    background-color: #4CAF50;
+    background-color: #28a745;
     color: white;
     border: none;
-    border-radius: 5px;
-    font-size: 16px;
+    border-radius: 4px;
     cursor: pointer;
 }
 
-button[type="submit"]:hover {
-    background-color: #45a049;
+.btn:hover {
+    background-color: #218838;
 }
 
-p {
+.form-container p {
     text-align: center;
-    margin-top: 20px;
+    margin-top: 10px;
 }
 
-a {
-    color: #4CAF50;
+.form-container p a {
+    color: #28a745;
     text-decoration: none;
 }
 
-a:hover {
+.form-container p a:hover {
     text-decoration: underline;
+}
+
+.alert {
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 4px;
+    transition: opacity 0.5s ease; /* Додаємо плавну анімацію зникнення */
+}
+
+.alert-success {
+    background-color: #28a745; /* Зелений фон */
+    color: #fff; /* Білий текст */
+    border: none;
+}
+
+.alert-error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
 }
