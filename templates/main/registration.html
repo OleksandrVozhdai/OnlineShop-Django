@@ -9,11 +9,32 @@
 <body>
     <div class="form-container">
         <h2>Register</h2>
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
         <form action="" method="POST">
             {% csrf_token %}
             {% for field in form %}
                 <div class="form-group">
-                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    <label for="{{ field.id_for_label }}">
+                        {% if field.label == "Full Name" %}
+                            Full Name
+                        {% elif field.label == "Email" %}
+                            Email Address
+                        {% elif field.label == "Phone" %}
+                            Phone Number
+                        {% elif field.label == "Address" %}
+                            Address
+                        {% elif field.label == "Password" %}
+                            Password
+                        {% elif field.label == "Password confirmation" %}
+                            Password Confirmation
+                        {% else %}
+                            {{ field.label }}
+                        {% endif %}
+                    </label>
                     {{ field }}
                     {% if field.errors %}
                         <p style="color: red;">{{ field.errors }}</p>
@@ -22,8 +43,22 @@
             {% endfor %}
             <button type="submit" class="btn">Register</button>
         </form>
-
         <p>Already have an account? <a href="{% url 'main:login' %}">Login here</a></p>
     </div>
+
+    <script>
+        // Зникаюче повідомлення через 7 секунд
+        document.addEventListener('DOMContentLoaded', function() {
+            const alerts = document.querySelectorAll('.alert');
+            alerts.forEach(alert => {
+                setTimeout(() => {
+                    alert.style.opacity = '0';
+                    setTimeout(() => {
+                        alert.remove();
+                    }, 500); // Даємо час на анімацію зникнення
+                }, 7000); // 7 секунд
+            });
+        });
+    </script>
 </body>
 </html>

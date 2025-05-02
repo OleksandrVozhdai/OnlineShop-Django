@@ -1,7 +1,6 @@
 {% load static %}
 
 <!DOCTYPE html>
-
 <html lang="en">
     <head>
         <meta charset="utf-8" />
@@ -10,26 +9,109 @@
         <meta name="author" content="" />
         <title>Device Market</title>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-        <link rel="icon" type="image/x-icon" href=" {% static '../../static/assets/favicon.ico' %}" />
-        <!-- Bootstrap icons-->
+        <!-- Іконка сайту -->
+        <link rel="icon" type="image/x-icon" href="{% static 'assets/favicon.ico' %}" />
+        <!-- Bootstrap icons -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
-        <!-- Google fonts-->
+        <!-- Google fonts -->
         <link rel="preconnect" href="https://fonts.gstatic.com" />
-        <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,600;1,600&amp;display=swap" rel="stylesheet" />
-        <link href="https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,300;0,500;0,600;0,700;1,300;1,500;1,600;1,700&amp;display=swap" rel="stylesheet" />
-        <link href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,400;1,400&amp;display=swap" rel="stylesheet" />
-        <!-- Core theme CSS (includes Bootstrap)-->
-        <link href="{% static '../../static/css/styles.css'%}" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,600;1,600&display=swap" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,300;0,500;0,600;0,700;1,300;1,500;1,600;1,700&display=swap" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,400;1,400&display=swap" rel="stylesheet" />
+        <!-- Core theme CSS (includes Bootstrap) -->
+        <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
+        <style>
+            /* Стили для аватара и выпадающего меню */
+            .avatar-dropdown {
+                position: relative;
+                display: inline-block;
+            }
+
+            .avatar {
+                width: 40px;
+                height: 40px;
+                background-color: black;
+                color: white;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 1.5rem;
+                font-weight: bold;
+                cursor: pointer;
+            }
+
+            .dropdown-menu {
+                display: none;
+                position: absolute;
+                top: 100%;
+                right: 0;
+                background-color: white;
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+                border-radius: 5px;
+                z-index: 1000;
+            }
+
+            .avatar-dropdown:hover .dropdown-menu {
+                display: block;
+            }
+
+            .dropdown-menu a, .dropdown-menu button {
+                display: block;
+                padding: 10px 20px;
+                color: black;
+                text-decoration: none;
+                white-space: nowrap;
+                background: none;
+                border: none;
+                width: 100%;
+                text-align: left;
+                cursor: pointer;
+            }
+
+            .dropdown-menu a:hover, .dropdown-menu button:hover {
+                background-color: #f0f0f0;
+            }
+
+            /* Исправление SVG-фигур */
+            .masthead-device-mockup .circle {
+                fill: url(#circleGradient);
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                top: 0;
+                left: 0;
+            }
+
+            .masthead-device-mockup .shape-1 {
+                fill: #007bff;
+                opacity: 0.3;
+                position: absolute;
+                top: -10%;
+                left: -10%;
+            }
+
+            .masthead-device-mockup .shape-2 {
+                fill: #ff6f61;
+                opacity: 0.3;
+                position: absolute;
+                bottom: -10%;
+                right: -10%;
+            }
+
+            .device-wrapper {
+                position: relative;
+                z-index: 1;
+            }
+        </style>
     </head>
 
     <body id="page-top">
-        <!-- Navigation-->
-
+        <!-- Navigation -->
         <nav class="navbar navbar-expand-lg navbar-light fixed-top shadow-sm" id="mainNav">
             <div class="container px-5">
-                 <a class="navbar-brand fw-bold" href="{% url 'main:index' %}" style="outline: none; box-shadow: none; border: none;">
-                  <img src="/static/assets/img/device-makret-logo.png" alt="Device Market" style="height: 40px;">
-                 </a>
+                <!-- Логотип -->
+                <img src="/static/assets/img/device-makret-logo.png" alt="Device Market" style="height: 40px;">
 
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                     Menu
@@ -37,39 +119,56 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ms-auto me-4 my-3 my-lg-0">
-                        <li class="nav-item"><a class="nav-link me-lg-3" href=""><i style="font-size: 1rem;" class="bi bi-bag-heart me-2 "></i></a></li>
+                        <li class="nav-item"><a class="nav-link me-lg-3" href=""><i style="font-size: 1rem;" class="bi bi-bag-heart me-2"></i></a></li>
                         <li class="nav-item"><a class="nav-link me-lg-3" href="{% url 'main:shop' %}">Shop</a></li>
                         <li class="nav-item"><a class="nav-link me-lg-3" href="{% url 'main:about' %}">About</a></li>
                         <li class="nav-item"><a class="nav-link me-lg-3" href="{% url 'main:catalog' %}">Catalog</a></li>
-                        <input type="text" placeholder="Search..">
+                        <li class="nav-item">
+                            <input type="text" placeholder="Search..." class="form-control search-input">
+                        </li>
                     </ul>
-                    <button class="btn btn-primary rounded-pill px-3 mb-2 mb-lg-0" id="RegistrationButton">
-                        <span>
-                            <i class="bi bi-person-add me-2" ></i>
-                            <span class="small">  Register</span>
-                        </span>
-                    </button>
-                     <ul class="navbar-nav">
-                          <li class="nav-item"><a class="nav-link me-lg-3" href="{% url 'main:login' %}">Log in</a></li>
-                     </ul>
+                    <!-- Секція авторизації -->
+                    {% if user.is_authenticated %}
+                        <div class="avatar-dropdown">
+                            <div class="avatar">
+                                {{ user.full_name|first|upper }}
+                            </div>
+                            <div class="dropdown-menu">
+                                <a href="{% url 'main:profile' %}">Profile</a>
+                                <form action="{% url 'logout' %}" method="post">
+                                    {% csrf_token %}
+                                    <button type="submit">Logout</button>
+                                </form>
+                            </div>
+                        </div>
+                    {% else %}
+                        <button class="btn btn-primary rounded-pill px-3 mb-2 mb-lg-0" id="RegistrationButton">
+                            <span>
+                                <i class="bi bi-person-add me-2"></i>
+                                <span class="small">Register</span>
+                            </span>
+                        </button>
+                        <ul class="navbar-nav">
+                            <li class="nav-item"><a class="nav-link me-lg-3" href="{% url 'main:login' %}">Log in</a></li>
+                        </ul>
+                    {% endif %}
                 </div>
             </div>
         </nav>
 
-        <!-- Mashead header-->
+        <!-- Mashead header -->
         <header class="masthead">
             <div class="container px-5">
                 <div class="row gx-5 align-items-center">
                     <div class="col-lg-6">
-                        <!-- Mashead text and app badges-->
+                        <!-- Mashead text and app badges -->
                         <div class="mb-5 mb-lg-0 text-center text-lg-start">
-                            <h1 class="display-1 lh-1 mb-3"> Experience the Future </h1>
+                            <h1 class="display-1 lh-1 mb-3">Experience the Future</h1>
                             <p class="lead fw-normal text-muted mb-5">Sleek design meets powerhouse performance — capture every moment in stunning clarity with ultra-smart AI camera technology.</p>
-
                         </div>
                     </div>
                     <div class="col-lg-6">
-                        <!-- Masthead device mockup feature-->
+                        <!-- Masthead device mockup feature -->
                         <div class="masthead-device-mockup">
                             <svg class="circle" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
                                 <defs>
@@ -78,19 +177,21 @@
                                         <stop class="gradient-end-color" offset="100%"></stop>
                                     </linearGradient>
                                 </defs>
-                                <circle cx="50" cy="50" r="50"></circle></svg
-                            ><svg class="shape-1 d-none d-sm-block" viewBox="0 0 240.83 240.83" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="50" cy="50" r="50"></circle>
+                            </svg>
+                            <svg class="shape-1 d-none d-sm-block" viewBox="0 0 240.83 240.83" xmlns="http://www.w3.org/2000/svg">
                                 <rect x="-32.54" y="78.39" width="305.92" height="84.05" rx="42.03" transform="translate(120.42 -49.88) rotate(45)"></rect>
-                                <rect x="-32.54" y="78.39" width="305.92" height="84.05" rx="42.03" transform="translate(-49.88 120.42) rotate(-45)"></rect></svg
-                            ><svg class="shape-2 d-none d-sm-block" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="50"></circle></svg>
+                                <rect x="-32.54" y="78.39" width="305.92" height="84.05" rx="42.03" transform="translate(-49.88 120.42) rotate(-45)"></rect>
+                            </svg>
+                            <svg class="shape-2 d-none d-sm-block" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="50" cy="50" r="50"></circle>
+                            </svg>
                             <div class="device-wrapper">
                                 <div class="device" data-device="iPhoneX" data-orientation="portrait" data-color="black">
                                     <div class="screen bg-black">
-                                        <!-- PUT CONTENTS HERE:-->
-                                        <!-- * * This can be a video, image, or just about anything else.-->
-                                        <!-- * * Set the max width of your media to 100% and the height to-->
-                                        <!-- * * 100% like the demo example below.-->
-                                        <video muted="muted" autoplay="" loop="" style="max-width: 100%; height: 100%"><source src="../../static/assets/img/demo-screen.mp4" type="video/mp4" /></video>
+                                        <video muted="muted" autoplay="" loop="" style="max-width: 100%; height: 100%">
+                                            <source src="{% static 'assets/img/demo-screen.mp4' %}" type="video/mp4" />
+                                        </video>
                                     </div>
                                 </div>
                             </div>
@@ -99,129 +200,141 @@
                 </div>
             </div>
         </header>
-        <!-- Quote/testimonial aside-->
+
+        <!-- Quote/testimonial aside -->
         <aside class="text-center bg-gradient-primary-to-secondary">
             <div class="container px-5">
                 <div class="row gx-5 justify-content-center">
                     <div class="col-xl-8">
-                        <div class="h2  text-white mb-4">"Your next favorite gadget is just a click away — explore top tech deals you won’t want to miss!"</div>
-
+                        <div class="h2 text-white mb-4">"Your next favorite gadget is just a click away — explore top tech deals you won’t want to miss!"</div>
                     </div>
                 </div>
             </div>
         </aside>
-        <!-- App features section-->
-      <section id="features">
-    <div class="container px-5">
-        <div class="row gx-5 align-items-center">
-            <div class="col-lg-8 order-lg-1 mb-5 mb-lg-0">
-                <div class="container-fluid px-5">
-                    <div class="row gx-5">
-                        <div class="col-md-6 mb-5">
-                            <div class="text-center">
-                                <i class="bi-phone icon-feature text-gradient d-block mb-3"></i>
-                                <h3 class="font-alt">Wide Selection of Gadgets</h3>
-                                <p class="text-muted mb-0">Choose from thousands of products: smartphones, tablets, laptops, and accessories!</p>
+
+        <!-- App features section -->
+        <section id="features">
+            <div class="container px-5">
+                <div class="row gx-5 align-items-center">
+                    <div class="col-lg-8 order-lg-1 mb-5 mb-lg-0">
+                        <div class="container-fluid px-5">
+                            <div class="row gx-5">
+                                <div class="col-md-6 mb-5">
+                                    <div class="text-center">
+                                        <i class="bi-phone icon-feature text-gradient d-block mb-3"></i>
+                                        <h3 class="font-alt">Wide Selection of Gadgets</h3>
+                                        <p class="text-muted mb-0">Choose from thousands of products: smartphones, tablets, laptops, and accessories!</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-5">
+                                    <div class="text-center">
+                                        <i class="bi-camera icon-feature text-gradient d-block mb-3"></i>
+                                        <h3 class="font-alt">Detailed Descriptions & Photos</h3>
+                                        <p class="text-muted mb-0">Browse high-quality images and read comprehensive specifications for each product!</p>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-md-6 mb-5">
-                            <div class="text-center">
-                                <i class="bi-camera icon-feature text-gradient d-block mb-3"></i>
-                                <h3 class="font-alt">Detailed Descriptions & Photos</h3>
-                                <p class="text-muted mb-0">Browse high-quality images and read comprehensive specifications for each product!</p>
+                            <div class="row">
+                                <div class="col-md-6 mb-5 mb-md-0">
+                                    <div class="text-center">
+                                        <i class="bi-gift icon-feature text-gradient d-block mb-3"></i>
+                                        <h3 class="font-alt">Exclusive Offers</h3>
+                                        <p class="text-muted mb-0">Stay tuned for our promotions, discounts, and special deals!</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="text-center">
+                                        <i class="bi-patch-check icon-feature text-gradient d-block mb-3"></i>
+                                        <h3 class="font-alt">Quality Assurance</h3>
+                                        <p class="text-muted mb-0">All our electronics are certified and come with an official manufacturer's warranty!</p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-md-6 mb-5 mb-md-0">
-                            <div class="text-center">
-                                <i class="bi-gift icon-feature text-gradient d-block mb-3"></i>
-                                <h3 class="font-alt">Exclusive Offers</h3>
-                                <p class="text-muted mb-0">Stay tuned for our promotions, discounts, and special deals!</p>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="text-center">
-                                <i class="bi-patch-check icon-feature text-gradient d-block mb-3"></i>
-                                <h3 class="font-alt">Quality Assurance</h3>
-                                <p class="text-muted mb-0">All our electronics are certified and come with an official manufacturer's warranty!</p>
+                    <div class="col-lg-4 order-lg-0">
+                        <div class="features-device-mockup">
+                            <svg class="circle" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                                <defs>
+                                    <linearGradient id="circleGradient" gradientTransform="rotate(45)">
+                                        <stop class="gradient-start-color" offset="0%"></stop>
+                                        <stop class="gradient-end-color" offset="100%"></stop>
+                                    </linearGradient>
+                                </defs>
+                                <circle cx="50" cy="50" r="50"></circle>
+                            </svg>
+                            <svg class="shape-1 d-none d-sm-block" viewBox="0 0 240.83 240.83" xmlns="http://www.w3.org/2000/svg">
+                                <rect x="-62.54" y="78.39" width="305.92" height="84.05" rx="42.03" transform="translate(120.42 -49.88) rotate(45)"></rect>
+                                <rect x="-62.54" y="78.39" width="305.92" height="84.05" rx="42.03" transform="translate(-49.88 120.42) rotate(-45)"></rect>
+                            </svg>
+                            <svg class="shape-2 d-none d-sm-block" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="50"></circle></svg>
+                            <div class="device-wrapper">
+                                <div class="device" data-device="iPhoneX" data-orientation="portrait" data-color="black">
+                                    <div class="screen bg-black">
+                                        <video muted="muted" autoplay="" loop="" style="max-width: 100%; height: 100%">
+                                            <source src="{% static 'assets/img/demo-screen.mp4' %}" type="video/mp4" />
+                                        </video>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-4 order-lg-0">
-                <div class="features-device-mockup">
-                    <svg class="circle" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                        <defs>
-                            <linearGradient id="circleGradient" gradientTransform="rotate(45)">
-                                <stop class="gradient-start-color" offset="0%"></stop>
-                                <stop class="gradient-end-color" offset="100%"></stop>
-                            </linearGradient>
-                        </defs>
-                        <circle cx="50" cy="50" r="50"></circle></svg
-                    ><svg class="shape-1 d-none d-sm-block" viewBox="0 0 240.83 240.83" xmlns="http://www.w3.org/2000/svg">
-                        <rect x="-32.54" y="78.39" width="305.92" height="84.05" rx="42.03" transform="translate(120.42 -49.88) rotate(45)"></rect>
-                        <rect x="-32.54" y="78.39" width="305.92" height="84.05" rx="42.03" transform="translate(-49.88 120.42) rotate(-45)"></rect></svg
-                    ><svg class="shape-2 d-none d-sm-block" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="50"></circle></svg>
-                    <div class="device-wrapper">
-                        <div class="device" data-device="iPhoneX" data-orientation="portrait" data-color="black">
-                            <div class="screen bg-black">
-                                <video muted="muted" autoplay="" loop="" style="max-width: 100%; height: 100%"><source src="../../static/assets/img/demo-screen.mp4" type="video/mp4" /></video>
-                            </div>
-                        </div>
+        </section>
+
+        <!-- Tech for Every Need section -->
+        <section class="bg-light">
+            <div class="container px-5">
+                <div class="row gx-5 align-items-center justify-content-center justify-content-lg-between">
+                    <div class="col-12 col-lg-5">
+                        <h2 class="display-4 lh-1 mb-4">Tech for Every Need</h2>
+                        <p class="lead fw-normal text-muted mb-5 mb-lg-0">Find exactly what you're looking for! From the latest smartphones to powerful laptops and useful accessories. We're here to help you make the right choice.</p>
+                    </div>
+                    <div class="col-sm-8 col-md-6">
+                        <div class="px-5 px-sm-0"><img class="img-fluid rounded-circle" src="https://source.unsplash.com/u8Jn2rzYIps/900x900" alt="..." /></div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-</section>
-<section class="bg-light">
-    <div class="container px-5">
-        <div class="row gx-5 align-items-center justify-content-center justify-content-lg-between">
-            <div class="col-12 col-lg-5">
-                <h2 class="display-4 lh-1 mb-4">Tech for Every Need</h2>
-                <p class="lead fw-normal text-muted mb-5 mb-lg-0">Find exactly what you're looking for! From the latest smartphones to powerful laptops and useful accessories. We're here to help you make the right choice.</p>
+        </section>
+
+        <!-- Call to Action section -->
+        <section class="cta">
+            <div class="cta-content">
+                <div class="container px-5">
+                    <h2 class="text-white display-1 lh-1 mb-4">
+                        Stop waiting.
+                        <br />
+                        Upgrade your tech today!
+                    </h2>
+                    <a class="btn btn-outline-light py-3 px-4 rounded-pill" href="{% url 'main:catalog' %}" target="_blank">Browse Our Catalog</a>
+                </div>
             </div>
-            <div class="col-sm-8 col-md-6">
-                <div class="px-5 px-sm-0"><img class="img-fluid rounded-circle" src="https://source.unsplash.com/u8Jn2rzYIps/900x900" alt="..." /></div>
+        </section>
+
+        <!-- Happy Shopping section -->
+        <section class="bg-gradient-primary-to-secondary" id="download">
+            <div class="container px-5">
+                <h2 class="text-center text-white font-alt mb-4">Happy shopping!</h2>
+                <div class="d-flex flex-column flex-lg-row align-items-center justify-content-center">
+                </div>
             </div>
-        </div>
-    </div>
-</section>
-<section class="cta">
-    <div class="cta-content">
-        <div class="container px-5">
-            <h2 class="text-white display-1 lh-1 mb-4">
-                Stop waiting.
-                <br />
-                Upgrade your tech today!
-            </h2>
-            <a class="btn btn-outline-light py-3 px-4 rounded-pill" href="{% url 'main:catalog' %}" target="_blank">Browse Our Catalog</a>
-        </div>
-    </div>
-</section>
-<section class="bg-gradient-primary-to-secondary" id="download">
-    <div class="container px-5">
-        <h2 class="text-center text-white font-alt mb-4">Happy shopping!</h2>
-        <div class="d-flex flex-column flex-lg-row align-items-center justify-content-center">
-        </div>
-    </div>
-</section>
+        </section>
 
-    {% block content %}
+        <!-- Вміст сторінки -->
+        {% block content %}
+        {% endblock content %}
 
-    {% endblock content %}
-
-     <!-- Footer-->
+        <!-- Footer -->
         <footer class="bg-black text-center py-5">
             <div class="container px-5">
                 <div class="text-white-50 small">
-                    <div class="mb-2">&copy; Device Market 2025. All Rights Reserved.</div>
+                    <div class="mb-2">© Device Market 2025. All Rights Reserved.</div>
                 </div>
             </div>
         </footer>
-        <!-- Feedback Modal-->
+
+        <!-- Feedback Modal -->
         <div class="modal fade" id="feedbackModal" tabindex="-1" aria-labelledby="feedbackModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
@@ -230,43 +343,33 @@
                         <button class="btn-close btn-close-white" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body border-0 p-4">
-                        <!-- * * * * * * * * * * * * * * *-->
-                        <!-- * * SB Forms Contact Form * *-->
-                        <!-- * * * * * * * * * * * * * * *-->
-                        <!-- This form is pre-integrated with SB Forms.-->
-                        <!-- To make this form functional, sign up at-->
-                        <!-- https://startbootstrap.com/solution/contact-forms-->
-                        <!-- to get an API token!-->
                         <form id="contactForm" data-sb-form-api-token="API_TOKEN">
-                            <!-- Name input-->
+                            <!-- Name input -->
                             <div class="form-floating mb-3">
                                 <input class="form-control" id="name" type="text" placeholder="Enter your name..." data-sb-validations="required" />
                                 <label for="name">Full name</label>
                                 <div class="invalid-feedback" data-sb-feedback="name:required">A name is required.</div>
                             </div>
-                            <!-- Email address input-->
+                            <!-- Email address input -->
                             <div class="form-floating mb-3">
                                 <input class="form-control" id="email" type="email" placeholder="name@example.com" data-sb-validations="required,email" />
                                 <label for="email">Email address</label>
                                 <div class="invalid-feedback" data-sb-feedback="email:required">An email is required.</div>
                                 <div class="invalid-feedback" data-sb-feedback="email:email">Email is not valid.</div>
                             </div>
-                            <!-- Phone number input-->
+                            <!-- Phone number input -->
                             <div class="form-floating mb-3">
                                 <input class="form-control" id="phone" type="tel" placeholder="(123) 456-7890" data-sb-validations="required" />
                                 <label for="phone">Phone number</label>
                                 <div class="invalid-feedback" data-sb-feedback="phone:required">A phone number is required.</div>
                             </div>
-                            <!-- Message input-->
+                            <!-- Message input -->
                             <div class="form-floating mb-3">
                                 <textarea class="form-control" id="message" type="text" placeholder="Enter your message here..." style="height: 10rem" data-sb-validations="required"></textarea>
                                 <label for="message">Message</label>
                                 <div class="invalid-feedback" data-sb-feedback="message:required">A message is required.</div>
                             </div>
-                            <!-- Submit success message-->
-                            <!---->
-                            <!-- This is what your users will see when the form-->
-                            <!-- has successfully submitted-->
+                            <!-- Submit success message -->
                             <div class="d-none" id="submitSuccessMessage">
                                 <div class="text-center mb-3">
                                     <div class="fw-bolder">Form submission successful!</div>
@@ -275,33 +378,32 @@
                                     <a href="https://startbootstrap.com/solution/contact-forms">https://startbootstrap.com/solution/contact-forms</a>
                                 </div>
                             </div>
-                            <!-- Submit error message-->
-                            <!---->
-                            <!-- This is what your users will see when there is-->
-                            <!-- an error submitting the form-->
-                            <div class="d-none" id="submitErrorMessage"><div class="text-center text-danger mb-3">Error sending message!</div></div>
-                            <!-- Submit Button-->
-                            <div class="d-grid"><button class="btn btn-primary rounded-pill btn-lg disabled" id="submitButton" type="submit">Submit</button></div>
+                            <!-- Submit error message -->
+                            <div class="d-none" id="submitErrorMessage">
+                                <div class="text-center text-danger mb-3">Error sending message!</div>
+                            </div>
+                            <!-- Submit Button -->
+                            <div class="d-grid">
+                                <button class="btn btn-primary rounded-pill btn-lg disabled" id="submitButton" type="submit">Submit</button>
+                            </div>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- Bootstrap core JS-->
+
+        <!-- Bootstrap core JS -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-        <!-- Core theme JS-->
-        <script src="../../static/js/scripts.js"></script>
-        <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
-        <!-- * *                               SB Forms JS                               * *-->
-        <!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
-        <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
+        <!-- Core theme JS -->
+        <script src="{% static 'js/scripts.js' %}"></script>
+        <!-- SB Forms JS -->
         <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
 
+        <!-- Скрипт для кнопки Register -->
         <script>
-          document.getElementById('RegistrationButton').addEventListener('click', function() {
+          document.getElementById('RegistrationButton')?.addEventListener('click', function() {
             window.location.href = "{% url 'main:registration' %}";
           });
         </script>
-
     </body>
 </html>

@@ -32,15 +32,13 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'main',  # Перемісти сюди, перед django.contrib.admin
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
-    # Custom Apps
-    'main'
 ]
 
 MIDDLEWARE = [
@@ -79,7 +77,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'mssql',
         'NAME': 'OnlineShop',
-        'HOST': 'YourServerName',
+        'HOST': 'localhost',
         'OPTIONS': {
             'driver': 'ODBC Driver 17 for SQL Server',
             'trusted_connection': 'yes',
@@ -135,8 +133,13 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Налаштування для надсилання email
-
-# В ЭТУ СТРОКУ ВВОДИМ ДАННЫЕ МОЕГО ПОЧТОВОГО ДОМЕНА <--------
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'  # Використовуємо SMTP для надсилання email
+EMAIL_HOST = 'mail.hosting.reg.ru'  # SMTP-сервер REG.RU
+EMAIL_PORT = 587  # Порт для TLS
+EMAIL_USE_TLS = True  # Використовуємо TLS для безпечного з'єднання
+EMAIL_HOST_USER = 'admin@deinekogames.net'  # Твій email для надсилання
+EMAIL_HOST_PASSWORD = '63XXp32Usz'  # Пароль для твого email
+DEFAULT_FROM_EMAIL = 'admin@deinekogames.net'  # Email, з якого будуть надсилатися листи
 
 # Налаштування для авторизації та перенаправлення
 AUTH_USER_MODEL = 'main.User'  # Кастомна модель користувача
