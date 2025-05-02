@@ -39,7 +39,6 @@ urlpatterns = [
          name='password_reset_confirm'),
     path('reset/done/', auth_views.PasswordResetCompleteView.as_view(template_name='main/password_reset_complete.html'),
          name='password_reset_complete'),
-
     # Додаємо маршрут для logout
     path('logout/', auth_views.LogoutView.as_view(next_page='/'), name='logout'),
 ]

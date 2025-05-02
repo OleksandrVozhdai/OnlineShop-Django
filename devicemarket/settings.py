@@ -134,7 +134,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Налаштування для надсилання email
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'  # Використовуємо SMTP для надсилання email
-EMAIL_HOST = ''  # SMTP-сервер REG.RU
+EMAIL_HOST = 'mail.hosting.reg.ru'  # SMTP-сервер REG.RU
 EMAIL_PORT = 587  # Порт для TLS
 EMAIL_USE_TLS = True  # Використовуємо TLS для безпечного з'єднання
 EMAIL_HOST_USER = 'admin@deinekogames.net'  # Твій email для надсилання

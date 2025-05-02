@@ -52,10 +52,16 @@ def Toggle_wishlist(request, id):
     return JsonResponse({'success': False})
 
 
-def WishlistView(request):
+def WishlistView(request, id):
+    product = get_object_or_404(TechList, id=id)
+    all_products = TechList.objects.all()
+    constAllProducts = random.sample(list(all_products), min(6, len(all_products)))
     wishlistProducts = TechList.objects.filter(on_wishlist=True)
 
-    return render(request, 'main/wishlist.html', {"wishlistProducts": wishlistProducts})
+    return render(request, 'main/wishlist.html', {
+        'wishlistProducts': wishlistProducts,
+        'product': product,
+        'constAllProducts' : constAllProducts,})
 
 def ShopView(request):
     products = TechList.objects.all()

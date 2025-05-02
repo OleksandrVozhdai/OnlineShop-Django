@@ -141,7 +141,7 @@
                                 <i class="bi-cart-fill me-1"></i> Add to cart
                             </button>
                             <button class="btn p-0 border-0 bg-transparent wishlist-btn ms-3" data-product-id="{{ product.id }}">
-                                {% if product.OnWishlist %}
+                                {% if product.on_wishlist %}
                                     <i class="bi bi-heart-fill" style="font-size: 1.8rem; color: red;"></i>
                                 {% else %}
                                     <i class="bi bi-heart" style="font-size: 1.8rem; color: black;"></i>
@@ -181,7 +181,7 @@
                             <div class="card-body p-0">
                                 <div class="text-center">
                                     <h5 class="fw-bold">{{ product.product_name }}</h5>
-                                    <span class="text-muted">${{ product.price }}</span>
+                                    <span class="text">${{ product.price }}</span>
                                 </div>
                             </div>
                             <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
