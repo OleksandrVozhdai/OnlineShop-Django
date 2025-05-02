@@ -271,8 +271,10 @@ document.addEventListener('DOMContentLoaded', function() {
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    alert('Succesfully added! 🛒')
+                    alert('Successfully added! 🛒');
                     updateCartCount();
+                } else {
+                    alert('Error: ' + (data.error || 'Something went wrong.'));
                 }
             })
             .catch(error => console.error('Error:', error));

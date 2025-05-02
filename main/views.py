@@ -6,10 +6,12 @@ from django.conf import settings
 from .forms import UserRegistrationForm, UserLoginForm
 from .models import TechList, User
 from django.shortcuts import render, get_object_or_404, redirect
-from django.http import JsonResponse
-from django.http import JsonResponse
 from django.views.decorators.http import require_POST
 from django.views.decorators.csrf import csrf_exempt
+from django.http import JsonResponse
+from django.contrib.auth.decorators import login_required
+from .models import Order, TechList
+from django.utils import timezone
 # Представлення для головної сторінки
 def IndexView(request):
     return render(request, 'main/index.html')
@@ -156,6 +158,28 @@ def RemoveFromCartView(request, product_id):
 def CartItemCountView(request):
     cart = request.session.get('cart', [])
     return JsonResponse({'count': len(cart)})
+@csrf_exempt
+@login_required
+def add_to_cart(request, tech_id):
+    if request.method == 'POST':
+        try:
+            tech = TechList.objects.get(id=tech_id)
+            quantity = 1
+
+            total_price = tech.price * quantity
+
+            Order.objects.create(
+                user=request.user,
+                tech=tech,
+                order_date=timezone.now(),
+                quantity=quantity,
+                total_price=total_price
+            )
+
+            return JsonResponse({'success': True, 'message': 'Order created'})
+        except TechList.DoesNotExist:
+            return JsonResponse({'success': False, 'error': 'Item not found'})
+    return JsonResponse({'success': False, 'error': 'Invalid request'})
 # Представлення для входу (авторизації)
 class LogInView(AuthLoginView):
     form_class = UserLoginForm
