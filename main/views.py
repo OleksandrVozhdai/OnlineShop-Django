@@ -12,6 +12,8 @@ from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 from .models import Order, TechList
 from django.utils import timezone
+from django.contrib.auth.models import User
+
 # Представлення для головної сторінки
 def IndexView(request):
     return render(request, 'main/index.html')
@@ -180,6 +182,36 @@ def add_to_cart(request, tech_id):
         except TechList.DoesNotExist:
             return JsonResponse({'success': False, 'error': 'Item not found'})
     return JsonResponse({'success': False, 'error': 'Invalid request'})
+@csrf_exempt
+@require_POST
+def create_order(request):
+    cart = request.session.get('cart', [])
+    if not cart:
+        return JsonResponse({'success': False, 'error': 'Cart is empty.'})
+    try:
+        default_user = User.objects.get(id=1)
+    except User.DoesNotExist:
+        return JsonResponse({'success': False, 'error': 'Default user does not exist.'})
+
+    for product_id in cart:
+        try:
+            tech = TechList.objects.get(id=product_id)
+            quantity = 1
+            total_price = tech.price * quantity
+
+            Order.objects.create(
+                user=default_user,
+                tech=tech,
+                order_date=timezone.now(),
+                quantity=quantity,
+                total_price=total_price
+            )
+        except TechList.DoesNotExist:
+            continue
+
+    # Очистити кошик після створення замовлення
+    request.session['cart'] = []
+    return JsonResponse({'success': True})
 # Представлення для входу (авторизації)
 class LogInView(AuthLoginView):
     form_class = UserLoginForm

@@ -42,8 +42,11 @@
                         </div>
                     </a>
                 </div>
-                {% endfor %}
+               {% endfor %}
             </div>
+<div class="text-center mt-4">
+    <button id="create-order-btn" class="btn btn-primary">Create Order</button>
+</div>
             {% else %}
                 <p class="text-center">Your cart is empty.</p>
             {% endif %}
@@ -111,6 +114,34 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
     });
+});
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const createOrderBtn = document.getElementById('create-order-btn');
+
+    if (createOrderBtn) {
+        createOrderBtn.addEventListener('click', function() {
+            fetch('/create_order/', {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}',
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Order created successfully! ');
+                } else {
+                    alert('Error: ' + (data.error || 'Something went wrong.'));
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
+    }
 });
 </script>
 
