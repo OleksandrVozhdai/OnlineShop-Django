@@ -19,6 +19,7 @@ class TechList(models.Model):
     image_url = models.URLField(max_length=500, blank=True, null=True, db_column='ImageURL')
     on_sale = models.BooleanField(default=False, db_column='OnSale')
     on_wishlist = models.BooleanField(default=False, db_column='OnWishlist')
+    stars = models.DecimalField(max_digits=3, decimal_places=1, default=0.0, db_column='Rating')
 
     def __str__(self):
         return self.product_name
@@ -29,6 +30,16 @@ class TechList(models.Model):
     @property
     def discounted_price(self):
         return round(self.price * Decimal('0.75'), 2)
+
+
+
+class Rating(models.Model):
+    tech = models.ForeignKey(TechList, on_delete=models.CASCADE, related_name='ratings')
+    rating = models.IntegerField(choices=[(i, str(i)) for i in range(6)])  # 0–5
+
+    def __str__(self):
+        return f"{self.tech.product_name}: {self.rating}★"
+
 
 
 # Кастомна модель користувача
