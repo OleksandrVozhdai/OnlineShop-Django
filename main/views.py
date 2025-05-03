@@ -209,9 +209,11 @@ def create_order(request):
         except TechList.DoesNotExist:
             continue
 
-    # Очистити кошик після створення замовлення
-    request.session['cart'] = []
-    return JsonResponse({'success': True})
+    @require_POST
+    def clear_cart(request):
+        request.session['cart'] = {}
+        request.session.modified = True
+        return JsonResponse({'success': True})
 # Представлення для входу (авторизації)
 class LogInView(AuthLoginView):
     form_class = UserLoginForm

@@ -119,31 +119,108 @@ document.addEventListener('DOMContentLoaded', function() {
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     const createOrderBtn = document.getElementById('create-order-btn');
+    const modal = document.getElementById('payment-modal');
+    const confirmPaymentBtn = document.getElementById('confirm-payment');
+    const cancelPaymentBtn = document.getElementById('cancel-payment');
+    const totalElement = document.getElementById('cart-total');
+    
+    const cardInput = document.getElementById('card-number');
+    cardInput.addEventListener('input', function(e) {
+        let value = e.target.value.replace(/\D/g, '').substring(0, 16);
+        const parts = value.match(/.{1,4}/g);
+        e.target.value = parts ? parts.join(' ') : '';
+    });
+    
+    const expiryInput = document.getElementById('expiry-date');
+    expiryInput.addEventListener('input', function(e) {
+        let value = e.target.value.replace(/\D/g, '').substring(0, 4);
+        if (value.length >= 3) {
+            e.target.value = value.substring(0, 2) + '/' + value.substring(2);
+        } else {
+            e.target.value = value;
+        }
+    });
+    
+    function calculateCartTotal() {
+        let sum = 0;
+        document.querySelectorAll('.card-body .fw-bolder').forEach(card => {
+            const priceText = card.nextElementSibling?.innerText?.trim();
+            if (priceText) {
+                const price = parseFloat(priceText.replace('$', ''));
+                if (!isNaN(price)) sum += price;
+            }
+        });
+        return sum.toFixed(2);
+    }
 
     if (createOrderBtn) {
         createOrderBtn.addEventListener('click', function() {
-            fetch('/create_order/', {
-                method: 'POST',
-                headers: {
-                    'X-CSRFToken': '{{ csrf_token }}',
-                    'Content-Type': 'application/json'
-                }
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    alert('Order created successfully! ');
-                } else {
-                    alert('Error: ' + (data.error || 'Something went wrong.'));
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
+            const total = calculateCartTotal();
+            totalElement.textContent = total;
+            modal.style.display = 'flex';
         });
     }
+
+    if (cancelPaymentBtn) {
+        cancelPaymentBtn.addEventListener('click', function() {
+            modal.style.display = 'none';
+        });
+    }
+
+if (confirmPaymentBtn) {
+    confirmPaymentBtn.addEventListener('click', function () {
+        modal.style.display = 'none';
+        alert(' Payment successful! Order created.');
+        
+        fetch('/clear_cart/', {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}',
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(() => {
+            location.reload();
+        })
+        .catch(error => {
+            console.error('Error clearing cart:', error);
+            location.reload();  
+        });
+    });
+}
+
+
 });
 </script>
+
+
+<<!-- Payment Modal -->
+<!-- Payment Modal -->
+<div id="payment-modal" class="modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background-color:rgba(0,0,0,0.5); justify-content:center; align-items:center; z-index:9999;">
+    <div style="background:white; padding:20px; border-radius:10px; width:350px; text-align:left;">
+        <h4 class="text-center">Payment Details</h4>
+        <p style="text-align:center; font-weight:bold; font-size:18px;">Total: $<span id="cart-total">0.00</span></p>
+
+        <div style="margin-top: 15px;">
+            <label>Card Number</label>
+            <input type="text" id="card-number" class="form-control" placeholder="1234 5678 9012 3456" maxlength="19">
+        </div>
+        <div style="margin-top: 10px;">
+            <label>Expiry Date</label>
+            <input type="text" id="expiry-date" class="form-control" placeholder="MM/YY" maxlength="5">
+        </div>
+        <div style="margin-top: 10px;">
+            <label>CVV</label>
+            <input type="text" id="cvv" class="form-control" placeholder="123" maxlength="4">
+        </div>
+        <div style="margin-top: 20px; text-align:center;">
+            <button id="confirm-payment" class="btn btn-success">Pay</button>
+            <button id="cancel-payment" class="btn btn-secondary">Cancel</button>
+        </div>
+    </div>
+</div>
+
+
 
 
 </body>
