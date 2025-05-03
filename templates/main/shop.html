@@ -124,6 +124,20 @@
                 </div>
             </div>
 
+           <div style="margin-bottom: 15px;">
+                <label style="font-weight: bold;">Rating:</label>
+                <div id="ratingContainer" style="max-height: none; overflow: hidden;">
+                    {% for i in "54321" %}
+                        <div>
+                            <input type="radio" name="rating" value="{{ i }}" id="rating_{{ i }}"
+                                   {% if request.GET.rating == i %}checked{% endif %}>
+                            <label for="rating_{{ i }}">{{ i }} +</label>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+
             <button style="margin-top: 15px" type="submit">Filter</button>
         </form>
     </div>

@@ -15,6 +15,7 @@ from .forms import UserRegistrationForm, UserLoginForm
 from .models import TechList, User, PendingUser
 from django.contrib.auth.hashers import make_password
 from django.contrib import messages
+from decimal import Decimal
 
 
 # Представлення для головної сторінки
@@ -95,6 +96,10 @@ def ShopView(request):
     if category:
         products = products.filter(category=category)
         is_filtered = True
+
+    rating = request.GET.get('rating')
+    if rating:
+        products = products.filter(stars__gte=Decimal(rating))
 
 
     isOnSale = products.filter(on_sale=True)
