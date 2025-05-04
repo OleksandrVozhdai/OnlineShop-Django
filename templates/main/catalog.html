@@ -1,123 +1,109 @@
 {% include 'partials/nav.html' %}
 {% include 'partials/dependence.html' %}
-     {% load static %}
 
-     {% block content %}
-     <main class="flex-shrink-0">
-         <!-- Category Cards Section -->
-         <section class="py-5" style="margin-top: 60px">
-             <div class="container px-5 px-3 mt-5">
-                 <h2 class="fw-bolder mb-4">Каталог товарів</h2>
-                 <div class="row gx-4 gx-lg-5 row-cols-4 row-cols-md-4 row-cols-xl-4 justify-content-center">
-                     <div class="col mb-5">
-                         <a href="{% url 'main:shop' %}?category=Smartphone">
-                             <div class="card">
-                                 <img class="card-img-top" src='{{ "https://img.freepik.com/premium-vector/realistic-phone-isolated-white-background-smartphone-template-your-mockup-vector-illustration_561158-94.jpg"|default:"https://dummyimage.com/450x300/dee2e6/6c757d.jpg" }}' alt="Smartphones" />
-                             </div>
-                         </a>
-                         <h5 class="fw-bolder">Smartphones</h5>
-                     </div>
-                     <div class="col mb-5">
-                         <a href="{% url 'main:shop' %}?category=Laptop">
-                             <div class="card">
-                                 <img class="card-img-top" src='{{ "https://storage.needpix.com/rsynced_images/laptop-2665794_1280.jpg"|default:"https://dummyimage.com/450x300/dee2e6/6c757d.jpg" }}' alt="Laptops" />
-                             </div>
-                         </a>
-                         <h5 class="fw-bolder">Laptops</h5>
-                     </div>
-                     <div class="col mb-5">
-                         <a href="{% url 'main:shop' %}?category=Mouse">
-                             <div class="card">
-                                 <img class="card-img-top" src='{{ "https://static3.nordic.pictures/29607040-thickbox_default/razer-wireless-mouse-viper-ultimate-charging-dock.jpg"|default:"https://dummyimage.com/450x300/dee2e6/6c757d.jpg" }}' alt="Mouses" />
-                             </div>
-                         </a>
-                         <h5 class="fw-bolder">Mouses</h5>
-                     </div>
-                     <div class="col mb-5">
-                         <a href="{% url 'main:shop' %}?category=Television">
-                             <div class="card">
-                                 <img class="card-img-top" src='{{ "https://mke.com.bd/media/catalog/product/s/o/sony_4k_ultra_hd_led_smart_android_google_tv_kd-55x80j_55_inch_1_1_1.jpg?store=default&image-type=image"|default:"https://dummyimage.com/450x300/dee2e6/6c757d.jpg" }}' alt="Televisions" />
-                             </div>
-                         </a>
-                         <h5 class="fw-bolder">Televisions</h5>
-                     </div>
-                     <div class="col mb-5">
-                         <a href="{% url 'main:shop' %}?category=Tablet">
-                             <div class="card">
-                                 <img class="card-img-top" src='{{ "https://wo.ua/upload/resize_cache/iblock/d41/790_790_1/w68modq15f8lc2120rpyi7ab00d1txxd.jpg"|default:"https://dummyimage.com/450x300/dee2e6/6c757d.jpg" }}' alt="Tablets" />
-                             </div>
-                         </a>
-                         <h5 class="fw-bolder">Tablets</h5>
-                     </div>
-                     <div class="col mb-5">
-                         <a href="{% url 'main:shop' %}">
-                             <div class="card">
-                                 <img class="card-img-top" src='{{ "https://media.istockphoto.com/id/639201180/vector/shopping-cart-icon.jpg?s=612x612&w=0&k=20&c=AIDue0uA36lvIYf4gstcMYqcIwCK_p3_RQb0EQv9XsI="|default:"https://dummyimage.com/450x300/dee2e6/6c757d.jpg" }}' alt="Shop" />
-                             </div>
-                         </a>
-                         <h5 class="fw-bolder">All</h5>
-                     </div>
-                 </div>
-             </div>
-         </section>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Shop</title>
+    <link rel="stylesheet" href="../../static/css/shop-stylesheet.css">
+    <style>
+    .card-img-top {
+        height: 200px;
+        width: 100%;
+        object-fit: contain;
+        padding: 20px 20px 20px 20px;
+        }
 
-         <!-- Products Section -->
-         <section class="py-5">
-             <div class="container px-5 px-3">
-                 <h2 class="fw-bolder mb-4">Усі товари</h2>
-                 <div class="row gx-4 gx-lg-5 row-cols-4 row-cols-md-4 row-cols-xl-4 justify-content-center">
-                     {% if products %}
-                         {% for product in products %}
-                             <div class="col mb-5">
-                                 <a href="{% url 'main:productPage' product.id %}">
-                                     <div class="card">
-                                         <img class="card-img-top" src="{{ product.image_url|default:'https://dummyimage.com/450x300/dee2e6/6c757d.jpg' }}" alt="{{ product.product_name }}">
-                                     </div>
-                                 </a>
-                                 <h5 class="fw-bolder">{{ product.product_name }}</h5>
-                                 <p class="card-text">Ціна: {{ product.price }} грн</p>
-                                 <p class="card-text">Автор: {{ product.author.full_name }}</p>
-                             </div>
-                         {% endfor %}
-                     {% else %}
-                         <p>У каталозі поки немає товарів.</p>
-                     {% endif %}
-                 </div>
-             </div>
-         </section>
-     </main>
-     {% endblock content %}
+    .card {
 
-     {% block styles %}
-     <style>
-         .card-img-top {
-             height: 200px;
-             width: 100%;
-             object-fit: contain;
-             padding: 20px;
-         }
+        border-radius: 50%;
+        overflow: hidden;
 
-         .card {
-             border-radius: 50%;
-             overflow: hidden;
-             width: 200px;
-             height: 200px;
-             margin-left: auto;
-             margin-right: auto;
-             margin-bottom: 25px;
-             display: flex;
-             align-items: center;
-             justify-content: center;
-             border: 1px solid #dee2e6;
-         }
+        width: 200px;
+        height: 200px;
 
-         .col.mb-5 {
-             text-align: center;
-         }
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: 25px;
 
-         h5.fw-bolder {
-             font-family: 'Arial', sans-serif;
-             margin-top: 0;
-         }
-     </style>
-     {% endblock styles %}
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid #dee2e6;
+    }
+
+    .col.mb-5 {
+        text-align: center;
+    }
+
+    h5.fw-bolder {
+        font-family: 'Arial', sans-serif;
+        margin-top: 0;
+    }
+    </style>
+</head>
+<body>
+   <section class="py-5" style = "margin-top: 60px">
+       <div class="container px-5 px-3 mt-5">
+           <div class="row gx-4 gx-lg-5 row-cols-4 row-cols-md-4 row-cols-xl-4 justify-content-center">
+
+              <div class="col mb-5">
+                <a href="{% url 'main:shop' %}?category=Smartphone">
+                    <div class="card">
+                        <img class="card-img-top" src='{{ "https://img.freepik.com/premium-vector/realistic-phone-isolated-white-background-smartphone-template-your-mockup-vector-illustration_561158-94.jpg"|default:"https://dummyimage.com/450x300/dee2e6/6c757d.jpg" }}' alt="Smartphones" />
+                    </div>
+                </a>
+                <h5 class="fw-bolder">Smartphones</h5>
+              </div>
+
+               <div class="col mb-5">
+                    <a href="{% url 'main:shop' %}?category=Laptop">
+                       <div class="card">
+                           <img class="card-img-top" src='{{ "https://storage.needpix.com/rsynced_images/laptop-2665794_1280.jpg"|default:"https://dummyimage.com/450x300/dee2e6/6c757d.jpg" }}' alt="Laptops" />
+                       </div>
+                   </a>
+                   <h5 class="fw-bolder">Laptops</h5>
+               </div>
+
+               <div class="col mb-5">
+                   <a href="{% url 'main:shop' %}?category=Mouse">
+                       <div class="card">
+                           <img class="card-img-top" src='{{ "https://static3.nordic.pictures/29607040-thickbox_default/razer-wireless-mouse-viper-ultimate-charging-dock.jpg"|default:"https://dummyimage.com/450x300/dee2e6/6c757d.jpg" }}' alt="Mouses" />
+                       </div>
+                   </a>
+                   <h5 class="fw-bolder">Mouses</h5>
+               </div>
+
+               <div class="col mb-5">
+                   <a href="{% url 'main:shop' %}?category=Television">
+                       <div class="card">
+                           <img class="card-img-top" src='{{ "https://images.samsung.com/is/image/samsung/ua-fhd-t5300-ue43t5300auxua-frontblack-226800509?$684_547_PNG$"|default:"https://dummyimage.com/450x300/dee2e6/6c757d.jpg" }}' alt="Televisions" />
+                       </div>
+                   </a>
+                   <h5 class="fw-bolder">Televisions</h5>
+               </div>
+
+               <div class="col mb-5">
+                   <a href="{% url 'main:shop' %}?category=Tablet">
+                       <div class="card">
+                           <img class="card-img-top" src='{{ "https://wo.ua/upload/resize_cache/iblock/d41/790_790_1/w68modq15f8lc2120rpyi7ab00d1txxd.jpg"|default:"https://dummyimage.com/450x300/dee2e6/6c757d.jpg" }}' alt="Televisions" />
+                       </div>
+                   </a>
+                   <h5 class="fw-bolder">Tablet</h5>
+               </div>
+
+                <div class="col mb-5">
+                   <a href="{% url 'main:shop' %}">
+                       <div class="card">
+                           <img class="card-img-top" src='{{ "https://media.istockphoto.com/id/639201180/vector/shopping-cart-icon.jpg?s=612x612&w=0&k=20&c=AIDue0uA36lvIYf4gstcMYqcIwCK_p3_RQb0EQv9XsI="|default:"https://dummyimage.com/450x300/dee2e6/6c757d.jpg" }}' alt="Shop" />
+                       </div>
+                   </a>
+                   <h5 class="fw-bolder">All</h5>
+               </div>
+
+           </div>
+       </div>
+   </section>
+</body>
+</html>

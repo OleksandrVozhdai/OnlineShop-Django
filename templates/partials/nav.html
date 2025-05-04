@@ -26,6 +26,12 @@
                         <ul id="search-results" class="search-results-list" style="display: none;"></ul>
                     </form>
                 </li>
+                <li class="nav-item">
+                            <a class="nav-link me-lg-3" href="{% url 'main:cart' %}">
+                               Cart 
+                               <span id="cart-count" style="background: red; color: white; border-radius: 50%; padding: 2px 8px;">{{ cart_item_count }}</span>
+                            </a>
+                </li>
             </ul>
             <!-- Секція авторизації -->
             {% if user.is_authenticated %}
@@ -167,4 +173,21 @@
 
 }
 
+</script>
+
+<script>
+  function updateCartCount() {
+    fetch('/cart_item_count/')
+      .then(response => response.json())
+      .then(data => {
+        const countElement = document.getElementById('cart-count');
+        if (countElement) {
+          countElement.textContent = data.count;
+        }
+      });
+  }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    updateCartCount();  
+  });
 </script>

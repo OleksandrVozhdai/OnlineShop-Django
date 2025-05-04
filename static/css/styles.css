@@ -1433,6 +1433,21 @@ progress {
     width: 16.6666666667%;
   }
 
+  .row-cols-xl-7 > * {
+  flex: 0 0 auto;
+  width: 14.2857142857%; /* 100 / 7 */
+}
+
+.row-cols-xl-8 > * {
+  flex: 0 0 auto;
+  width: 12.5%; /* 100 / 8 */
+}
+
+.row-cols-xl-9 > * {
+  flex: 0 0 auto;
+  width: 11.1111111111%; /* 100 / 9 */
+}
+
   .row-cols-xl-10 > * {
     flex: 0 0 auto;
     width: 13%;

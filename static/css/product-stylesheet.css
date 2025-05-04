@@ -78,6 +78,33 @@ h5.fw-bolder {
     height: auto;
 }
 
+
+.recommendation-container {
+
+    background-image: url('/static/assets/img/recommendation-bg.png');
+    background-position: center 360px;
+    background-size: cover;
+
+    padding: 1px;
+    border-radius: 15px;
+    margin: 21px auto;
+    width: 90%;
+    height: 55%;
+    display: flex;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    border: none;
+    box-sizing: border-box;
+    min-width: 250px;
+
+}
+
 .recommendation-background {
     background: linear-gradient(to bottom, #013548, #e0f2f7);
+}
+
+
+.recommendation-container .row {
+    padding-top: 7px;
+    scroll-behavior: smooth;
 }

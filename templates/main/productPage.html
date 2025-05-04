@@ -203,43 +203,49 @@
         </div>
     </section>
 <!-- more from this user -->
- <section class="py-5 bg-light related-products">
-        <div class="container px-4 px-lg-5">
-            <h2 class="fw-bolder mb-4 text-center">More from {{ product.author.username }}</h2>
-            <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-6 justify-content-center">
-                {% for product in sameUserProducts %}
-                <div class="col mb-1">
-                    <a href="{% url 'main:productPage' product.id %}" class="text-decoration-none text-dark">
+ <h2 class="fw-bolder mb-4 text-center">More from {{ product.author.username }}</h2>
+<div class="recommendation-container" style="justify-content: center; margin-top: 30px; height: 330px; background-size: cover;">
+    <section class="py-0">
+        <div class="container px-1 px-lg-0 mt-0">
+
+            <div style="overflow-x: auto; overflow-y: hidden; display: flex; justify-content: center;">
+                <div class="row gx-1 gx-lg-3 flex-nowrap" style="overflow-x: auto; overflow-y: hidden; width: 100%; white-space: nowrap;">
+                    {% for product in sameUserProducts %}
+                    <div class="col mb-5" style="flex: 0 0 auto; width: 200px;">
                         <div class="card h-100 shadow-sm">
                             {% if product.on_sale %}
-                                <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Sale</div>
+                            <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Sale</div>
                             {% endif %}
-                            <img class="card-img-top" src="{{ product.image_url|default:'https://dummyimage.com/450x300/dee2e6/6c757d.jpg' }}" alt="{{ product.product_name }}">
-                            <div class="card-body p-0">
+                            <a href="{% url 'main:productPage' product.id %}" class="text-decoration-none text-dark">
+                                <img class="card-img-top" src="{{ product.image_url|default:'https://dummyimage.com/450x300/dee2e6/6c757d.jpg' }}" alt="{{ product.product_name }}">
+                            </a>
+                            <div class="card-body p-1">
                                 <div class="text-center">
-                                <h5 class="fw-bolder">{{ product.product_name }}</h5>
-                               {% if product.on_sale %}
-                                    <span class="text-muted text-decoration-line-through">${{ product.price }}</span><br>
-                                    <span class="text-danger fw-bold">${{ product.discounted_price }}</span>
-                                {% else %}
-                                    <span>${{ product.price }}</span>
-                                {% endif %}
+                                    <h5 class="fw-bolder">{{ product.product_name }}</h5>
+                                    {% if product.on_sale %}
+                                        <span class="text-muted text-decoration-line-through">${{ product.price }}</span><br>
+                                        <span class="text-danger fw-bold">${{ product.discounted_price }}</span>
+                                    {% else %}
+                                        <span>${{ product.price }}</span>
+                                    {% endif %}
+                                </div>
                             </div>
-                            </div>
-
                         </div>
-                    </a>
+                    </div>
+                    {% endfor %}
                 </div>
-                {% endfor %}
             </div>
         </div>
     </section>
+</div>
 
-    <!-- Схожі товари -->
+
+
+
     <section class="py-5 bg-light related-products">
         <div class="container px-4 px-lg-5">
             <h2 class="fw-bolder mb-4 text-center">Related Products</h2>
-            <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-6 justify-content-center">
+            <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-5 justify-content-center">
                 {% for product in relatedProducts %}
                 <div class="col mb-5">
                     <a href="{% url 'main:productPage' product.id %}" class="text-decoration-none text-dark">
@@ -251,6 +257,7 @@
                             <div class="card-body p-0">
                                 <div class="text-center">
                                 <h5 class="fw-bolder">{{ product.product_name }}</h5>
+                                <h5 class="fw-bolder" style="font-size: 14px; color: purple"> {{ product.author.username }}</h5>
                                {% if product.on_sale %}
                                     <span class="text-muted text-decoration-line-through">${{ product.price }}</span><br>
                                     <span class="text-danger fw-bold">${{ product.discounted_price }}</span>
@@ -335,6 +342,19 @@
     });
 });
 
-    </script>
+
+document.addEventListener("DOMContentLoaded", function() {
+    const container = document.querySelector('.recommendation-container .row');
+
+    container.addEventListener('wheel', function(e) {
+        if (e.deltaY !== 0) {
+            e.preventDefault();
+            container.scrollLeft += e.deltaY;
+        }
+    });
+});
+</script>
+
+
 </body>
 </html>
