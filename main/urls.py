@@ -1,5 +1,6 @@
 from django.urls import path
 from .views import *
+from .views import search_products
 from django.contrib.auth.views import LogoutView
 
 app_name = 'main'
@@ -21,4 +22,5 @@ urlpatterns = [
     path('add-product/', add_product, name='add_product'),
     path('delete-product/<int:product_id>/', delete_product, name='delete_product'),
     path('edit-product/<int:product_id>/', edit_product, name='edit_product'),
+    path('search/', search_products, name='search_products'),
 ]

@@ -1,5 +1,7 @@
 {% load static %}
 
+
+
 <!-- Navigation -->
 <nav class="navbar navbar-expand-lg navbar-light fixed-top shadow-sm" id="mainNav">
     <div class="container px-5">
@@ -18,8 +20,11 @@
                 <li class="nav-item"><a class="nav-link me-lg-3" href="{% url 'main:shop' %}">Shop</a></li>
                 <li class="nav-item"><a class="nav-link me-lg-3" href="{% url 'main:about' %}">About</a></li>
                 <li class="nav-item"><a class="nav-link me-lg-3" href="{% url 'main:catalog' %}">Catalog</a></li>
-                <li class="nav-item">
-                    <input type="text" placeholder="Search..." class="form-control search-input">
+               <li class="nav-item">
+                    <form method="GET" action="{% url 'main:search_products' %}" id="search-form">
+                        <input type="text" name="query" id="search-input" placeholder="Search..." class="form-control search-input" oninput="searchProducts()" autocomplete="off">
+                        <ul id="search-results" class="search-results-list" style="display: none;"></ul>
+                    </form>
                 </li>
             </ul>
             <!-- Секція авторизації -->
@@ -52,6 +57,30 @@
 </nav>
 
 <style>
+    .search-results-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    max-height: 200px;
+    overflow-y: auto;
+    position: absolute;
+    background-color: white;
+    width: 100%;
+    z-index: 9999;
+    border: 1px solid #ccc;
+    display: none;
+    }
+
+    .search-results-list li {
+        padding: 10px;
+        cursor: pointer;
+    }
+
+    .search-results-list li:hover {
+        background-color: #f1f1f1;
+    }
+
+
     /* Стили для аватара и выпадающего меню */
     .avatar-dropdown {
         position: relative;
@@ -109,4 +138,33 @@
     document.getElementById('RegistrationButton')?.addEventListener('click', function() {
         window.location.href = "{% url 'main:registration' %}";
     });
+</script>
+
+<script>
+    function searchProducts() {
+    const query = document.getElementById('search-input').value;
+
+
+
+    fetch(`/search/?query=${query}`)
+        .then(response => response.json())
+        .then(data => {
+            const resultsContainer = document.getElementById('search-results');
+            resultsContainer.innerHTML = '';
+
+            if (data.products.length > 0) {
+                data.products.forEach(product => {
+                    const li = document.createElement('li');
+                    li.innerHTML = `<a href="/shop/productPage/${product.id}" style="text-decoration: none; color: inherit;">${product.product_name}</a>`;
+                    resultsContainer.appendChild(li);
+                });
+                resultsContainer.style.display = 'block';
+            } else {
+                resultsContainer.style.display = 'none';
+            }
+        })
+        .catch(error => console.log(error));
+
+}
+
 </script>

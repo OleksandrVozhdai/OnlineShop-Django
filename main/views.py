@@ -218,3 +218,23 @@ def edit_product(request, product_id):
     else:
         form = TechListForm(instance=product)
     return render(request, 'main/edit_product.html', {'form': form})
+
+def search_products(request):
+    query = request.GET.get('query', '')
+    products = []
+
+    if query:
+        products = TechList.objects.filter(
+            product_name__icontains=query
+        ).filter(
+            brand__icontains=query
+        )
+
+    # Перетворюємо продукти в список словників для JSON відповіді
+    products_data = [{
+        'id': product.id,
+        'product_name': product.product_name,
+        'brand': product.brand
+    } for product in products]
+
+    return JsonResponse({'products': products_data})
