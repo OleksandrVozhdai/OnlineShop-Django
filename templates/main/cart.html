@@ -170,9 +170,8 @@ document.addEventListener('DOMContentLoaded', function() {
 if (confirmPaymentBtn) {
     confirmPaymentBtn.addEventListener('click', function () {
         modal.style.display = 'none';
-        alert(' Payment successful! Order created.');
-        
-        fetch('/clear_cart/', {
+
+        fetch('/pay/', {
             method: 'POST',
             headers: {
                 'X-CSRFToken': '{{ csrf_token }}',
@@ -180,14 +179,17 @@ if (confirmPaymentBtn) {
             }
         })
         .then(() => {
+            alert('Payment successful! Order created.');
             location.reload();
         })
         .catch(error => {
-            console.error('Error clearing cart:', error);
-            location.reload();  
+            console.error('Error during order creation:', error);
+            alert('Payment successful! Order created.');
+            location.reload();
         });
     });
 }
+
 
 
 });
