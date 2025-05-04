@@ -139,6 +139,7 @@
                 <div class="d-flex flex-column justify-content-between h-100">
                     <div>
                         <h1 class="display-6 fw-bold mb-3">{{ product.product_name }}</h1>
+                        <h5 class="fw-bolder" style="font-size: 20px; color: purple"> {{ product.author.username }}</h5>
 
                                 <div class="text-left" style = "margin-bottom: 20px">
                                    <div class="d-flex justify-content-left align-items-center text-warning mb-2" style="font-size: 24px;">
@@ -199,6 +200,38 @@
         <div class="container product-info-block">
             <h1> Characteristics and description </h1>
             <p class="lead">{{ product.description }}</p>
+        </div>
+    </section>
+<!-- more from this user -->
+ <section class="py-5 bg-light related-products">
+        <div class="container px-4 px-lg-5">
+            <h2 class="fw-bolder mb-4 text-center">More from {{ product.author.username }}</h2>
+            <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-6 justify-content-center">
+                {% for product in sameUserProducts %}
+                <div class="col mb-1">
+                    <a href="{% url 'main:productPage' product.id %}" class="text-decoration-none text-dark">
+                        <div class="card h-100 shadow-sm">
+                            {% if product.on_sale %}
+                                <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Sale</div>
+                            {% endif %}
+                            <img class="card-img-top" src="{{ product.image_url|default:'https://dummyimage.com/450x300/dee2e6/6c757d.jpg' }}" alt="{{ product.product_name }}">
+                            <div class="card-body p-0">
+                                <div class="text-center">
+                                <h5 class="fw-bolder">{{ product.product_name }}</h5>
+                               {% if product.on_sale %}
+                                    <span class="text-muted text-decoration-line-through">${{ product.price }}</span><br>
+                                    <span class="text-danger fw-bold">${{ product.discounted_price }}</span>
+                                {% else %}
+                                    <span>${{ product.price }}</span>
+                                {% endif %}
+                            </div>
+                            </div>
+
+                        </div>
+                    </a>
+                </div>
+                {% endfor %}
+            </div>
         </div>
     </section>
 

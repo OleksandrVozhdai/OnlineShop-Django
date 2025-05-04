@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 
 from pathlib import Path
 import os
+import mimetypes
 
 from django.conf.global_settings import MEDIA_URL, MEDIA_ROOT
 
@@ -77,7 +78,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'mssql',
         'NAME': 'OnlineShop',
-        'HOST': 'localhost',
+        'HOST': 'YourServerName',
         'OPTIONS': {
             'driver': 'ODBC Driver 17 for SQL Server',
             'trusted_connection': 'yes',
@@ -134,7 +135,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Налаштування для надсилання email
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'  # Використовуємо SMTP для надсилання email
-EMAIL_HOST = 'mail.hosting.reg.ru'  # SMTP-сервер REG.RU
+EMAIL_HOST = ''  # SMTP-сервер REG.RU
 EMAIL_PORT = 587  # Порт для TLS
 EMAIL_USE_TLS = True  # Використовуємо TLS для безпечного з'єднання
 EMAIL_HOST_USER = 'admin@deinekogames.net'  # Твій email для надсилання
@@ -146,3 +147,4 @@ AUTH_USER_MODEL = 'main.User'  # Кастомна модель користув�
 LOGIN_REDIRECT_URL = '/'  # Перенаправлення після входу
 LOGOUT_REDIRECT_URL = '/login/'  # Перенаправлення після виходу
 LOGIN_URL = '/login/'  # URL для входу
+

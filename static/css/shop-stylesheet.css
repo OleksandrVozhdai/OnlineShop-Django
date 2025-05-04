@@ -82,13 +82,13 @@ h5.fw-bolder {
     background-position: center 360px;
     background-size: cover;
 
-    padding: 20px;
+    padding: 10px;
     border-radius: 15px;
     margin: 21px auto;
     width: 90%;
     height: 55%;
     display: flex;
-    overflow-x: auto;
+    overflow-x: hidden;
     overflow-y: hidden;
     border: none;
     box-sizing: border-box;
@@ -99,6 +99,14 @@ h5.fw-bolder {
 .recommendation-background {
     background: linear-gradient(to bottom, #013548, #e0f2f7);
 }
+
+.recommendation-background-shop-only {
+    background: linear-gradient(to bottom, lightgray, #e0f2f7);
+    padding: 20px;
+    color: black;
+    text-align: center;
+}
+
 
 .recommendation-container .row {
     padding-top: 7px;
@@ -113,7 +121,7 @@ h5.fw-bolder {
 .product-image {
     max-height: 100%;
     max-width: 100%;
-    object-fit: contain;
+    object-fit: fill;
 }
 
 .noUi-handle {
@@ -131,6 +139,19 @@ h5.fw-bolder {
     display: none !important;
 }
 
+.video-banner {
+  width: 100%;
+  height: 200px;
+
+  overflow: hidden;
+  position: relative;
+}
+
+video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
 
 
 

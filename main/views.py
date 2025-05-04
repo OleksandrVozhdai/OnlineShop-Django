@@ -24,12 +24,14 @@ def ProductPageView(request, id):
 
     relatedProducts = TechList.objects.filter(category=product.category).exclude(id=product.id)
     sameBrandProducts = TechList.objects.filter(brand=product.brand).exclude(id=product.id)[:6]
+    sameUserProducts = TechList.objects.filter(author__username=product.author.username).exclude(id=product.id)[:6]
 
     return render(request, 'main/productPage.html', {
         'product': product,
         'relatedProducts': relatedProducts,
         'sameBrandProducts': sameBrandProducts,
         'constAllProducts': constAllProducts,
+        'sameUserProducts': sameUserProducts
     })
 
 # Перемикання стану "у списку бажань"
@@ -58,7 +60,6 @@ def ShopView(request):
     products = TechList.objects.all()
     is_filtered = False
 
-    # Фільтрація за ціною
     min_price = request.GET.get('min_price')
     max_price = request.GET.get('max_price')
     if min_price:
@@ -68,26 +69,22 @@ def ShopView(request):
         products = products.filter(price__lte=max_price)
         is_filtered = True
 
-    # Фільтрація за брендом
     brand = request.GET.get('brand')
     if brand:
         products = products.filter(brand=brand)
         is_filtered = True
 
-    # Фільтрація за категорією
     category = request.GET.get('category')
     if category:
         products = products.filter(category=category)
         is_filtered = True
 
-    # Фільтрація за рейтингом
     rating = request.GET.get('rating')
     if rating:
         products = products.filter(stars__gte=Decimal(rating))
 
     isOnSale = products.filter(on_sale=True)
 
-    # Отримуємо унікальні бренди та категорії для фільтрів
     brands = TechList.objects.values_list('brand', flat=True).distinct()
     categories = TechList.objects.values_list('category', flat=True).distinct()
 

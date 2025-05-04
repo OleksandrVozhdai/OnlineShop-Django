@@ -212,7 +212,7 @@
                                 <h5 class="card-title">{{ product.product_name }}</h5>
                                 <p class="card-text">Category: {{ product.category }}</p>
                                 <p class="card-text">Brand: {{ product.brand }}</p>
-                                <p class="card-text">Price: {{ product.price }} UAH</p>
+                                <p class="card-text">Price: {{ product.price }} $</p>
                                 <p class="card-text">{{ product.description|truncatewords:20 }}</p>
                                 <div class="mt-2">
                                     <form action="{% url 'main:delete_product' product.id %}" method="post" style="display: inline;">

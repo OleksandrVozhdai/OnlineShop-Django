@@ -40,6 +40,8 @@ urlpatterns = [
          name='password_reset_complete'),
     # Додаємо маршрут для logout
     path('logout/', auth_views.LogoutView.as_view(next_page='/'), name='logout'),
+
+
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

@@ -45,3 +45,11 @@ class TechListForm(forms.ModelForm):
         self.fields['description'].widget.attrs.update({'placeholder': 'Enter product description'})
         self.fields['stock_quantity'].widget.attrs.update({'placeholder': 'Enter stock quantity'})
         self.fields['image_url'].widget.attrs.update({'placeholder': 'Enter image URL'})
+
+    def save(self, commit=True):
+        instance = super().save(commit=False)
+        if instance.stars is None:
+            instance.stars = 0.0
+        if commit:
+            instance.save()
+        return instance
