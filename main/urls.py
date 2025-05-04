@@ -22,6 +22,7 @@ urlpatterns = [
     path('toggle_wishlist/<int:id>/', Toggle_wishlist, name='toggle_wishlist'),
     path('confirm-email/<str:token>/', ConfirmEmailView, name='confirm_email'),
     path('profile/', ProfileView, name='profile'),
+    path('update-username/', views.update_username, name='update_username'),
     path('add-product/', add_product, name='add_product'),
     path('delete-product/<int:product_id>/', delete_product, name='delete_product'),
     path('edit-product/<int:product_id>/', edit_product, name='edit_product'),

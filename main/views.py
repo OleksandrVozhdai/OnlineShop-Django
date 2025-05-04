@@ -333,3 +333,19 @@ def create_order(request):
         request.session['cart'] = {}
         request.session.modified = True
         return JsonResponse({'success': True})
+
+def update_username(request):
+    if request.method == "POST":
+        username = request.POST.get('username')
+        if not username:
+            # Generate random 6-character username if empty
+            username = ''.join(random.choices(string.ascii_lowercase + string.digits, k=6))
+        try:
+            user = request.user
+            user.username = username
+            user.save()
+            messages.success(request, "Username updated successfully!")
+        except Exception as e:
+            messages.error(request, f"Error updating username: {e}")
+        return redirect('main:profile')
+    return render(request, 'main/profile.html')

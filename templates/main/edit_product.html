@@ -49,60 +49,56 @@
                 {% csrf_token %}
                 <div class="mb-3 form-group">
                     <label for="id_product_name" class="form-label">Product Name</label>
-                    {{ form.product_name }}
+                    <input type="text" name="product_name" id="id_product_name" class="form-control" value="{{ form.product_name.value|default_if_none:'' }}" required>
                     {% if form.product_name.errors %}
                         <div class="text-danger">{{ form.product_name.errors }}</div>
                     {% endif %}
                 </div>
                 <div class="mb-3 form-group">
                     <label for="id_category" class="form-label">Category</label>
-                    {{ form.category }}
+                    <input type="text" name="category" id="id_category" class="form-control" value="{{ form.category.value|default_if_none:'' }}" required>
                     {% if form.category.errors %}
                         <div class="text-danger">{{ form.category.errors }}</div>
                     {% endif %}
                 </div>
                 <div class="mb-3 form-group">
                     <label for="id_brand" class="form-label">Brand</label>
-                    {{ form.brand }}
+                    <input type="text" name="brand" id="id_brand" class="form-control" value="{{ form.brand.value|default_if_none:'' }}">
                     {% if form.brand.errors %}
                         <div class="text-danger">{{ form.brand.errors }}</div>
                     {% endif %}
                 </div>
                 <div class="mb-3 form-group">
-                    <label for="id_price" class="form-label">Price (UAH)</label>
-                    {{ form.price }}
+                    <label for="id_price" class="form-label">Price (USD)</label>
+                    <input type="number" name="price" id="id_price" class="form-control" value="{{ form.price.value|default_if_none:'' }}" step="0.01" required>
                     {% if form.price.errors %}
                         <div class="text-danger">{{ form.price.errors }}</div>
                     {% endif %}
                 </div>
                 <div class="mb-3 form-group">
                     <label for="id_description" class="form-label">Description</label>
-                    {{ form.description }}
+                    <textarea name="description" id="id_description" class="form-control">{{ form.description.value|default_if_none:'' }}</textarea>
                     {% if form.description.errors %}
                         <div class="text-danger">{{ form.description.errors }}</div>
                     {% endif %}
                 </div>
                 <div class="mb-3 form-group">
                     <label for="id_stock_quantity" class="form-label">Stock Quantity</label>
-                    {{ form.stock_quantity }}
+                    <input type="number" name="stock_quantity" id="id_stock_quantity" class="form-control" value="{{ form.stock_quantity.value|default_if_none:'' }}" required>
                     {% if form.stock_quantity.errors %}
                         <div class="text-danger">{{ form.stock_quantity.errors }}</div>
                     {% endif %}
                 </div>
                 <div class="mb-3 form-group">
                     <label for="id_image_url" class="form-label">Image URL</label>
-                    {{ form.image_url }}
+                    <input type="url" name="image_url" id="id_image_url" class="form-control" value="{{ form.image_url.value|default_if_none:'' }}">
                     {% if form.image_url.errors %}
                         <div class="text-danger">{{ form.image_url.errors }}</div>
                     {% endif %}
                 </div>
                 <div class="mb-3 form-check">
-                    {{ form.on_sale }}
+                    <input type="checkbox" name="on_sale" id="id_on_sale" class="form-check-input" {% if form.on_sale.value %}checked{% endif %}>
                     <label for="id_on_sale" class="form-check-label">On Sale</label>
-                </div>
-                <div class="mb-3 form-check">
-                    {{ form.on_wishlist }}
-                    <label for="id_on_wishlist" class="form-check-label">On Wishlist</label>
                 </div>
                 <button type="submit" class="btn btn-primary submit-btn">Save Changes</button>
             </form>
@@ -138,7 +134,6 @@
         color: #007bff;
     }
 
-    /* Стили для аватара и выпадающего меню */
     .avatar-dropdown {
         position: relative;
         display: inline-block;
@@ -197,7 +192,6 @@
         background-color: #f0f0f0;
     }
 
-    /* Стили для формы */
     main {
         max-width: 800px;
         margin: 2rem auto;
@@ -316,4 +310,14 @@
         text-align: center;
     }
 </style>
+
+<script>
+    document.addEventListener('click', function(event) {
+        const dropdown = document.querySelector('.avatar-dropdown');
+        const menu = document.querySelector('.dropdown-menu');
+        if (!dropdown.contains(event.target)) {
+            menu.style.display = 'none';
+        }
+    });
+</script>
 {% endblock content %}

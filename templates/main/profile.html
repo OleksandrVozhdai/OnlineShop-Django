@@ -71,9 +71,8 @@
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
 
-        .logo h1 {
-            margin: 0;
-            font-size: 1.5rem;
+        .logo img {
+            height: 40px;
         }
 
         .nav-links a {
@@ -145,6 +144,34 @@
             90% { opacity: 1; }
             100% { opacity: 0; display: none; }
         }
+
+        .username-form {
+            margin-bottom: 1.5rem;
+        }
+
+        .username-form input {
+            width: 100%;
+            max-width: 300px;
+            padding: 0.75rem;
+            border-radius: 8px;
+            border: 1px solid #ced4da;
+            font-size: 1rem;
+            margin-right: 1rem;
+        }
+
+        .username-form button {
+            padding: 0.75rem 1.5rem;
+            background-color: #007bff;
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-size: 1rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .username-form button:hover {
+            background-color: #0056b3;
+        }
     </style>
 </head>
 <body>
@@ -152,7 +179,7 @@
         <nav class="navbar">
             <div class="logo">
                 <a href="{% url 'main:index' %}">
-                    <img src="/static/assets/img/device-makret-logo.png" alt="Device Market" style="height: 40px;">
+                    <img src="{% static 'assets/img/device-makret-logo.png' %}" alt="Device Market" style="height: 40px;">
                 </a>
             </div>
             <div class="nav-links">
@@ -195,6 +222,12 @@
             <p><strong>Phone:</strong> {{ user.phone|default:"Not provided" }}</p>
             <p><strong>Address:</strong> {{ user.address|default:"Not provided" }}</p>
             <p><strong>Registration Date:</strong> {{ user.date_joined|date:"F d, Y" }}</p>
+            <p><strong>Username:</strong> {{ user.username|default:"Not set" }}</p>
+            <form method="POST" class="username-form" action="{% url 'main:update_username' %}">
+                {% csrf_token %}
+                <input type="text" name="username" value="{{ user.username|default:'' }}" placeholder="Enter username">
+                <button type="submit">Update Username</button>
+            </form>
         </div>
 
         <!-- Кнопка для додавання товару -->
