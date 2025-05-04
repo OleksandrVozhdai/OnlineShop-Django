@@ -1,0 +1,7 @@
+body{
+     background: linear-gradient(to bottom, #e0f2f7 , #ffffff); !important;
+}
+h5.fw-bolder {
+    font-family: 'Arial', sans-serif; !important;
+    margin-top: 0;
+}

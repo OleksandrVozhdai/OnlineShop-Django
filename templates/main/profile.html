@@ -1,0 +1,240 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+    <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
+    <style>
+        /* Стили для аватара и выпадающего меню */
+        .avatar-dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            background-color: black;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background-color: white;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            border-radius: 5px;
+            z-index: 1000;
+        }
+
+        .avatar-dropdown:hover .dropdown-menu {
+            display: block;
+        }
+
+        .dropdown-menu a, .dropdown-menu button {
+            display: block;
+            padding: 10px 20px;
+            color: black;
+            text-decoration: none;
+            white-space: nowrap;
+            background: none;
+            border: none;
+            width: 100%;
+            text-align: left;
+            cursor: pointer;
+        }
+
+        .dropdown-menu a:hover, .dropdown-menu button:hover {
+            background-color: #f0f0f0;
+        }
+
+        /* Стили для навигации */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo h1 {
+            margin: 0;
+            font-size: 1.5rem;
+        }
+
+        .nav-links a {
+            margin: 0 1rem;
+            text-decoration: none;
+            color: #333;
+        }
+
+        .nav-links a:hover {
+            color: #007bff;
+        }
+
+        /* Стили для профиля */
+        main {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .profile-info {
+            background-color: #f8f9fa;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+        }
+
+        .profile-info p {
+            margin: 0.5rem 0;
+            font-size: 1.1rem;
+        }
+
+        .add-product-btn {
+            background-color: #28a745;
+            border: none;
+            padding: 0.85rem 2rem;
+            border-radius: 8px;
+            font-size: 1.15rem;
+            font-weight: 600;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 2px 5px rgba(40, 167, 69, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 2rem;
+            display: inline-block;
+            text-decoration: none;
+            color: white;
+        }
+
+        .add-product-btn:hover {
+            background-color: #218838;
+            transform: translateY(-2px);
+        }
+
+        .alert-success {
+            background-color: #d4edda;
+            border-color: #c3e6cb;
+            color: #155724;
+            border-radius: 8px;
+            padding: 1rem;
+            font-size: 1rem;
+            text-align: center;
+            margin-bottom: 1rem;
+            animation: fadeOut 5s forwards;
+        }
+
+        @keyframes fadeOut {
+            0% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { opacity: 0; display: none; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <a href="{% url 'main:index' %}">
+                    <img src="/static/assets/img/device-makret-logo.png" alt="Device Market" style="height: 40px;">
+                </a>
+            </div>
+            <div class="nav-links">
+                <a href="{% url 'main:shop' %}">Shop</a>
+                <a href="{% url 'main:about' %}">About</a>
+                <a href="{% url 'main:catalog' %}">Catalog</a>
+            </div>
+            <div class="auth-section">
+                {% if user.is_authenticated %}
+                    <div class="avatar-dropdown">
+                        <div class="avatar">
+                            {{ user.full_name|first|upper }}
+                        </div>
+                        <div class="dropdown-menu">
+                            <a href="{% url 'main:profile' %}">Profile</a>
+                            <form action="{% url 'logout' %}" method="post">
+                                {% csrf_token %}
+                                <button type="submit">Logout</button>
+                            </form>
+                        </div>
+                    </div>
+                {% else %}
+                    <a href="{% url 'main:login' %}">Log in</a>
+                {% endif %}
+            </div>
+        </nav>
+    </header>
+    <main>
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-success" role="alert">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+        <h2>Your Profile</h2>
+        <div class="profile-info">
+            <p><strong>Full Name:</strong> {{ user.full_name }}</p>
+            <p><strong>Email:</strong> {{ user.email }}</p>
+            <p><strong>Phone:</strong> {{ user.phone|default:"Not provided" }}</p>
+            <p><strong>Address:</strong> {{ user.address|default:"Not provided" }}</p>
+            <p><strong>Registration Date:</strong> {{ user.date_joined|date:"F d, Y" }}</p>
+        </div>
+
+        <!-- Кнопка для додавання товару -->
+        <a href="{% url 'main:add_product' %}" class="add-product-btn">Add New Product</a>
+
+        <!-- Список товарів користувача -->
+        <h3 class="fw-bolder mb-3">Your Products</h3>
+        {% if user_products %}
+            <div class="row gx-5">
+                {% for product in user_products %}
+                    <div class="col-md-4 mb-4">
+                        <div class="card h-100">
+                            <img src="{{ product.image_url|default:'https://dummyimage.com/450x300/dee2e6/6c757d.jpg' }}" class="card-img-top" alt="{{ product.product_name }}" style="height: 200px; object-fit: cover;">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ product.product_name }}</h5>
+                                <p class="card-text">Category: {{ product.category }}</p>
+                                <p class="card-text">Brand: {{ product.brand }}</p>
+                                <p class="card-text">Price: {{ product.price }} $</p>
+                                <p class="card-text">{{ product.description|truncatewords:20 }}</p>
+                                <div class="mt-2">
+                                    <form action="{% url 'main:delete_product' product.id %}" method="post" style="display: inline;">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-danger btn-sm">Delete Product</button>
+                                    </form>
+                                    <a href="{% url 'main:edit_product' product.id %}" class="btn btn-primary btn-sm ms-2">Edit</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p>You have no products yet.</p>
+        {% endif %}
+    </main>
+    <script>
+        setTimeout(() => {
+            const alerts = document.querySelectorAll('.alert-success');
+            alerts.forEach(alert => alert.style.display = 'none');
+        }, 5000);
+    </script>
+</body>
+</html>

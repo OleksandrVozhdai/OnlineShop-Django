@@ -48,17 +48,17 @@
        <div class="container px-5 px-3 mt-5">
            <div class="row gx-4 gx-lg-5 row-cols-4 row-cols-md-4 row-cols-xl-4 justify-content-center">
 
-               <div class="col mb-5">
-                   <a href="{% url 'main:shop' %}smartphones/">
-                       <div class="card">
-                           <img class="card-img-top" src='{{ "https://img.freepik.com/premium-vector/realistic-phone-isolated-white-background-smartphone-template-your-mockup-vector-illustration_561158-94.jpg"|default:"https://dummyimage.com/450x300/dee2e6/6c757d.jpg" }}' alt="Smartphones" />
-                       </div>
-                   </a>
-                   <h5 class="fw-bolder">Smartphones</h5>
-               </div>
+              <div class="col mb-5">
+                <a href="{% url 'main:shop' %}?category=Smartphone">
+                    <div class="card">
+                        <img class="card-img-top" src='{{ "https://img.freepik.com/premium-vector/realistic-phone-isolated-white-background-smartphone-template-your-mockup-vector-illustration_561158-94.jpg"|default:"https://dummyimage.com/450x300/dee2e6/6c757d.jpg" }}' alt="Smartphones" />
+                    </div>
+                </a>
+                <h5 class="fw-bolder">Smartphones</h5>
+              </div>
 
                <div class="col mb-5">
-                   <a href="{% url 'main:shop' %}laptops/">
+                    <a href="{% url 'main:shop' %}?category=Laptop">
                        <div class="card">
                            <img class="card-img-top" src='{{ "https://storage.needpix.com/rsynced_images/laptop-2665794_1280.jpg"|default:"https://dummyimage.com/450x300/dee2e6/6c757d.jpg" }}' alt="Laptops" />
                        </div>
@@ -67,7 +67,7 @@
                </div>
 
                <div class="col mb-5">
-                   <a href="{% url 'main:shop' %}mouses/">
+                   <a href="{% url 'main:shop' %}?category=Mouse">
                        <div class="card">
                            <img class="card-img-top" src='{{ "https://static3.nordic.pictures/29607040-thickbox_default/razer-wireless-mouse-viper-ultimate-charging-dock.jpg"|default:"https://dummyimage.com/450x300/dee2e6/6c757d.jpg" }}' alt="Mouses" />
                        </div>
@@ -76,12 +76,21 @@
                </div>
 
                <div class="col mb-5">
-                   <a href="{% url 'main:shop' %}televisions/">
+                   <a href="{% url 'main:shop' %}?category=Television">
                        <div class="card">
-                           <img class="card-img-top" src='{{ "https://mke.com.bd/media/catalog/product/s/o/sony_4k_ultra_hd_led_smart_android_google_tv_kd-55x80j_55_inch_1_1_1.jpg?store=default&image-type=image"|default:"https://dummyimage.com/450x300/dee2e6/6c757d.jpg" }}' alt="Televisions" />
+                           <img class="card-img-top" src='{{ "https://images.samsung.com/is/image/samsung/ua-fhd-t5300-ue43t5300auxua-frontblack-226800509?$684_547_PNG$"|default:"https://dummyimage.com/450x300/dee2e6/6c757d.jpg" }}' alt="Televisions" />
                        </div>
                    </a>
                    <h5 class="fw-bolder">Televisions</h5>
+               </div>
+
+               <div class="col mb-5">
+                   <a href="{% url 'main:shop' %}?category=Tablet">
+                       <div class="card">
+                           <img class="card-img-top" src='{{ "https://wo.ua/upload/resize_cache/iblock/d41/790_790_1/w68modq15f8lc2120rpyi7ab00d1txxd.jpg"|default:"https://dummyimage.com/450x300/dee2e6/6c757d.jpg" }}' alt="Televisions" />
+                       </div>
+                   </a>
+                   <h5 class="fw-bolder">Tablet</h5>
                </div>
 
                 <div class="col mb-5">

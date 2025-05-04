@@ -56,6 +56,11 @@ body {
 .card {
     border-radius: 20px;
     overflow: hidden;
+    transition: transform 0.3s ease;
+}
+
+.card:hover {
+    transform: scale(1.05);
 }
 
 .card-img-top {
@@ -63,26 +68,29 @@ body {
     width: 100%;
     object-fit: contain;
     padding: 10px 10px 0 10px;
+
 }
 
 h5.fw-bolder {
-    font-family: 'Arial', sans-serif;
+    font-family: 'Arial', sans-serif; !important;
     margin-top: 0;
 }
 
 .recommendation-container {
-    background-color: darkcyan;
-    background-image: url('/static/assets/img/shop-recommendation-bg.jpg');
 
-    padding: 20px;
+    background-image: url('/static/assets/img/recommendation-bg.png');
+    background-position: center 360px;
+    background-size: cover;
+
+    padding: 10px;
     border-radius: 15px;
-    margin: 20px auto;
+    margin: 21px auto;
     width: 90%;
     height: 55%;
     display: flex;
-    overflow-x: auto;
+    overflow-x: hidden;
     overflow-y: hidden;
-    border: 1px solid #013548;
+    border: none;
     box-sizing: border-box;
     min-width: 250px;
 
@@ -92,7 +100,57 @@ h5.fw-bolder {
     background: linear-gradient(to bottom, #013548, #e0f2f7);
 }
 
+.recommendation-background-shop-only {
+    background: linear-gradient(to bottom, lightgray, #e0f2f7);
+    padding: 20px;
+    color: black;
+    text-align: center;
+}
+
+
 .recommendation-container .row {
+    padding-top: 7px;
     scroll-behavior: smooth;
 }
+
+.product-image-container {
+    height: 500px;
+    overflow: hidden;
+}
+
+.product-image {
+    max-height: 100%;
+    max-width: 100%;
+    object-fit: fill;
+}
+
+.noUi-handle {
+    border-radius: 50% !important;
+    width: 20px !important;
+    height: 20px !important;
+    background: darkcyan !important;
+    border: none !important;
+    right: -10px !important;
+    top: -2.5px !important;
+    position: absolute !important;
+}
+.noUi-handle::before,
+.noUi-handle::after {
+    display: none !important;
+}
+
+.video-banner {
+  width: 100%;
+  height: 200px;
+
+  overflow: hidden;
+  position: relative;
+}
+
+video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 

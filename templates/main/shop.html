@@ -1,6 +1,7 @@
 
 {% include 'partials/nav.html' %}
 {% include 'partials/dependence.html' %}
+{% load static %}
 
 <!DOCTYPE html>
 <head>
@@ -9,7 +10,6 @@
     <link rel="stylesheet" href="../../static/css/shop-stylesheet.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.7.1/nouislider.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.7.1/nouislider.min.js"></script>
-
 <style>
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(-20px); }
@@ -19,12 +19,18 @@
 </head>
 
 <body>
-
-<div class = "recommendation-background" style="height: auto; width: auto; align-content: center">
-<div style="display: flex; justify-content: center; margin-top: 120px">
+<div class="video-banner" style="margin-top: 80px">
+    <video autoplay muted loop playsinline style="width: 100%; height: 100%; object-fit: cover;">
+    <source src="{% static 'assets/ads/Phone_ad.mp4' %}" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+</div>
+{% if isOnSale %}
+<div class = "recommendation-background-shop-only " style="height: auto; width: auto; align-content: center">
+<div style="display: flex; justify-content: center; margin-top: 40px">
   <h1 style="
     font-family: 'Arial', sans-serif;
-    color: #e0f2f7;
+    color: black;
     font-size: 48px;
     font-weight: bold;
     text-shadow: 2px 2px 8px rgba(0,0,0,0.2);
@@ -34,7 +40,7 @@
   </h1>
 </div>
 
-<div class="recommendation-container" style="margin-top: 30px; height: 330px; background-size: cover;"> <!-- Recommendation -->
+<div class="recommendation-container" style=" justify-content: center; margin-top: 30px; height: 330px; background-size: cover;"> <!-- Recommendation -->
     <section class="py-0">
         <div class="container px-1 px-lg-0 mt-0">
             <div class="row gx-1 gx-lg-3 justify-content-start flex-nowrap" style="overflow-x: auto; overflow-y: hidden;">
@@ -43,17 +49,25 @@
                     <div class="col mb-5" style="flex: 0 0 auto; width: 200px;"> <!-- Фіксована ширина -->
                         <div class="card h-100">
                             <div class="badge bg-red text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Sale</div>
-                            <img class="card-img-top" src='{{ product.image_url|default:"https://dummyimage.com/450x300/dee2e6/6c757d.jpg" }}' alt="{{ product.product_name }}" />
+                            <a href="{% url 'main:productPage' product.id %}" style="text-decoration: none; color: inherit;">
+                                <img class="card-img-top" src='{{ product.image_url|default:"https://dummyimage.com/450x300/dee2e6/6c757d.jpg" }}' alt="{{ product.product_name }}" />
+                            </a>
                             <div class="card-body p-1">
                                 <div class="text-center">
                                     <div class="d-flex justify-content-center small text-warning mb-2">
-                                        <div class="bi-star-fill"></div>
-                                        <div class="bi-star-fill"></div>
-                                        <div class="bi-star-fill"></div>
-                                        <div class="bi-star-fill"></div>
-                                        <div class="bi-star-fill"></div>
+                                        {% for i in "12345"|make_list %}
+                                            {% if forloop.counter <= product.stars|floatformat:0 %}
+                                                <div class="bi-star-fill"></div>
+                                            {% elif forloop.counter <= product.stars %}
+                                                <div class="bi-star-fill"></div>
+                                            {% else %}
+                                                <div class="bi-star"></div>
+                                            {% endif %}
+                                        {% endfor %}
                                     </div>
                                     <h5 class="fw-bolder">{{ product.product_name }}</h5>
+
+
                                 </div>
                             </div>
                         </div>
@@ -68,8 +82,14 @@
 </div>
 
 
+
+
 <div style="display: flex;">
     <div class="filter-container" style="width: 250px; margin-top: 50px; margin-left: 30px; flex-shrink: 0; position: sticky; top: 120px; height: fit-content;"> <!-- filters -->
+    {% else %}
+<div style="display: flex;">
+    <div class="filter-container" style="width: 250px; margin-top: 120px; margin-left: 30px; flex-shrink: 0; position: sticky; top: 120px; height: fit-content;"> <!-- filters -->
+    {% endif %}
         <form method="get" action="">
             <div style="margin-bottom: 15px;">
                 <label style="font-weight: bold;">Price Range ($):</label>
@@ -92,7 +112,7 @@
                 </div>
 
                 {% if brands|length > 6 %}
-                        <button id="showMoreBrands" style="background: none; border: none; color: #007bff; padding: 0; margin-top: 5px; cursor: pointer;" type="button" class="btn btn-link p-0 mt-1"> {{ brands|length|add:"-6" }} more</button>
+                    <button id="showMoreBrands" style="background: none; border: none; color: #007bff; padding: 0; margin-top: 5px; cursor: pointer;" type="button" class="btn btn-link p-0 mt-1"> {{ brands|length|add:"-6" }} more</button>
                 {% endif %}
             </div>
 
@@ -112,12 +132,29 @@
                 </div>
             </div>
 
+           <div style="margin-bottom: 15px;">
+                <label style="font-weight: bold;">Rating:</label>
+                <div id="ratingContainer" style="max-height: none; overflow: hidden;">
+                    {% for i in "54321" %}
+                        <div>
+                            <input type="radio" name="rating" value="{{ i }}" id="rating_{{ i }}"
+                                   {% if request.GET.rating == i %}checked{% endif %}>
+                            <label for="rating_{{ i }}">{{ i }} +</label>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+
             <button style="margin-top: 15px" type="submit">Filter</button>
         </form>
     </div>
-
-  <div style="flex-grow: 1; padding-left: 40px; overflow-x: auto;"> <!-- product cards -->
-    <section class="py-5" style="margin-right: 30px;">
+{% if not isOnSale %}
+  <div style="flex-grow: 1; padding-left: 40px; overflow-x: auto; margin-top: 75px"> <!-- product cards -->
+  {% else %}
+  <div style="flex-grow: 1; padding-left: 40px; overflow-x: auto;">
+  {% endif %}
+      <section class="py-5" style="margin-right: 30px;">
         <div class="container px-4 px-lg-0">
             <div class="row gx-6 gx-lg-3 row-cols-5 row-cols-md-4 row-cols-xl-6 justify-content-center">
                 {% for product in products %}
@@ -132,18 +169,38 @@
                         <div class="card-body p-4">
                             <div class="text-center">
                                 <h5 class="fw-bolder">{{ product.product_name }}</h5>
-                                <span> ${{ product.price }} </span>
+                                <h5 class="fw-bolder" style="font-size: 14px; color: purple"> {{ product.author.username }}</h5>
+                            <div class="card-body p-1">
+                                <div class="text-center">
+                                    <div class="d-flex justify-content-center small text-warning mb-2">
+                                        {% for i in "12345"|make_list %}
+                                            {% if forloop.counter <= product.stars|floatformat:0 %}
+                                                <div class="bi-star-fill"></div>
+                                            {% elif forloop.counter <= product.stars %}
+                                                <div class="bi-star-fill"></div>
+                                            {% else %}
+                                                <div class="bi-star"></div>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                               {% if product.on_sale %}
+                                    <span class="text-muted text-decoration-line-through">${{ product.price }}</span><br>
+                                    <span class="text-danger fw-bold">${{ product.discounted_price }}</span>
+                                {% else %}
+                                    <span>${{ product.price }}</span>
+                                {% endif %}
                             </div>
                         </div>
                         <div class="card-footer p-4 pt-0 border-top-0 bg-transparent d-flex justify-content-between align-items-center">
-                            <button class="btn btn-outline-dark mt-auto add-to-cart-btn" data-product-id="{{ product.id }}">
+                             <button class="btn btn-outline-dark mt-auto add-to-cart-btn" data-product-id="{{ product.id }}">
                                    Add to cart
                             </button>
 
-
                             <!-- wishlist heart -->
                             <button class="btn p-0 border-0 bg-transparent wishlist-btn" data-product-id="{{ product.id }}">
-                                {% if product.OnWishlist %}
+                               {% if product.on_wishlist %}
                                     <i class="bi bi-heart-fill" style="font-size: 1.5rem; color: red; margin-left: 15px" ></i>
                                 {% else %}
                                     <i class="bi bi-heart" style="font-size: 1.5rem; color: black; margin-left: 15px"></i>
@@ -157,7 +214,6 @@
         </div>
     </section>
 </div>
-
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {
@@ -219,7 +275,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 document.addEventListener('DOMContentLoaded', function() {
     const buttons = document.querySelectorAll('.wishlist-btn');
-    
+
     buttons.forEach(button => {
         button.addEventListener('click', function(e) {
             e.preventDefault();
@@ -250,8 +306,11 @@ document.addEventListener('DOMContentLoaded', function() {
             .catch(error => console.error('Error:', error));
         });
     });
+
+
 });
 </script>
+
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     const addToCartButtons = document.querySelectorAll('.add-to-cart-btn');
@@ -282,6 +341,5 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 </script>
-
 </body>
 </html>

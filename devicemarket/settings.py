@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 
 from pathlib import Path
 import os
+import mimetypes
 
 from django.conf.global_settings import MEDIA_URL, MEDIA_ROOT
 
@@ -32,15 +33,13 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'main',  # Перемісти сюди, перед django.contrib.admin
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
-    # Custom Apps
-    'main'
 ]
 
 MIDDLEWARE = [
@@ -62,7 +61,6 @@ TEMPLATES = [
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
-                'main.context_processors.cart_item_count',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
@@ -136,11 +134,17 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Налаштування для надсилання email
-
-# В ЭТУ СТРОКУ ВВОДИМ ДАННЫЕ МОЕГО ПОЧТОВОГО ДОМЕНА <--------
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'  # Використовуємо SMTP для надсилання email
+EMAIL_HOST = ''  # SMTP-сервер REG.RU
+EMAIL_PORT = 587  # Порт для TLS
+EMAIL_USE_TLS = True  # Використовуємо TLS для безпечного з'єднання
+EMAIL_HOST_USER = 'admin@deinekogames.net'  # Твій email для надсилання
+EMAIL_HOST_PASSWORD = 'Secret'  # Пароль для твого email
+DEFAULT_FROM_EMAIL = 'admin@deinekogames.net'  # Email, з якого будуть надсилатися листи
 
 # Налаштування для авторизації та перенаправлення
 AUTH_USER_MODEL = 'main.User'  # Кастомна модель користувача
 LOGIN_REDIRECT_URL = '/'  # Перенаправлення після входу
 LOGOUT_REDIRECT_URL = '/login/'  # Перенаправлення після виходу
 LOGIN_URL = '/login/'  # URL для входу
+
