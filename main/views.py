@@ -27,6 +27,7 @@ from django.contrib.auth.decorators import login_required
 from .models import Order, TechList
 from django.utils import timezone
 from django.contrib.auth.models import User
+import string
 
 # Представлення для головної сторінки
 def IndexView(request):
@@ -214,8 +215,8 @@ def add_product(request):
     return render(request, 'main/add_product.html', {'form': form})
 
 @login_required
-def delete_product(request, product_id):
-    product = get_object_or_404(TechList, id=product_id, author=request.user)
+def delete_product(request, id):
+    product = get_object_or_404(TechList, id=id, author=request.user)
     if request.method == 'POST':
         product.delete()
         messages.success(request, 'Product successfully deleted!')
@@ -223,8 +224,8 @@ def delete_product(request, product_id):
     return render(request, 'main/delete_confirmation.html', {'product': product})
 
 @login_required
-def edit_product(request, product_id):
-    product = get_object_or_404(TechList, id=product_id, author=request.user)
+def edit_product(request, id):
+    product = get_object_or_404(TechList, id=id, author=request.user)
     if request.method == 'POST':
         form = TechListForm(request.POST, instance=product)
         if form.is_valid():
@@ -268,6 +269,7 @@ def AddToCartView(request, product_id):
         cart.append(str(product_id))
     request.session['cart'] = cart
     return JsonResponse({'success': True})
+
 @require_POST
 def RemoveFromCartView(request, product_id):
     cart = request.session.get('cart', [])
@@ -275,10 +277,12 @@ def RemoveFromCartView(request, product_id):
         cart.remove(str(product_id))
     request.session['cart'] = cart
     return JsonResponse({'success': True})
+
 @csrf_exempt
 def CartItemCountView(request):
     cart = request.session.get('cart', [])
     return JsonResponse({'count': len(cart)})
+
 @csrf_exempt
 @login_required
 def add_to_cart(request, tech_id):
@@ -291,7 +295,7 @@ def add_to_cart(request, tech_id):
 
             Order.objects.create(
                 user=request.user,
-                tech=tech,
+                product=tech,
                 order_date=timezone.now(),
                 quantity=quantity,
                 total_price=total_price
@@ -301,6 +305,7 @@ def add_to_cart(request, tech_id):
         except TechList.DoesNotExist:
             return JsonResponse({'success': False, 'error': 'Item not found'})
     return JsonResponse({'success': False, 'error': 'Invalid request'})
+
 @csrf_exempt
 @require_POST
 def create_order(request):
@@ -320,7 +325,7 @@ def create_order(request):
 
             Order.objects.create(
                 user=default_user,
-                tech=tech,
+                product=tech,
                 order_date=timezone.now(),
                 quantity=quantity,
                 total_price=total_price
