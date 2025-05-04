@@ -157,7 +157,7 @@
                                 </div>
 
                         {% if product.stock_quantity > 0 %}
-                            <h2 style="font-size: medium; color: green;">In stock</h2>
+                            <h2 style="font-size: medium; color: green;">In stock ({{ product.stock_quantity }})</h2>
                         {% else %}
                             <h2 style="font-size: medium; color: darkred;">Out of stock</h2>
                         {% endif %}
