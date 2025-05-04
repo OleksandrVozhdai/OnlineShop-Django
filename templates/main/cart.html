@@ -14,7 +14,7 @@
 <div style="flex-grow: 1; padding-left: 40px; overflow-x: auto;">
     <section class="py-5 bg-light" style="flex-grow: 1; padding-left: 40px; overflow-x: auto;">
         <div class="container px-4 px-lg-5 mt-5">
-            <h2 class="fw-bolder mb-4">Your Cart</h2>
+            <h2 class="fw-bold mb-4 text-center" style="font-family: 'Arial', sans-serif;">Your Cart</h2>
             {% if products %}
             <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
                 {% for product in products %}
@@ -33,9 +33,9 @@
                             </div>
                             <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
                                 <div class="text-center">
-                                   <button class="remove-from-cart-btn" data-product-id="{{ product.id }}">
-                                           Remove
-                                   </button>
+                                   <button class="remove-from-cart-btn btn btn-danger btn-sm shadow-sm" data-product-id="{{ product.id }}">
+                                        <i class="bi bi-trash-fill"></i> Remove
+                                    </button>
 
                                 </div>
                             </div>
@@ -57,7 +57,7 @@
 <!-- Footer -->
 <footer class="py-5 bg-dark">
     <div class="container">
-        <p class="m-0 text-center text-white">Copyright &copy; Your Website 2023</p>
+        <p class="m-0 text-center text-white">Copyright &copy; Device Market 2025</p>
     </div>
 </footer>
 
