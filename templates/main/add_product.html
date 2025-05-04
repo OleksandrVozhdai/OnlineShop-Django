@@ -1,0 +1,328 @@
+{% load static %}
+
+{% block content %}
+<header>
+    <nav class="navbar">
+        <div class="logo">
+            <a href="{% url 'main:index' %}">
+                <img src="{% static 'assets/img/device-makret-logo.png' %}" alt="Device Market" style="height: 40px;">
+            </a>
+        </div>
+        <div class="nav-links">
+            <a href="{% url 'main:shop' %}">Shop</a>
+            <a href="{% url 'main:about' %}">About</a>
+            <a href="{% url 'main:catalog' %}">Catalog</a>
+        </div>
+        <div class="auth-section">
+            {% if user.is_authenticated %}
+                <div class="avatar-dropdown">
+                    <div class="avatar">
+                        {{ user.full_name|first|upper }}
+                    </div>
+                    <div class="dropdown-menu">
+                        <a href="{% url 'main:profile' %}" class="dropdown-item">Profile</a>
+                        <form action="{% url 'logout' %}" method="post" style="margin: 0;">
+                            {% csrf_token %}
+                            <button type="submit" class="dropdown-item">Logout</button>
+                        </form>
+                    </div>
+                </div>
+            {% else %}
+                <a href="{% url 'main:login' %}" class="nav-link">Log in</a>
+            {% endif %}
+        </div>
+    </nav>
+</header>
+
+<main class="flex-shrink-0">
+    <section class="py-5">
+        <div class="container px-5 form-container">
+            <h2 class="fw-bolder mb-4">Add New Product</h2>
+            {% if messages %}
+                <div class="alert alert-info">
+                    {% for message in messages %}
+                        {{ message }}
+                    {% endfor %}
+                </div>
+            {% endif %}
+            <form method="POST" class="product-form">
+                {% csrf_token %}
+                <div class="mb-3 form-group">
+                    <label for="id_product_name" class="form-label">Product Name</label>
+                    {{ form.product_name }}
+                    {% if form.product_name.errors %}
+                        <div class="text-danger">{{ form.product_name.errors }}</div>
+                    {% endif %}
+                </div>
+                <div class="mb-3 form-group">
+                    <label for="id_category" class="form-label">Category</label>
+                    {{ form.category }}
+                    {% if form.category.errors %}
+                        <div class="text-danger">{{ form.category.errors }}</div>
+                    {% endif %}
+                </div>
+                <div class="mb-3 form-group">
+                    <label for="id_brand" class="form-label">Brand</label>
+                    {{ form.brand }}
+                    {% if form.brand.errors %}
+                        <div class="text-danger">{{ form.brand.errors }}</div>
+                    {% endif %}
+                </div>
+                <div class="mb-3 form-group">
+                    <label for="id_price" class="form-label">Price (USD)</label>
+                    {{ form.price }}
+                    {% if form.price.errors %}
+                        <div class="text-danger">{{ form.price.errors }}</div>
+                    {% endif %}
+                </div>
+                <div class="mb-3 form-group">
+                    <label for="id_description" class="form-label">Description</label>
+                    {{ form.description }}
+                    {% if form.description.errors %}
+                        <div class="text-danger">{{ form.description.errors }}</div>
+                    {% endif %}
+                </div>
+                <div class="mb-3 form-group">
+                    <label for="id_stock_quantity" class="form-label">Stock Quantity</label>
+                    {{ form.stock_quantity }}
+                    {% if form.stock_quantity.errors %}
+                        <div class="text-danger">{{ form.stock_quantity.errors }}</div>
+                    {% endif %}
+                </div>
+                <div class="mb-3 form-group">
+                    <label for="id_image_url" class="form-label">Image URL</label>
+                    {{ form.image_url }}
+                    {% if form.image_url.errors %}
+                        <div class="text-danger">{{ form.image_url.errors }}</div>
+                    {% endif %}
+                </div>
+                <div class="mb-3 form-check">
+                    {{ form.on_sale }}
+                    <label for="id_on_sale" class="form-check-label">On Sale</label>
+                </div>
+                <div class="mb-3 form-check">
+                    {{ form.on_wishlist }}
+                    <label for="id_on_wishlist" class="form-check-label">On Wishlist</label>
+                </div>
+                <button type="submit" class="btn btn-success submit-btn">Add New Product</button>
+            </form>
+        </div>
+    </section>
+</main>
+
+<style>
+    /* Стили для хедера */
+    .navbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 2rem;
+        background-color: #fff;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        font-family: 'Roboto', sans-serif;
+    }
+
+    .logo img {
+        height: 40px;
+    }
+
+    .nav-links a {
+        margin: 0 1rem;
+        text-decoration: none;
+        color: #333;
+        font-size: 1rem;
+        font-weight: 500;
+    }
+
+    .nav-links a:hover {
+        color: #007bff;
+    }
+
+    /* Стили для аватара и выпадающего меню */
+    .avatar-dropdown {
+        position: relative;
+        display: inline-block;
+    }
+
+    .avatar {
+        width: 40px;
+        height: 40px;
+        background-color: #000;
+        color: #fff;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .avatar:hover {
+        background-color: #333;
+    }
+
+    .dropdown-menu {
+        display: none;
+        position: absolute;
+        top: 100%;
+        right: 0;
+        background-color: #fff;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        border-radius: 5px;
+        z-index: 1000;
+        min-width: 150px;
+        padding: 0.5rem 0;
+        list-style: none;
+    }
+
+    .avatar-dropdown:hover .dropdown-menu {
+        display: block;
+    }
+
+    .dropdown-item {
+        display: block;
+        padding: 0.5rem 1.5rem;
+        color: #000;
+        text-decoration: none;
+        font-size: 1rem;
+        font-weight: 500;
+        width: 100%;
+        text-align: left;
+        cursor: pointer;
+    }
+
+    .dropdown-item:hover {
+        background-color: #f0f0f0;
+    }
+
+    /* Стили для формы */
+    main {
+        max-width: 800px;
+        margin: 2rem auto;
+        padding: 0 1rem;
+        font-family: 'Roboto', sans-serif;
+    }
+
+    .form-container {
+        background-color: #f8f9fa;
+        padding: 2rem;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        border: 1px solid #e0e0e0;
+    }
+
+    h2.fw-bolder {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #333;
+        text-align: center;
+        margin-bottom: 1.5rem;
+    }
+
+    .product-form {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+
+    .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .form-label {
+        font-weight: 500;
+        color: #333;
+        font-size: 1.1rem;
+        text-transform: capitalize;
+    }
+
+    .form-control {
+        width: 100%;
+        max-width: 500px;
+        border-radius: 8px;
+        border: 1px solid #ced4da;
+        padding: 0.75rem;
+        font-size: 1rem;
+        transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        font-family: 'Roboto', sans-serif;
+        box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05);
+    }
+
+    .form-control:focus {
+        border-color: #28a745;
+        box-shadow: 0 0 8px rgba(40, 167, 69, 0.3);
+        outline: none;
+    }
+
+    textarea.form-control {
+        resize: vertical;
+        min-height: 120px;
+    }
+
+    .form-check {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .form-check-input {
+        margin: 0;
+        width: 1.25rem;
+        height: 1.25rem;
+    }
+
+    .form-check-label {
+        color: #555;
+        font-size: 1rem;
+    }
+
+    .text-danger {
+        font-size: 0.875rem;
+        margin-top: 0.25rem;
+        color: #dc3545;
+    }
+
+    .submit-btn {
+        background-color: #28a745;
+        border: none;
+        padding: 0.85rem 2.5rem;
+        border-radius: 8px;
+        font-size: 1.15rem;
+        font-weight: 600;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+        align-self: flex-start;
+        box-shadow: 0 2px 5px rgba(40, 167, 69, 0.3);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        color: #fff;
+    }
+
+    .submit-btn:hover {
+        background-color: #218838;
+        transform: translateY(-2px);
+    }
+
+    .alert-info {
+        background-color: #e7f3ff;
+        border-color: #b8daff;
+        color: #004085;
+        border-radius: 8px;
+        padding: 1rem;
+        font-size: 1rem;
+        text-align: center;
+    }
+</style>
+<script>
+    document.addEventListener('click', function(event) {
+        const dropdown = document.querySelector('.avatar-dropdown');
+        const menu = document.querySelector('.dropdown-menu');
+        if (!dropdown.contains(event.target)) {
+            menu.style.display = 'none';
+        }
+    });
+</script>
+{% endblock content %}

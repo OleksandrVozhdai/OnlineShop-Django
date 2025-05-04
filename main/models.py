@@ -1,25 +1,21 @@
-
-from django.db import models
-
-# Create your models here.
-
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 import uuid
 from decimal import Decimal
 
+
 class TechList(models.Model):
     id = models.AutoField(primary_key=True, db_column='ID')
-    product_name = models.CharField(max_length=255, db_column='ProductName')
+    product_name = models.CharField(max_length=255, db_column='ProductName', default='Unnamed Product')
     category = models.CharField(max_length=100, blank=True, null=True, db_column='Category')
     brand = models.CharField(max_length=100, blank=True, null=True, db_column='Brand')
     price = models.DecimalField(max_digits=10, decimal_places=2, db_column='Price')
     description = models.TextField(blank=True, null=True, db_column='Description')
-    stock_quantity = models.IntegerField(db_column='StockQuantity')
+    stock_quantity = models.IntegerField(db_column='StockQuantity', default=0)
     image_url = models.URLField(max_length=500, blank=True, null=True, db_column='ImageURL')
     on_sale = models.BooleanField(default=False, db_column='OnSale')
     on_wishlist = models.BooleanField(default=False, db_column='OnWishlist')
-    stars = models.DecimalField(max_digits=3, decimal_places=1, default=0.0, db_column='Rating')
+    author = models.ForeignKey('User', on_delete=models.CASCADE, related_name='products', null=True, db_column='author_id')
 
     def __str__(self):
         return self.product_name
@@ -31,16 +27,12 @@ class TechList(models.Model):
     def discounted_price(self):
         return round(self.price * Decimal('0.75'), 2)
 
-
-
 class Rating(models.Model):
     tech = models.ForeignKey(TechList, on_delete=models.CASCADE, related_name='ratings')
     rating = models.IntegerField(choices=[(i, str(i)) for i in range(6)])  # 0–5
 
     def __str__(self):
         return f"{self.tech.product_name}: {self.rating}★"
-
-
 
 # Кастомна модель користувача
 class User(AbstractUser):
@@ -65,7 +57,7 @@ class User(AbstractUser):
 class Order(models.Model):
     id = models.AutoField(primary_key=True, db_column='OrderID')
     user = models.ForeignKey(User, on_delete=models.CASCADE, db_column='UserID')
-    product = models.ForeignKey(TechList, on_delete=models.CASCADE, db_column='ProductID')
+    product = models.ForeignKey(TechList, on_delete=models.CASCADE, null=True, blank=True)
     order_date = models.DateTimeField(auto_now_add=True, db_column='OrderDate')
     quantity = models.IntegerField(db_column='Quantity')
     total_price = models.DecimalField(max_digits=10, decimal_places=2, db_column='TotalPrice')

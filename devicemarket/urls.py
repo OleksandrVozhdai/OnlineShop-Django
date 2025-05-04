@@ -26,7 +26,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path("", IndexView),
     path('', include('main.urls')),
-    path('main/', include('main.urls')),
 
     # Додаємо маршрути для сброса пароля в кореневе простір імен
     path('password_reset/', auth_views.PasswordResetView.as_view(template_name='main/password_reset.html'),

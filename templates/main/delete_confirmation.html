@@ -1,0 +1,51 @@
+{% extends 'partials/base.html' %}
+{% load static %}
+
+{% block content %}
+<header>
+    <nav class="navbar">
+        <div class="logo">
+            <a href="{% url 'main:index' %}">
+                <img src="{% static 'assets/img/device-makret-logo.png' %}" alt="Device Market" style="height: 40px;">
+            </a>
+        </div>
+        <div class="nav-links">
+            <a href="{% url 'main:shop' %}">Shop</a>
+            <a href="{% url 'main:about' %}">About</a>
+            <a href="{% url 'main:catalog' %}">Catalog</a>
+        </div>
+        <div class="auth-section">
+            {% if user.is_authenticated %}
+                <div class="avatar-dropdown">
+                    <div class="avatar">
+                        {{ user.full_name|first|upper }}
+                    </div>
+                    <div class="dropdown-menu">
+                        <a href="{% url 'main:profile' %}">Profile</a>
+                        <form action="{% url 'logout' %}" method="post">
+                            {% csrf_token %}
+                            <button type="submit">Logout</button>
+                        </form>
+                    </div>
+                </div>
+            {% else %}
+                <a href="{% url 'main:login' %}">Log in</a>
+            {% endif %}
+        </div>
+    </nav>
+</header>
+
+<main class="flex-shrink-0">
+    <section class="py-5">
+        <div class="container px-5">
+            <h2 class="fw-bolder mb-4">Confirm Deletion</h2>
+            <p>Are you sure you want to delete the product "{{ product.product_name }}"?</p>
+            <form method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger">Yes, Delete</button>
+                <a href="{% url 'main:profile' %}" class="btn btn-secondary">Cancel</a>
+            </form>
+        </div>
+    </section>
+</main>
+{% endblock content %}

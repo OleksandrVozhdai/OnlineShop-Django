@@ -76,8 +76,8 @@ WSGI_APPLICATION = 'devicemarket.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'mssql',
-        'NAME': 'OnlineShopReg',
-        'HOST': 'YourServerName',
+        'NAME': 'OnlineShop',
+        'HOST': 'localhost',
         'OPTIONS': {
             'driver': 'ODBC Driver 17 for SQL Server',
             'trusted_connection': 'yes',
