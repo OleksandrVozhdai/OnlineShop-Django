@@ -77,11 +77,13 @@ WSGI_APPLICATION = 'devicemarket.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'mssql',
-        'NAME': 'OnlineShop',
-        'HOST': 'localhost',
+        'NAME': 'OnlineShopReg',
+        'USER': 'sa',
+        'PASSWORD': '1234567890',
+        'HOST': 'host.docker.internal',
+        'PORT': '1433',
         'OPTIONS': {
             'driver': 'ODBC Driver 17 for SQL Server',
-            'trusted_connection': 'yes',
         },
     }
 }
