@@ -19,18 +19,18 @@ jobs:
         ports:
           - 1433:1433
         options: >-
-          --health-cmd "/opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P 'YourStrong!Passw0rd' -Q 'SELECT 1'"
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
+          --health-cmd="/opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P '1234567890' -Q 'SELECT 1'"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
 
     env:
       DB_HOST: localhost
       DB_PORT: 1433
-      DB_NAME: test_db
+      DB_NAME: OnlineShopReg
       DB_USER: sa
       DB_PASSWORD: 1234567890
-      DJANGO_SETTINGS_MODULE: your_project.settings
+      DJANGO_SETTINGS_MODULE: main.settings
       DEBUG: '0'
       SECRET_KEY: testsecret
 
