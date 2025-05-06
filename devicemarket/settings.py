@@ -80,7 +80,7 @@ DATABASES = {
         'NAME': 'OnlineShopReg',
         'USER': 'sa',
         'PASSWORD': '1234567890',
-        'HOST': 'host.docker.internal',
+        'HOST': 'mssql',
         'PORT': '1433',
         'OPTIONS': {
             'driver': 'ODBC Driver 17 for SQL Server',

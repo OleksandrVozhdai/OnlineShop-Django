@@ -19,5 +19,8 @@ jobs:
       - name: Build Docker image
         run: docker build -t online-shop-test:latest .
 
+      - name: Show MSSQL container logs
+        run: docker logs $(docker ps -q --filter "ancestor=mcr.microsoft.com/mssql/server:2022-latest")
+
       - name: Run tests in container
         run: docker run --rm online-shop-test:latest python manage.py test main
