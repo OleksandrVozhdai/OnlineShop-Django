@@ -11,6 +11,21 @@ on:
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:13
+        env:
+          POSTGRES_DB: onlineshop
+          POSTGRES_USER: admin
+          POSTGRES_PASSWORD: admin123
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -21,5 +36,5 @@ jobs:
       - name: Build Docker image
         run: docker build -t online-shop-test:latest .
 
-      - name: Run tests in container
+      - name: Run tests in container with SQLite
         run: docker run --rm online-shop-test:latest python manage.py test main

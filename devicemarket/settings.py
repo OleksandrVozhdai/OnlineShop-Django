@@ -78,10 +78,12 @@ DATABASES = {
     'default': {
         'ENGINE': 'mssql',
         'NAME': 'OnlineShop',
-        'HOST': 'localhost',
+        'USER': 'localhost',
+        'PASSWORD': '1234567890',
+        'HOST': 'host.docker.internal',
+        'PORT': '1433',
         'OPTIONS': {
             'driver': 'ODBC Driver 17 for SQL Server',
-            'trusted_connection': 'yes',
         },
     }
 }
@@ -151,11 +153,11 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Налаштування для надсилання email
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'  # Використовуємо SMTP для надсилання email
-EMAIL_HOST = 'mail.hosting.reg.ru'  # SMTP-сервер REG.RU
+EMAIL_HOST = ''  # SMTP-сервер REG.RU
 EMAIL_PORT = 587  # Порт для TLS
 EMAIL_USE_TLS = True  # Використовуємо TLS для безпечного з'єднання
 EMAIL_HOST_USER = 'admin@deinekogames.net'  # Твій email для надсилання
-EMAIL_HOST_PASSWORD = '63XXp32Usz'  # Пароль для твого email
+EMAIL_HOST_PASSWORD = 'Secret'  # Пароль для твого email
 DEFAULT_FROM_EMAIL = 'admin@deinekogames.net'  # Email, з якого будуть надсилатися листи
 
 # Налаштування для авторизації та перенаправлення
@@ -163,12 +165,3 @@ AUTH_USER_MODEL = 'main.User'  # Кастомна модель користув�
 LOGIN_REDIRECT_URL = '/'  # Перенаправлення після входу
 LOGOUT_REDIRECT_URL = '/login/'  # Перенаправлення після виходу
 LOGIN_URL = '/login/'  # URL для входу
-
-# Настройки для тестов
-import sys
-if 'test' in sys.argv:
-    DATABASES['default'] = {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': ':memory:',
-    }
-    EMAIL_BACKEND = 'django.core.mail.backends.locmem.EmailBackend'
