@@ -1,58 +1,23 @@
-name: Django Tests (MSSQL)
-
 on:
   push:
-    branches: [main]
+    branches:
+      - main
   pull_request:
-    branches: [main]
+    branches:
+      - main
 
 jobs:
-  test:
+  build-and-test:
     runs-on: ubuntu-latest
-
-    services:
-      mssql:
-        image: mcr.microsoft.com/mssql/server:2022-latest
-        env:
-          ACCEPT_EULA: "Y"
-          SA_PASSWORD: "1234567890"
-        ports:
-          - 1433:1433
-        options: >-
-          --health-cmd="/opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P '1234567890' -Q 'SELECT 1'"
-          --health-interval=10s
-          --health-timeout=5s
-          --health-retries=5
-
-    env:
-      DB_HOST: localhost
-      DB_PORT: 1433
-      DB_NAME: OnlineShopReg
-      DB_USER: sa
-      DB_PASSWORD: 1234567890
-      DJANGO_SETTINGS_MODULE: main.settings
-      DEBUG: '0'
-      SECRET_KEY: testsecret
-
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-    - name: Set up Python
-      uses: actions/setup-python@v5
-      with:
-        python-version: '3.11'
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
 
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install -r requirements.txt
+      - name: Build Docker image
+        run: docker build -t online-shop-test:latest .
 
-    - name: Wait for MSSQL to be ready
-      run: sleep 30
-
-    - name: Run migrations
-      run: python manage.py migrate
-
-    - name: Run tests
-      run: python manage.py test
+      - name: Run tests in container
+        run: docker run --rm online-shop-test:latest python manage.py test main
