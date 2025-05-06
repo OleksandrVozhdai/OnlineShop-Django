@@ -4,3 +4,5 @@ django-crispy-forms
 crispy-bootstrap5
 mssql-django
 twisted
+pytest
+pytest-django
