@@ -164,3 +164,11 @@ LOGIN_REDIRECT_URL = '/'  # Перенаправлення після входу
 LOGOUT_REDIRECT_URL = '/login/'  # Перенаправлення після виходу
 LOGIN_URL = '/login/'  # URL для входу
 
+# Настройки для тестов
+import sys
+if 'test' in sys.argv:
+    DATABASES['default'] = {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': ':memory:',
+    }
+    EMAIL_BACKEND = 'django.core.mail.backends.locmem.EmailBackend'
