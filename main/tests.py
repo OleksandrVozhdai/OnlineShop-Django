@@ -17,5 +17,10 @@ class UserModelTestCase(unittest.TestCase):
         user = User(full_name="John Doe")
         self.assertEqual(str(user), "John Doe")
 
+class PendingUserModelTestCase(unittest.TestCase):
+    def test_str_method(self):
+        pending = PendingUser(email="test@example.com")
+        self.assertEqual(str(pending), "test@example.com")
+
 if __name__ == '__main__':
     unittest.main()
