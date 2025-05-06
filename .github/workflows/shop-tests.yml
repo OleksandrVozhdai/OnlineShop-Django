@@ -26,7 +26,7 @@ jobs:
 
     - name: Run Python tests without DB
       run: |
-        pytest tests --ds=devicemarket.settings --tb=short -p no:django_db
+        pytest main/tests.py --ds=devicemarket.settings --tb=short -p no:django_db
 
     - name: Set up Node.js
       uses: actions/setup-node@v3
