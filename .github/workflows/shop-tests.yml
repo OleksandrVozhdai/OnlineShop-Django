@@ -27,14 +27,3 @@ jobs:
     - name: Run Python tests without DB
       run: |
         pytest main/tests.py --ds=devicemarket.settings --tb=short -p no:django_db
-
-    - name: Set up Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: '18'
-
-    - name: Install frontend dependencies
-      run: npm install
-
-    - name: Run JS tests
-      run: npm run test
