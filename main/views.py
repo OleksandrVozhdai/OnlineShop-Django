@@ -11,29 +11,16 @@ from decimal import Decimal
 import random
 from .forms import UserRegistrationForm, UserLoginForm, TechListForm
 from .models import TechList, User, PendingUser
-
-from django.shortcuts import render, redirect
-from django.contrib.auth.views import LoginView as AuthLoginView
 from django.contrib.auth import login
-from django.core.mail import send_mail
-from django.conf import settings
-from .forms import UserRegistrationForm, UserLoginForm
-from .models import TechList, User
-from django.shortcuts import render, get_object_or_404, redirect
 from django.views.decorators.http import require_POST
 from django.views.decorators.csrf import csrf_exempt
-from django.http import JsonResponse
-from django.contrib.auth.decorators import login_required
-from .models import Order, TechList
+from .models import Order
 from django.utils import timezone
-from django.contrib.auth.models import User
 import string
 
-# Представлення для головної сторінки
 def IndexView(request):
     return render(request, 'main/index.html')
 
-# Представлення для сторінки товару
 def ProductPageView(request, id):
     product = get_object_or_404(TechList, id=id)
     all_products = TechList.objects.all()
@@ -51,7 +38,6 @@ def ProductPageView(request, id):
         'sameUserProducts': sameUserProducts
     })
 
-# Перемикання стану "у списку бажань"
 def Toggle_wishlist(request, id):
     if request.method == 'POST':
         product = get_object_or_404(TechList, id=id)
@@ -60,7 +46,6 @@ def Toggle_wishlist(request, id):
         return JsonResponse({'success': True, 'on_wishlist': product.on_wishlist})
     return JsonResponse({'success': False})
 
-# Представлення для списку бажань
 def WishlistView(request, id):
     product = get_object_or_404(TechList, id=id)
     all_products = TechList.objects.all()
@@ -72,7 +57,6 @@ def WishlistView(request, id):
         'constAllProducts': constAllProducts,
     })
 
-# Представлення для магазину з фільтрацією товарів
 def ShopView(request):
     products = TechList.objects.all()
     is_filtered = False
@@ -113,21 +97,17 @@ def ShopView(request):
         'isOnSale': isOnSale,
     })
 
-# Представлення для сторінки "Про нас"
 def AboutView(request):
     return render(request, 'main/about.html')
 
-# Представлення для каталогу
 def CatalogView(request):
     products = TechList.objects.all()
     return render(request, 'main/catalog.html', {'products': products})
 
-# Представлення для реєстрації користувача
 def RegistrationView(request):
     if request.method == 'POST':
         form = UserRegistrationForm(request.POST)
         if form.is_valid():
-            # Зберігаємо дані в модель PendingUser до підтвердження email
             pending_user = PendingUser(
                 email=form.cleaned_data['email'],
                 full_name=form.cleaned_data['full_name'],
@@ -137,23 +117,19 @@ def RegistrationView(request):
             )
             pending_user.save()
 
-            # Формуємо посилання для підтвердження
             token = str(pending_user.token)
             confirm_url = request.build_absolute_uri(reverse('main:confirm_email', args=[token]))
 
-            # Надсилаємо email для підтвердження
             subject = 'Confirm Your Registration at DeviceMarket'
             message = f'Hello, {pending_user.full_name}!\n\nThank you for registering. Please click the link below to activate your account:\n{confirm_url}'
             send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, [pending_user.email])
 
-            # Повідомлення про успішну відправку листа
             messages.success(request, 'A confirmation email has been sent to your email address.')
             return redirect('main:login')
     else:
         form = UserRegistrationForm()
     return render(request, 'main/registration.html', {'form': form})
 
-# Активація акаунта
 def ActivateView(request, user_id):
     try:
         user = User.objects.get(id=user_id)
@@ -163,12 +139,10 @@ def ActivateView(request, user_id):
     except User.DoesNotExist:
         return render(request, 'main/error.html', {'message': 'User not found'})
 
-# Представлення для входу (авторизації)
 class LogInView(AuthLoginView):
     form_class = UserLoginForm
     template_name = 'main/login.html'
 
-# Представлення для підтвердження email
 def ConfirmEmailView(request, token):
     try:
         pending_user = PendingUser.objects.get(token=token)
@@ -188,7 +162,6 @@ def ConfirmEmailView(request, token):
         messages.error(request, 'Invalid or expired confirmation link.')
         return redirect('main:login')
 
-# Представлення для профілю користувача
 def ProfileView(request):
     if not request.user.is_authenticated:
         return redirect('main:login')
@@ -247,7 +220,6 @@ def search_products(request):
             brand__icontains=query
         )
 
-    # Перетворюємо продукти в список словників для JSON відповіді
     products_data = [{
         'id': product.id,
         'product_name': product.product_name,
@@ -295,7 +267,7 @@ def add_to_cart(request, tech_id):
 
             Order.objects.create(
                 user=request.user,
-                product=tech,
+                product_id=tech.id,  # Исправлено: используем product_id
                 order_date=timezone.now(),
                 quantity=quantity,
                 total_price=total_price
@@ -325,7 +297,7 @@ def create_order(request):
 
             Order.objects.create(
                 user=default_user,
-                product=tech,
+                product_id=tech.id,  # Исправлено: используем product_id
                 order_date=timezone.now(),
                 quantity=quantity,
                 total_price=total_price
@@ -333,17 +305,20 @@ def create_order(request):
         except TechList.DoesNotExist:
             continue
 
-    @require_POST
-    def clear_cart(request):
-        request.session['cart'] = {}
-        request.session.modified = True
-        return JsonResponse({'success': True})
+    request.session['cart'] = []  # Очищаем корзину
+    request.session.modified = True
+    return JsonResponse({'success': True})
+
+@require_POST
+def clear_cart(request):
+    request.session['cart'] = []
+    request.session.modified = True
+    return JsonResponse({'success': True})
 
 def update_username(request):
     if request.method == "POST":
         username = request.POST.get('username')
         if not username:
-            # Generate random 6-character username if empty
             username = ''.join(random.choices(string.ascii_lowercase + string.digits, k=6))
         try:
             user = request.user

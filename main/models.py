@@ -3,7 +3,6 @@ from django.contrib.auth.models import AbstractUser
 import uuid
 from decimal import Decimal
 
-# Модель для списку техніки
 class TechList(models.Model):
     id = models.AutoField(primary_key=True, db_column='ID')
     product_name = models.CharField(max_length=255, db_column='ProductName', default='Unnamed Product')
@@ -28,7 +27,6 @@ class TechList(models.Model):
     def discounted_price(self):
         return round(self.price * Decimal('0.75'), 2)
 
-# Кастомна модель користувача
 class User(AbstractUser):
     id = models.AutoField(primary_key=True, db_column='UserID')
     password = models.CharField(max_length=128, db_column='Password', null=True, blank=True)
@@ -48,11 +46,10 @@ class User(AbstractUser):
     class Meta:
         db_table = 'Users'
 
-# Модель для замовлень
 class Order(models.Model):
     id = models.AutoField(primary_key=True, db_column='OrderID')
     user = models.ForeignKey(User, on_delete=models.CASCADE, db_column='UserID')
-    product = models.ForeignKey(TechList, on_delete=models.CASCADE, null=True, blank=True, db_column='ProductID')
+    product = models.ForeignKey(TechList, on_delete=models.CASCADE, null=True, blank=True, db_column='product_id')  # Исправлено
     order_date = models.DateTimeField(auto_now_add=True, db_column='OrderDate')
     quantity = models.IntegerField(db_column='Quantity')
     total_price = models.DecimalField(max_digits=10, decimal_places=2, db_column='TotalPrice')
@@ -63,7 +60,6 @@ class Order(models.Model):
     class Meta:
         db_table = 'Orders'
 
-# Модель для зберігання даних користувачів до підтвердження email
 class PendingUser(models.Model):
     email = models.EmailField(unique=True, db_column='Email')
     full_name = models.CharField(max_length=255, db_column='FullName')
