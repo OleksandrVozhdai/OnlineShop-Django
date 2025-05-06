@@ -1,0 +1,25 @@
+name: Build and Test Docker Container for reg Branch
+
+on:
+  push:
+    branches:
+      - reg
+  pull_request:
+    branches:
+      - reg
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build Docker image
+        run: docker build -t online-shop-test:latest .
+
+      - name: Run tests in container
+        run: docker run --rm online-shop-test:latest python manage.py test main
