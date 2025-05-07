@@ -177,9 +177,10 @@
 
                         <div class="d-flex align-items-center mt-4">
                             <input class="form-control text-center me-3" id="inputQuantity" type="number" value="1" style="max-width: 4rem;" />
-                            <button class="btn btn-outline-dark flex-shrink-0" type="button">
+                            <button class="btn btn-outline-dark flex-shrink-0 add-to-cart-btn" data-product-id="{{ product.id }}">
                                 <i class="bi-cart-fill me-1"></i> Add to cart
                             </button>
+   
                             <button class="btn p-0 border-0 bg-transparent wishlist-btn ms-3" data-product-id="{{ product.id }}">
                                 {% if product.on_wishlist %}
                                     <i class="bi bi-heart-fill" style="font-size: 1.8rem; color: red;"></i>
@@ -355,6 +356,36 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 </script>
 
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const addToCartButtons = document.querySelectorAll('.add-to-cart-btn');
+
+    addToCartButtons.forEach(button => {
+        button.addEventListener('click', function(e) {
+            e.preventDefault();
+            const productId = this.getAttribute('data-product-id');
+
+            fetch(`/add_to_cart/${productId}/`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}',
+                    'Content-Type': 'application/json'
+                },
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Successfully added! 🛒');
+                    updateCartCount();
+                } else {
+                    alert('Error: ' + (data.error || 'Something went wrong.'));
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        });
+    });
+});
+</script>
 
 </body>
 </html>
