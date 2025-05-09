@@ -6,3 +6,5 @@ mssql-django
 twisted
 pytest
 pytest-django
+psycopg2
+psycopg2-binary
