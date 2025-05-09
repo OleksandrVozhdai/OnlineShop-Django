@@ -33,7 +33,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'main',  # Перемісти сюди, перед django.contrib.admin
+    'main',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -76,17 +76,15 @@ WSGI_APPLICATION = 'devicemarket.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'mssql',
-        'NAME': 'OnlineShopReg',
-        'USER': 'sa',
-        'PASSWORD': '1234567890',
-        'HOST': 'mssql',
-        'PORT': '1433',
-        'OPTIONS': {
-            'driver': 'ODBC Driver 17 for SQL Server',
-        },
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'de4kgtbitkfosu',
+        'USER': 'u2nicqlroab6ie',
+        'PASSWORD': 'p33dbfaf3e8de05eb5b34218544b40a4d566fb6003e4ac7c345fd237e76c10621',
+        'HOST': 'cdccpamhe0hpfj.cluster-czrs8kj4isg7.us-east-1.rds.amazonaws.com',
+        'PORT': '5432',
     }
 }
+
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
